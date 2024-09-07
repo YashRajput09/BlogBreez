@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.
     route("/signup")
-    .get(signUpUser)
-    .post();
+    // .get(signUpFrom)
+    .post(signUpUser);
 
 export default router;

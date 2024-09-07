@@ -6,6 +6,8 @@ import userRoute from './routes/user_route.js'
 const app = express();
 dotenv.config();
 
+app.use(express.json());
+
 const port = process.env.PORT;
 const dburl = process.env.MONGODB_ATLUS_URL;
 async function dbConnection() {
