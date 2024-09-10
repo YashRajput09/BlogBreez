@@ -1,6 +1,5 @@
-// import mongoose from 'mongoose';
 import userModel from "../models/user_model.js";
-import { v2 as cloudinary } from "cloudinary";
+import cloudinary from "../cloudConfig.js";
 
 export const signUpUser = async (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
@@ -38,7 +37,9 @@ export const signUpUser = async (req, res) => {
   }
 
   const cloudinaryResponse = await cloudinary.uploader.upload(
-    profileImage.tempFilePath
+    profileImage.tempFilePath,{
+        folder: "Blog_web"
+    }
   );
   console.log("cloudinary response : ", cloudinaryResponse);
 

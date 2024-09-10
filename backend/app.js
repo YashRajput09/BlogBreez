@@ -1,12 +1,10 @@
-import express from 'express';
 import dotenv from 'dotenv';
-// import mongooseConnection, { store } from './config/mongoose_connection.js';
+dotenv.config();
+import express from 'express';
 import mongoose from 'mongoose';
 import fileUpload from 'express-fileupload';
-import { v2 as cloudinary } from 'cloudinary';
 import userRoute from './routes/user_route.js'
 const app = express();
-dotenv.config();
 
 //MIDDLEWARES
 app.use(express.json());
@@ -35,10 +33,3 @@ dbConnection();
 // ROUTES
 app.use('/user', userRoute);
 
-//CLOUDINARY 
-//CONFIGRATION
-cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.CLOUD_API_KEY,
-    api_secret: process.env.CLOUD_API_SECRET,
-});
