@@ -1,5 +1,6 @@
 import userModel from "../models/user_model.js";
 import cloudinary from "../cloudConfig.js";
+import bcrypt from "bcryptjs";
 
 export const signUpUser = async (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
@@ -46,10 +47,12 @@ export const signUpUser = async (req, res) => {
   if (!cloudinaryResponse || cloudinaryResponse.error) {
     console.log(cloudinaryResponse.error);
   }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = new userModel({
     name,
     email,
-    password,
+    password: hashedPassword,
     mobileNumber,
     education,
     role,
