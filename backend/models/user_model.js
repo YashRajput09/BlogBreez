@@ -41,6 +41,9 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum:["user", "admin"],
     },
+    token:{
+        type: String,
+    },
     createdAt:{
         type: Date,
         default: Date.now,
