@@ -43,7 +43,7 @@ export const signUpUser = async (req, res) => {
         folder: "Blog_web"
     }
   );
-  console.log("cloudinary response : ", cloudinaryResponse);
+  // console.log("cloudinary response : ", cloudinaryResponse);
 
   if (!cloudinaryResponse || cloudinaryResponse.error) {
     console.log(cloudinaryResponse.error);
@@ -70,3 +70,34 @@ export const signUpUser = async (req, res) => {
   }
   console.log("New response : ", newUser);
 };
+
+export const logInUser = async (req, res) => {
+  const { email, password, role } = req.body;
+  try{
+    if(!email || !password || !role){
+      return res.status(400).json({ message: "Please fill required fields" });
+    }
+    const user = await userModel.findOne({ email }).select("+password");
+    if(!user.password){
+      return res.status(400).json({ message: "User password is missing" });
+    }
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if(!user || !isValidPassword){
+      return res.status(400).json({ message: "Invalid email or password"});
+    }
+    if(user.role !== role){
+      return res.status(400).json({ message: `Invalid role ${role}`});
+    }
+    const token = await createTokenAndSaveCookie(user._id, res);
+    res.status(200).json({
+      message: "User loggedIn successfully",
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      }, token: token
+    })
+  } catch(error){
+    return res.status(400).json({ error: "Invalid credentials" });
+  }
+}
