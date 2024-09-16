@@ -100,4 +100,9 @@ export const logInUser = async (req, res) => {
   } catch(error){
     return res.status(400).json({ error: "Invalid credentials" });
   }
-}
+};
+
+export const logOutUser = async (req, res) => {
+  res.clearCookie("jwttoken");
+  res.status(200).json({ message: "User loggedOut successfully "});
+};
