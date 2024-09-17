@@ -31,6 +31,10 @@ const blogSchema = new mongoose.Schema({
     adminName: {
         type: String,
         required: true
+    },
+    craetedBy: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
     }
 })
 
