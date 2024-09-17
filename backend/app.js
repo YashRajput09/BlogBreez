@@ -4,6 +4,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import fileUpload from 'express-fileupload';
 import userRoute from './routes/user_route.js'
+import blogRoute from './routes/blog_route.js'
 const app = express();
 
 //MIDDLEWARES
@@ -32,4 +33,5 @@ dbConnection();
 
 // ROUTES
 app.use('/user', userRoute);
+app.use("/blog", blogRoute);
 

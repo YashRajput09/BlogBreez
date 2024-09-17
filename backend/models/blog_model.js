@@ -10,7 +10,7 @@ const blogSchema = new mongoose.Schema({
         required: true
     },
     blogImage: {
-        public_Id: {
+        public_id: {
             type: String,
             required: true
         },
@@ -19,21 +19,21 @@ const blogSchema = new mongoose.Schema({
             required: true
         }
     },
-    discription: {
+    description: {
         type: String,
         required: true,
         minlength: [200, "Atleast 200 characters required."]
     },
     adminImage: {
         type: String,
-        required: true
+        // required: true
     },
     adminName: {
         type: String,
-        required: true
+        // required: true
     },
     craetedBy: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     }
 })
