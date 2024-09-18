@@ -5,10 +5,12 @@ import mongoose from 'mongoose';
 import fileUpload from 'express-fileupload';
 import userRoute from './routes/user_route.js'
 import blogRoute from './routes/blog_route.js'
+import cookieParser from 'cookie-parser';
 const app = express();
 
 //MIDDLEWARES
 app.use(express.json());
+app.use(cookieParser());
 app.use(fileUpload({
     useTempFiles: true,
     tempFileDir: '/tmp/'
