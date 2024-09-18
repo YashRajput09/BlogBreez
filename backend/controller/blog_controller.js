@@ -66,3 +66,18 @@ console.log("Req.User : ",req.user);
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const deleteBlog = async (req, res) => {
+    const { id } = req.params;
+    // console.log(req.params);
+    const blog = await blogModel.findById(id);
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+    await blog.deleteOne();
+  //  const deletedBlogResponse = await blogModel.findByIdAndDelete(id);
+  //  console.log(deletedBlogResponse);
+   res.status(200).json({ message: "Blog deleted successfully"})
+   
+  }
+
