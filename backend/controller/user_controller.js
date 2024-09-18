@@ -103,6 +103,10 @@ export const logInUser = async (req, res) => {
 };
 
 export const logOutUser = async (req, res) => {
-  res.clearCookie("jwttoken");
-  res.status(200).json({ message: "User loggedOut successfully "});
-};
+  try{
+    res.clearCookie("jwttoken");
+    res.status(200).json({ message: "User loggedOut successfully "});
+  } catch(errro){
+    return res.status(500).json({ message: "Internal server error "});
+  }
+};    
