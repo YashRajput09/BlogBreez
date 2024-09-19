@@ -26,13 +26,13 @@ const blogSchema = new mongoose.Schema({
     },
     adminImage: {
         type: String,
-        // required: true
+        required: true
     },
     adminName: {
         type: String,
-        // required: true
+        required: true
     },
-    craetedBy: {
+    createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     }
