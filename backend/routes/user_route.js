@@ -1,5 +1,5 @@
 import express from "express";
-import { signUpUser, logInUser, logOutUser } from "../controller/user_controller.js";
+import { signUpUser, logInUser, logOutUser, getMyProfile, getAdmins } from "../controller/user_controller.js";
 import {isAuthenticated} from  "../middleware/authenticateUser.js"
 import { isAdmin } from "../middleware/authorizeUser.js";
 const router = express.Router();
@@ -18,5 +18,11 @@ router.
     route("/logout")
     .post(isAuthenticated, logOutUser);
 
+router.
+    route("/myprofile")
+    .get(isAuthenticated, getMyProfile);
 
+router.
+    route("/admins")
+    .get(isAuthenticated, isAdmin("admin"), getAdmins);
 export default router;
