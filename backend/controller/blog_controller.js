@@ -126,3 +126,20 @@ export const getMyBlogs = async (req, res) => {
   const blogs = await blogModel.find({ createdBy });
   res.status(200).json(blogs);
 };
+
+//update Blog
+export const updateBlog = async (req, res) => {
+  const { id } = req.params;
+
+  //check blog is present in database with given id
+  if(!mongoose.Types.ObjectId.isValid(id)){
+    return res.status(400).json({ message: "Invalid Blog Id, Blog not found"})
+  }
+  const updatedBlog = await blogModel.findByIdAndUpdate(
+    id,
+    { $set: req.body } ,  // $set is used to update only the fields provided in the request
+    { new: true, runValidators: true } // Return the updated document & run validation
+  );
+
+  res.status(200).json({ updatedBlog });
+};
