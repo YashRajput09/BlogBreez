@@ -14,7 +14,8 @@ router.
 
 router.
     route("/all-blogs")
-    .get(isAuthenticated, getAllBlogs);
+    // .get(isAuthenticated, getAllBlogs);
+    .get(getAllBlogs);
 
 router.
     route("/single-blog/:id")
