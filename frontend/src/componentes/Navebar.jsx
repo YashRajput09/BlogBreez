@@ -24,7 +24,7 @@ const Navebar = () => {
       <nav className="shadow-xl px-4 py-3">
         <div className="flex justify-between items-center md:mx-11">
           <div>
-            Breez<span className="font-semibold text-blue-500">Blogs</span>
+            <span className="font-semibold text-blue-500 text-xl">BreezBlogs</span>
           </div>
 
           {/* Desktop menu */}
