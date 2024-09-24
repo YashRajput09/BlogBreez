@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import createTokenAndSaveCookie from "../jwt/AuthenticateToken.js"
 
 export const signUpUser = async (req, res) => {
+  try {
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).json({ message: "User profile image is required" });
   }
@@ -69,6 +70,10 @@ export const signUpUser = async (req, res) => {
     return res.status(200).json({ message: "User registered successfully",newUser, token: token});
   }
   console.log("New response : ", newUser);
+} catch(error) {
+  console.log(error);
+  res.status(500).json({ message: "Internal server error", error})
+}
 };
 
 export const logInUser = async (req, res) => {
