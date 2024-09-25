@@ -12,6 +12,8 @@ export const AuthProvider = ({ children }) => {  // takes {children} as a props,
           "http://localhost:3000/blog/all-blogs"
         );
         setBlogs(data); // store the data in the state, using setBlogs().
+        console.log(data);
+        
       } catch (error) {
         console.log(error);
       }

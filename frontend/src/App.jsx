@@ -10,7 +10,8 @@ import Creators from './pages/Creator';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
-import { useAuth } from './context/authProvider';
+import { useAuth } from './context/AuthProvider';
+import toast, { Toaster } from 'react-hot-toast';
 
 function App() {
   const location = useLocation();
@@ -34,6 +35,7 @@ function App() {
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/dashboard" element={<Dashboard/>}/>
        </Routes>
+       <Toaster />
        {/* {!hidePages && <Footer/>} */}
       </div>
     </>
