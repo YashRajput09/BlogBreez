@@ -41,7 +41,7 @@ const SignUp = () => {
     // }
     // console.log(formData);
     try {
-      const response = await axios.post(
+      const {data} = await axios.post(
         "http://localhost:3000/user/signup",
         formData, //sending form data to /signup endpoint
         {
@@ -51,16 +51,16 @@ const SignUp = () => {
           },
         }
       );
-      console.log(response);
-      console.log(response.data);
+      console.log(data);
+      
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div>
-      <div className="mx-auto max-w-md rounded-xl border shadow-lg px-4 py-10 my-10 text-gray-700 sm:px-8">
+    <div className="h-screen flex justify-center items-center px-3">
+      <div className="mx-auto max-w-md rounded-xl border shadow-lg px-4 py-10 my-10 text-gray-700 sm:w-[30rem]">
         <div className="flex justify-between mb-10">
           <span className="font-semibold text-blue-500 text-xl">
             BreezBlogs
@@ -137,10 +137,10 @@ const SignUp = () => {
           </div>
 
           <div className="flex ">
-            <div className="w-12 h-12 rounded-full overflow-hidden profileImage ">
+            <div className="w-12 h-14 rounded-full overflow-hidden profileImage">
               <img
                 src={imagePreview ? `${imagePreview}` : "Image Preview"}
-                alt="Image"
+                alt="Img"
               />
             </div>
 
