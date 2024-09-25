@@ -10,7 +10,6 @@ import Creators from './pages/Creator';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
-import { useAuth } from './context/AuthProvider';
 import toast, { Toaster } from 'react-hot-toast';
 
 function App() {
@@ -18,8 +17,6 @@ function App() {
   const hidePages = ["/login", "/signup", "/dashboard"].includes(
     location.pathname
   );
-  const { blogs } = useAuth();
-  console.log(blogs);
   
   return (
     <>
