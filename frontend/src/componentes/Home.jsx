@@ -1,6 +1,7 @@
 import React from 'react';
 import Hero from '../home/Hero.jsx';
 import Trending from '../home/Trending.jsx';
+import Devotaional from '../home/Devotional.jsx';
 
 const Home = () => {
   
@@ -8,6 +9,7 @@ const Home = () => {
     <div>
       <Hero />
       <Trending />
+      <Devotaional />
     </div>
   )
 }
