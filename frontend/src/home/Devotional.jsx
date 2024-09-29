@@ -31,8 +31,11 @@ const Devotional = () => {
   const devotionalBlogs = blogs?.filter((blog) => blog.category === "Devotional");
 
   return (
-    <div className='md:mx-10 px-5 p-5  my-5 mb-5'>
+    <div className='md:mx-10 px-5 my-5 mb-5'>
       <h1 className='text-2xl font-bold m-2'>Devotional</h1>
+      <div className="flex justify-center m-2">
+        <h2>The concept of god varies widely accross different cultures, religions and belief systems.</h2>
+      </div>
       <Carousel responsive={responsive}>
       {devotionalBlogs.map(({ _id, blogImage, title }) => (
         <Link 

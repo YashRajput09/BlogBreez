@@ -141,7 +141,7 @@ export const updateBlog = async (req, res) => {
         folder: "Blog_web",
       }
     );
-    console.log("CloudinaryResponse : ", cloudinaryResponse);
+    // console.log("CloudinaryResponse : ", cloudinaryResponse);
   }
   const updatedData = { ...req.body };
   if (cloudinaryResponse) {

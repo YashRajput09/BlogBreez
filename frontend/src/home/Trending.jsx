@@ -33,7 +33,7 @@ const Trending = () => {
     <div className='md:mx-10 px-5 p-5  my-5 mb-5'>
       <h1 className='text-2xl font-bold m-2'>Tranding</h1>
       <Carousel responsive={responsive}>
-      {blogs.slice(0, 5).map(({ _id, blogImage, title, adminImage, adminName }) => (
+      {blogs.map(({ _id, blogImage, title, adminImage, adminName }) => (
         <Link 
           to="/" 
           key={_id} 
