@@ -2,7 +2,7 @@ import React from 'react';
 import Hero from '../home/Hero.jsx';
 import Trending from '../home/Trending.jsx';
 import Devotaional from '../home/Devotional.jsx';
-import Creators from '../home/Creators.jsx';
+import PopularCreators from '../home/PopularCreators.jsx';
 import Footer from './Footer.jsx';
 
 const Home = () => {
@@ -12,7 +12,7 @@ const Home = () => {
       <Hero />
       <Trending />
       <Devotaional />
-      <Creators />
+      <PopularCreators />
       <Footer/>
     </div>
   )
