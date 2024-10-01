@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-function Creator() {
+function PopularCreators() {
   const [admin, setAdmin] = useState([]);
   console.log(admin);
   useEffect(() => {
@@ -47,4 +47,4 @@ function Creator() {
   );
 }
 
-export default Creator;
+export default PopularCreators;
