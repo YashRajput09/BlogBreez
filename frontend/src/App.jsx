@@ -6,7 +6,7 @@ import Footer from './componentes/Footer';
 import Blogs from './pages/Blogs';
 import About from './pages/About';
 import Contact from './pages/Contact';
-import Creators from './pages/Creator';
+import Creators from './pages/Creators';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
@@ -33,7 +33,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard/>}/>
        </Routes>
        <Toaster />
-       {/* {!hidePages && <Footer/>} */}
+       {!hidePages && <Footer/>}
       </div>
     </>
   )

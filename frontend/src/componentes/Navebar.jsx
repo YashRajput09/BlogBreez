@@ -9,7 +9,7 @@ const Navebar = () => {
   const menuLinks = [
     { to: "/", label: "Home" },
     { to: "/blogs", label: "Blogs" },
-    { to: "/creators", label: "Creatores" },
+    { to: "/creators", label: "Creators" },
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
   ];
