@@ -3,6 +3,7 @@ import Hero from '../home/Hero.jsx';
 import Trending from '../home/Trending.jsx';
 import Devotaional from '../home/Devotional.jsx';
 import Creators from '../home/Creators.jsx';
+import Footer from './Footer.jsx';
 
 const Home = () => {
   
@@ -12,6 +13,7 @@ const Home = () => {
       <Trending />
       <Devotaional />
       <Creators />
+      <Footer/>
     </div>
   )
 }
