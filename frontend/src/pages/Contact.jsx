@@ -4,10 +4,10 @@ const Contact = () => {
   return (
     <>
     <div className='flex justify-center py-5'>
-      <div className='flex flex-col rounded-lg  px-2 py-5 shadow-lg bg-white'>
+      <div className='w-11/12 md:w-auto flex flex-col rounded-lg  px-2 py-5 shadow-lg bg-white'>
         <div className='flex flex-col'>
         <h1 className='font-semibold text-xl p-2 text-indigo-600 animate-pulse'>Get In Touch</h1>
-        <div className='flex space-x-3 p-4'>
+        <div className='grid grid-cols-1 gap-2 md:flex md:space-x-3 p-4'>
           {[
             {text: '+91 1234567890', rotate: 'rotate-2'},
             {text: 'breezblogs@gmail.com', rotate: '-rotate-2'},
