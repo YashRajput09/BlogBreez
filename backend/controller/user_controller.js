@@ -117,7 +117,10 @@ export const logOutUser = async (req, res) => {
 };  
 
 export const getMyProfile = async (req, res) => {
+  console.log(req);
+  
   const profileDetails = await req.user;
+  // console.log(profileDetails);
   res.status(200).json(profileDetails)
 }
 

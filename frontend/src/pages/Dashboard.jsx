@@ -1,9 +1,9 @@
-import React from 'react'
-
+import React from "react";
+import MyProfile from "../dashboard/MyProfile";
 const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+  return <div>
+    <MyProfile/>
+  </div>;
+};
 
-export default Dashboard
+export default Dashboard;
