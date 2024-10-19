@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import { useAuth } from "../context/AuthProvider.jsx";
 
 const MyProfile = () => {
-  return (
-    <div>MyProfile</div>
-  )
-}
+    const { profile, isAuthenticated } = useAuth();
 
-export default MyProfile
+  console.log(profile);
+  console.log(isAuthenticated);
+  
+
+  return <div>MyProfile</div>;
+};
+
+export default MyProfile;
