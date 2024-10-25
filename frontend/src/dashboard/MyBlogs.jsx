@@ -6,4 +6,4 @@ const MyBlogs = () => {
   )
 }
 
-export default MyBlogs
+export default MyBlogs;

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 export const AuthContext = createContext(); //creates a context to that manage authenticated data (blog Info) golbally.
 
@@ -12,10 +13,17 @@ export const AuthProvider = ({ children }) => {  // takes {children} as a props,
   useEffect(() => { 
     const fetchProfile = async () => {
       try {
+        // let token = Cookies.get("jwttoken");
+        // console.log("jwt : ", token);
+        
+        // let parsedToken  = token ? JSON.parse(token) : undefined;
+        // console.log("token : ", parsedToken);
+        // if(parsedToken){
+
           const { data } = await axios.get(
             "http://localhost:3000/user/myprofile",
             {
-              withCredentials: true,
+              withCredentials: true, // This ensures cookies are sent
               headers: {
                 "Content-Type": "application/json",
               }
@@ -25,6 +33,7 @@ export const AuthProvider = ({ children }) => {  // takes {children} as a props,
           console.log("profiledata : ",data);
           setIsAuthenticated(true);
           
+        // }
 
       } catch(error){
         console.log(error);
@@ -48,7 +57,7 @@ export const AuthProvider = ({ children }) => {  // takes {children} as a props,
     fetchProfile();
   }, []); // '[]' indicates useEffect will run only once after component mounts.
   return (
-    <AuthContext.Provider value={{ blogs, profile, isAuthenticated }}>{children}</AuthContext.Provider> // provides the data to the childrean via the value prop
+    <AuthContext.Provider value={{ blogs, profile, isAuthenticated, setIsAuthenticated }}>{children}</AuthContext.Provider> // provides the data to the childrean via the value prop
   );
 };
 
