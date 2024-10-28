@@ -13,7 +13,7 @@ const Dashboard = () => {
   //check user is LoggedIn
   if(!isAuthenticated){ 
     // return window.location.pathname = '/';
-    return <Navigate to={'/'}/>
+    // return <Navigate to={'/'}/>
   }
 
   return( <div>

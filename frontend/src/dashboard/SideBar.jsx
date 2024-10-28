@@ -24,11 +24,16 @@ const SideBar = ({ setComponent }) => {
   const [show, setShow] = useState(false);
   // console.log(profile);
 
-  const handleComponent = (value) => setComponent(value);
+  const handleComponent = (value) => (
+    setComponent(value), 
+   console.log(value)
+  );
 
   const handleHomeBtn = () => {
     window.location.pathname = "/";
     // e.view.parent.location.pathname = '/';
+    console.log("Home clicked");
+    
   };
 
   const handleLogoutBtn = async () => {
@@ -55,7 +60,7 @@ const SideBar = ({ setComponent }) => {
       </div>
       <div
         className={` fixed top-0 left-0 bg-gray-50 h-screen w-60 transition-transform duration-300 sm:translate-x-0 shadow-lg rounded-lg ${
-          show ? "translate-x-0" : "-translate-x-full"
+          show ? "translate-x-0" : "-translate-x-full z-10"
         }`}
       >
         <div>
@@ -77,23 +82,23 @@ const SideBar = ({ setComponent }) => {
             <SideBarBtn
               icon={SiPaperswithcode}
               label="My Blogs"
-              onCLick={() => handleComponent("My Blogs")}
+              onClick={() => handleComponent("My Blogs")}
             />
             <SideBarBtn
               icon={CgProfile}
               label="My Profile"
-              onCLick={() => handleComponent("My Profile")}
+              onClick={() => handleComponent("My Profile")}
             />
             <SideBarBtn
               icon={GrScheduleNew}
               label="Create Blog"
-              onCLick={() => handleComponent("Create Blog")}
+              onClick={() => handleComponent("Create Blog")}
             />
-            <SideBarBtn icon={FaHome} label="Home" onCLick={handleHomeBtn} />
+            <SideBarBtn icon={FaHome} label="Home" onClick={handleHomeBtn} />
             <SideBarBtn
               icon={RiLogoutBoxRLine}
               label="Logout"
-              onCLick={handleLogoutBtn}
+              onClick={handleLogoutBtn}
             />
           </div>
         </div>
