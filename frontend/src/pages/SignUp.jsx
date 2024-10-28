@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -52,9 +53,11 @@ const SignUp = () => {
         }
       );
       console.log(data);
+      toast.success("Welcome to BreezBlogs");
       
     } catch (error) {
       console.log(error);
+      toast.error("Error signing up");
     }
   };
 
@@ -136,7 +139,7 @@ const SignUp = () => {
             />
           </div>
 
-          <div className="flex ">
+          <div  iv className="flex ">
             <div className="w-12 h-14 rounded-full overflow-hidden profileImage">
               <img
                 src={imagePreview ? `${imagePreview}` : "Image Preview"}

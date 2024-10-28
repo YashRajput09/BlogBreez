@@ -24,7 +24,7 @@ const Login = () => {
         }
       );
       console.log(data);
-      toast.success("Registered successfully");
+      toast.success("Loggedin successfully");
       setRole("");
       setEmail("");
       setPassword("");
