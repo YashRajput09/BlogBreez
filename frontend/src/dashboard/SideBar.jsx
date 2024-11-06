@@ -24,16 +24,12 @@ const SideBar = ({ setComponent }) => {
   const [show, setShow] = useState(false);
   // console.log(profile);
 
-  const handleComponent = (value) => (
-    setComponent(value), 
-   console.log(value)
-  );
+  const handleComponent = (value) => (setComponent(value), console.log(value));
 
   const handleHomeBtn = () => {
     window.location.pathname = "/";
     // e.view.parent.location.pathname = '/';
     console.log("Home clicked");
-    
   };
 
   const handleLogoutBtn = async () => {
@@ -55,12 +51,12 @@ const SideBar = ({ setComponent }) => {
 
   return (
     <>
-      <div className={`sm:hidden fixed top-4 left-4  `}>
+      <div className={`sm:hidden fixed top-4 left-5`}>
         <GiHamburgerMenu className="text-xl" onClick={() => setShow(!show)} />
       </div>
       <div
         className={` fixed top-0 left-0 bg-gray-50 h-screen w-60 transition-transform duration-300 sm:translate-x-0 shadow-lg rounded-lg ${
-          show ? "translate-x-0" : "-translate-x-full z-10"
+          show ? "translate-x-0" : "-translate-x-full z-0"
         }`}
       >
         <div>
