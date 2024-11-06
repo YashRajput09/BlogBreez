@@ -16,7 +16,8 @@ const Dashboard = () => {
     // return <Navigate to={'/'}/>
   }
 
-  return( <div>
+  return( 
+    <div>
      <SideBar component={component} setComponent={setComponent}/>
     {
       component === "My Profile" ? (
@@ -27,7 +28,7 @@ const Dashboard = () => {
         <MyBlogs/>
       )
     }
-  </div>
+    </div>
 )
 };
 
