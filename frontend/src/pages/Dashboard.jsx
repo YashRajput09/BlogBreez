@@ -5,10 +5,11 @@ import CreateBlog from "../dashboard/CreateBlog.jsx";
 import MyBlogs from "../dashboard/MyBlogs.jsx"
 import { useAuth } from "../context/AuthProvider.jsx";
 import { Navigate } from "react-router-dom";
+import UpdateBlog from "../dashboard/UpdateBlog.jsx";
 const Dashboard = () => {
   const [component, setComponent] = useState("My Blogs");
   const {isAuthenticated} = useAuth();
-  console.log(isAuthenticated);
+  // console.log(isAuthenticated);
   
   //check user is LoggedIn
   if(!isAuthenticated){ 
@@ -24,7 +25,7 @@ const Dashboard = () => {
         <MyProfile/>
       ) : component === "Create Blog" ? (
         <CreateBlog/>
-      ) :  (
+      ) : (
         <MyBlogs/>
       )
     }

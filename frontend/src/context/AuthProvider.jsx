@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {  // takes {children} as a props,
             }
           );
           setProfile(data);
-          console.log("profiledata : ",data);
+          // console.log("profiledata : ",data);
           setIsAuthenticated(true);
           
         // }

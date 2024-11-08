@@ -23,7 +23,7 @@ const Login = () => {
           },
         }
       );
-      console.log(data);
+      // console.log(data);
       toast.success("Loggedin successfully");
       setRole("");
       setEmail("");

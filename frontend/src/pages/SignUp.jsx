@@ -52,7 +52,7 @@ const SignUp = () => {
           },
         }
       );
-      console.log(data);
+      // console.log(data);
       toast.success("Welcome to BreezBlogs");
       
     } catch (error) {
