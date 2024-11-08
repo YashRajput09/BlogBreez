@@ -126,6 +126,9 @@ export const getMyBlogs = async (req, res) => {
 //update Blog
 export const updateBlog = async (req, res) => {
   const { id } = req.params;
+  try {
+    
+  
 
   //check blog is present in database with given id
   let cloudinaryResponse;
@@ -161,4 +164,8 @@ export const updateBlog = async (req, res) => {
   );
 
   res.status(200).json({ updatedBlog });
+} catch (error) {
+    console.log(error);
+    res.status(400).json({message: "All fields are required"})
+}
 };

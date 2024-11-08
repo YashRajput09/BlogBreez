@@ -6,7 +6,9 @@ const debugMongoose = dbgr("development:mongoose");
 
 const dbUrl = process.env.MONGODB_ATLUS_URL;
 mongoose
-  .connect(dbUrl)
+  .connect(dbUrl,{
+      connectTimeoutMS: 30000 //30 seconds connection timeout
+    })
   .then(() => {
     debugMongoose("connected");
   })
