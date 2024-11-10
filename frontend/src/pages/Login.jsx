@@ -28,6 +28,7 @@ const Login = () => {
       setRole("");
       setEmail("");
       setPassword("");
+      window.location.pathname = "/";
     } catch (error) {
       console.log(error);
       toast.error("role || email || password is incorrect")

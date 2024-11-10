@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
+import session from 'express-session'
 import mongoose from 'mongoose';
 import fileUpload from 'express-fileupload';
 import userRoute from './routes/user_route.js'
@@ -9,7 +10,20 @@ import cookieParser from 'cookie-parser';
 import cors from "cors";
 const app = express();
 
+// define session options
+const sessionOptions = {
+    secret: "secret code",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 28 * 24 * 60 * 60 * 1000,
+    maxAge: 28 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+    } 
+}
+
 //MIDDLEWARES
+app.use(session(sessionOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
