@@ -54,6 +54,10 @@ const SignUp = () => {
       );
       // console.log(data);
       toast.success("Welcome to BreezBlogs");
+      window.location.pathname = "/";
+      // console.log(window.location());
+      
+
       
     } catch (error) {
       console.log(error);

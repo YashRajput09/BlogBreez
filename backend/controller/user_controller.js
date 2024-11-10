@@ -94,14 +94,23 @@ export const logInUser = async (req, res) => {
       return res.status(400).json({ message: `Invalid role ${role}`});
     }
     const token = await createTokenAndSaveCookie(user._id, res);
+    // const  redirectUrl = req.session.redirectTo || "/";
+    // res.redirect(redirectUrl);
+    
     res.status(200).json({
       message: "User loggedIn successfully",
       user: {
         id: user._id,
         name: user.name,
         email: user.email,
-      }, token: token
+      }, token: token,
+      // redirectUrl: redirectUrl  // Send redirect URL as part of JSON response
     })
+    // let redirectUrl = res.locals.redirectUrl || "/";
+    // console.log("Original Url : ",req.originalUrl );
+    // console.log("Redirect Url : ",redirectUrl );
+    
+    // res.redirect(redirectUrl);
   } catch(error){
     return res.status(400).json({ error: "Invalid credentials" });
   }
