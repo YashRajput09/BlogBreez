@@ -18,7 +18,7 @@ const Blogs = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-0">
       {blogs.map(({ _id, blogImage, title }) => (
         <Link 
-          to="/" 
+          to={`/blog/view/${_id}`} 
           key={_id} 
           className='shadow-xl rounded-lg overflow-hidden transform hover:scale-105 duration-300 transition-transform flex flex-col  m-2'
         >

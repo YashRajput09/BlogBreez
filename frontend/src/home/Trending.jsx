@@ -35,7 +35,7 @@ const Trending = () => {
       <Carousel responsive={responsive}>
       {blogs.map(({ _id, blogImage, title, adminImage, adminName }) => (
         <Link 
-          to="/" 
+        to={`/blog/view/${_id}`}   
           key={_id} 
           className='shadow-xl rounded-lg overflow-hidden transform hover:scale-105 duration-300 transition-transform flex flex-col  m-2'
         >

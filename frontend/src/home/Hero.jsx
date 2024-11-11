@@ -12,7 +12,7 @@ const Hero = () => {
     <div className='md:mx-10 px-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-5 my-5'>
       {blogs.slice(0, 4).map(({ _id, blogImage, title, adminImage, adminName }) => (
         <Link 
-          to="/" 
+          to={`/blog/view/${_id}`} 
           key={_id} 
           className='shadow-xl rounded-lg overflow-hidden transform hover:scale-105 duration-300 transition-transform'
         >
