@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { RiMenu3Fill, RiCloseFill } from "react-icons/ri";
+import { CgLogIn } from "react-icons/cg";
 
 const Navebar = () => {
   const [show, setShow] = useState(false);
@@ -8,10 +9,13 @@ const Navebar = () => {
   // Menu links for both mobile and desktop
   const menuLinks = [
     { to: "/", label: "Home" },
+    { to: "/dashboard", label: "Dashboard" },
     { to: "/blogs", label: "Blogs" },
     { to: "/creators", label: "Creators" },
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
+    { to: "/login", label: "LogIn" },
+    { to: "/signup", label: "SignUp" },
   ];
 
   // function to handle toggling the menu
@@ -30,15 +34,20 @@ const Navebar = () => {
           {/* Desktop menu */}
           <ul className="hidden md:flex gap-7">
             {menuLinks.map((link, index) => {
-              return (
-                <Link
-                  key={index}
-                  to={link.to}
-                  className="hover:text-cyan-600 duration-400"
-                >
-                  {link.label}
-                </Link>
-              );
+              const excludedLabels = ['Dashboard', 'LogIn', 'SignUp'] //hide in mid size devices 
+
+              if (!excludedLabels.includes(link.label)) {
+                return (  
+                  <Link
+                    key={index}
+                    to={link.to}
+                    className="hover:text-cyan-600 duration-400"
+                  >
+                    {link.label}
+                  </Link>
+                );
+              }
+              
             })}
           </ul>
 
