@@ -1,7 +1,9 @@
 import userModel from "../models/user_model.js";
 import cloudinary from "../cloudConfig.js";
 import bcrypt from "bcryptjs";
-import createTokenAndSaveCookie from "../jwt/AuthenticateToken.js"
+import createTokenAndSaveCookie from "../jwt/AuthenticateToken.js";
+import mongoose from "mongoose";
+
 
 export const signUpUser = async (req, res) => {
   try {
@@ -136,4 +138,62 @@ export const getMyProfile = async (req, res) => {
 export const getAdmins = async (req, res) => {
   const admins = await userModel.find({ role: "admin"});
   res.status(200).json(admins);
+}
+
+export const editAdminProfile = async (req, res) => {
+  const {id} = req.params;
+  // console.log(id);
+  console.log("Request Body :",req.body);
+  console.log("File : ", req.files);
+  
+  
+  try { 
+
+  let cloudinaryResponse;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid Admin Id, Admin not found" });
+  }
+  if (req.files && req.files.profileImage) {
+    console.log(req.files);
+    const updatedImage = req.files.profileImage;
+     cloudinaryResponse = await cloudinary.uploader.upload(
+      updatedImage.tempFilePath,
+      {
+        folder: "Blog_web",
+      }
+    );
+    // console.log("CloudinaryResponse : ", cloudinaryResponse);
+  }
+  const updatedData = { ...req.body };
+  if (cloudinaryResponse) {
+    updatedData.profileImage = {
+      public_id: cloudinaryResponse.public_id,
+      url: cloudinaryResponse.secure_url
+    };
+    // updatedData.blogImage.public_id = cloudinaryResponse.public_id;
+    // updatedData.blogImage.url = cloudinaryResponse.secure_url;
+  }
+  console.log(updatedData);
+  
+
+
+  // Find and update the user based on the extracted id
+  const updatedUser = await userModel.findOneAndUpdate(
+      { _id: id },  // Use id directly, not as an object
+      { $set: updatedData },
+      { new: true }
+  );
+
+  if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+  }
+
+    console.log(updatedUser);
+    
+    res.status(200).json({updatedUser})
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({message: "All fields are required"});
+    
+  }
 }

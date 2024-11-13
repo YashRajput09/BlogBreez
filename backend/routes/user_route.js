@@ -5,6 +5,7 @@ import {
   logOutUser,
   getMyProfile,
   getAdmins,
+  editAdminProfile,
 } from "../controller/user_controller.js";
 import { isAuthenticated } from "../middleware/authenticateUser.js";
 import { isAdmin } from "../middleware/authorizeUser.js";
@@ -26,4 +27,8 @@ router.route("/logout").post(isAuthenticated, logOutUser);
 router.route("/myprofile").get(isAuthenticated, getMyProfile);
 
 router.route("/admins").get(isAuthenticated, isAdmin("admin"), getAdmins);
+
+router
+  .route("/update/admin/profile/:id")
+  .put(isAuthenticated, isAdmin("admin"), editAdminProfile);
 export default router;
