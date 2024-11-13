@@ -21,13 +21,13 @@ const Creators = () => {
 
   const renderCreatorCard = (item) => (
     <div key={item._id} className='flex flex-col items-center rounded-lg shadow-lg overflow-hidden group'>
-      <div className='w-72 h-52 md:w-52 md:h-28 relative flex justify-center'>
+      <div className='w-72 h-52 md:w-60 md:h-36 relative flex justify-center'>
         <img
           className='w-full h-full bg-black object-cover'
           src={item?.profileImage?.url || "/default-image.jpg"}
           alt="profile"
         />
-        <div className='absolute -bottom-7 w-14 h-14 rounded-full bg-yellow-400 overflow-hidden border-2 group-hover:rounded-md group-hover:-bottom-9 duration-500 ease-in-out'>
+        <div className='absolute -bottom-7 w-16 h-16 rounded-full bg-yellow-400 overflow-hidden border-2 group-hover:rounded-md group-hover:-bottom-9 duration-500 ease-in-out'>
           <img
             className='bg-red-300 w-full h-full'
             src={item?.profileImage?.url || "/default-avatar.jpg"}

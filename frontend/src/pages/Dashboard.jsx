@@ -4,9 +4,8 @@ import MyProfile from "../dashboard/MyProfile.jsx";
 import CreateBlog from "../dashboard/CreateBlog.jsx";
 import MyBlogs from "../dashboard/MyBlogs.jsx"
 import { useAuth } from "../context/AuthProvider.jsx";
-import { Navigate } from "react-router-dom";
-import UpdateBlog from "../dashboard/UpdateBlog.jsx";
-const Dashboard = () => {
+// import { Navigate } from "react-router-dom";
+ const Dashboard = () => {
   const [component, setComponent] = useState("My Blogs");
   const {isAuthenticated} = useAuth();
   // console.log(isAuthenticated);
