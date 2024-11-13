@@ -12,6 +12,7 @@ import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import UpdateBlog from './dashboard/UpdateBlog';
 import ViewBlog from './pages/ViewBlog';
+import UpdateAdminProfile from './dashboard/updateAdminProfile';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/blog/update/:id" element={<UpdateBlog/>}/>
         <Route path="/blog/view/:id" element={<ViewBlog/>}/>
+        <Route path="/user/update/admin/profile/:id" element={<UpdateAdminProfile/>}/>
        </Routes>
        <Toaster />
        {!hidePages && <Footer/>}
