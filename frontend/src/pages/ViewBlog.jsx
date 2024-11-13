@@ -27,7 +27,7 @@
     
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-100 via-blue-50 to-gray-100 p-5 flex justify-center items-center ">
+        <div className="min-h-screen bg-gradient-to-br from-gray-100 via-blue-50 to-gray-100 p-2 md:p-5  flex justify-center items-center ">
             <div className='group'>
         <motion.div
             className="w-full max-w-3xl p-6 bg-white shadow-lg rounded-lg"
@@ -84,7 +84,7 @@
            
 
             {/* Floating Icons */}
-            <div className="absolute right-8 bottom-8 md:right-12 md:bottom-12">
+            <div className="absolute hidden lg:block md:right-12 md:bottom-12">
             <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}

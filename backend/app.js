@@ -54,6 +54,6 @@ async function dbConnection() {
 dbConnection();
 
 // ROUTES
-app.use('/user', userRoute);
+app.use("/user", userRoute);
 app.use("/blog", blogRoute);
 
