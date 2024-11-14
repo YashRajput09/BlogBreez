@@ -2,7 +2,7 @@
 
     import React, {useState, useEffect} from 'react';
     import { motion } from 'framer-motion';
-    import { useParams } from 'react-router-dom';
+    import { useParams, Link } from 'react-router-dom';
     import { useAuth } from '../context/AuthProvider.jsx';
 
 
@@ -57,10 +57,13 @@
             </motion.h1>
 
             {/* Author & Date */}
-            <div className="mt-3 flex items-center gap-4 text-sm text-gray-500">
+            <div className="mt-3 flex items-center justify-between text-sm">
+            <div className='space-x-4 text-gray-500'>
             <span>by {blog?.adminName}</span>
             <span className="font-light">|</span>
             <span>24-07-2024</span>
+            </div>
+            <Link to={`/blog/update/${id}`} className="underline text-blue-500">update</Link>
             </div>
 
             {/* Divider */}
