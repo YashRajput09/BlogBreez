@@ -47,8 +47,8 @@ fetchBlogs();
     {
     myBlogs && myBlogs.length > 0 ? (
        myBlogs.map(({ _id, blogImage, title, category }) => (
-      <div 
-        // to="/" 
+      <Link 
+        to={`/blog/view/${_id}`} 
         key={_id} 
         className='shadow-xl rounded-lg overflow-hidden transform hover:scale-105 duration-300 transition-transform'
       >
@@ -72,7 +72,7 @@ fetchBlogs();
           <button onClick={(e) => handleDelete(_id)}  className='border-2 rounded-md px-3 py-1 bg-red-400 hover:bg-red-600  duration-300 ease-in-out'>Delete</button>
           </div>
         </div>
-      </div>
+      </Link>
     ))) : (
       <p className='text-center text-gray-500 font-semibold'>
         You have not Posted any blog yet !
