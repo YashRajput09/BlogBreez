@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 function PopularCreators() {
   const [admin, setAdmin] = useState([]);
-  console.log(admin);
+  // console.log(admin);
   useEffect(() => {
     const fetchAdmins = async () => {
       const { data } = await axios.get(
@@ -40,7 +40,7 @@ function PopularCreators() {
             );
           })
         ) : (
-          <div></div>
+          <div>Please LoggedIn to see Creators</div>
         )}
       </div>
     </div>
