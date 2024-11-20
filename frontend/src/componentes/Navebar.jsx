@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { RiMenu3Fill, RiCloseFill } from "react-icons/ri";
-import { CgLogIn } from "react-icons/cg";
+// import { CgLogIn } from "react-icons/cg";
+import { useAuth } from '../context/AuthProvider.jsx';
+import toast from "react-hot-toast";
+import axios from "axios";
 
 const Navebar = () => {
+  const {profile, isAuthenticated, setIsAuthenticated} = useAuth(); 
+  
   const [show, setShow] = useState(false);
-
+  // const {isAuthenticated} = 
   // Menu links for both mobile and desktop
   const menuLinks = [
     { to: "/", label: "Home" },
@@ -21,6 +26,23 @@ const Navebar = () => {
   // function to handle toggling the menu
   const toggleMenu = () => {
     setShow(!show);
+  };
+  const handleLogoutBtn = async () => {
+    try {
+      await axios.post(
+        "http://localhost:3000/user/logout",
+        {}, // Empty body for the logout request (if required)
+        {
+          withCredentials: true, // It Ensure credentials (cookies, tokens) are sent
+        }
+      );
+      toast.success("User loggedOut successfully");
+      // window.location.pathname = '/login';
+      setIsAuthenticated(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("Faild to logout");
+    }
   };
 
   return (
@@ -58,9 +80,19 @@ const Navebar = () => {
 
           {/* Desktop Dashboard/Login Buttons */}
           <div className="hidden md:flex gap-5 border-b-2 border-t-2 shadow-xl duration-200 d px-3 py-2 rounded-lg">
-            <Link to="/dashboard">Dashboard</Link>
+            {isAuthenticated ? (
+               <Link to="/dashboard">Dashboard</Link>
+            ) : " " }
+           
             {/* <Link to="/signup">SignUp</Link> */}
-            <Link to="/login">LogIn</Link>
+            {!isAuthenticated && profile?.role === "admin" ? (
+                <Link to="/login">LogIn</Link>
+            ) : <div>
+              <button onClick={handleLogoutBtn}>
+                Logout
+              </button>
+            </div> }
+           
           </div>
         </div>
 
