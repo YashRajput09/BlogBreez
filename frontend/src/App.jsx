@@ -13,6 +13,7 @@ import Dashboard from './pages/Dashboard';
 import UpdateBlog from './dashboard/UpdateBlog';
 import ViewBlog from './pages/ViewBlog';
 import UpdateAdminProfile from './dashboard/updateAdminProfile';
+import PageNotFound from './pages/PageNotFound';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/blog/update/:id" element={<UpdateBlog/>}/>
         <Route path="/blog/view/:id" element={<ViewBlog/>}/>
         <Route path="/user/update/admin/profile/:id" element={<UpdateAdminProfile/>}/>
+        <Route path='*' element={<PageNotFound/>}/>
        </Routes>
        <Toaster />
        {!hidePages && <Footer/>}
