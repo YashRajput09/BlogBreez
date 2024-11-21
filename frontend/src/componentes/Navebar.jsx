@@ -2,25 +2,25 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { RiMenu3Fill, RiCloseFill } from "react-icons/ri";
 // import { CgLogIn } from "react-icons/cg";
-import { useAuth } from '../context/AuthProvider.jsx';
+import { useAuth } from "../context/AuthProvider.jsx";
 import toast from "react-hot-toast";
 import axios from "axios";
 
 const Navebar = () => {
-  const {profile, isAuthenticated, setIsAuthenticated} = useAuth(); 
-  
+  const { profile, isAuthenticated, setIsAuthenticated } = useAuth();
+
   const [show, setShow] = useState(false);
-  // const {isAuthenticated} = 
+  // const {isAuthenticated} =
   // Menu links for both mobile and desktop
   const menuLinks = [
     { to: "/", label: "Home" },
-    { to: "/dashboard", label: "Dashboard" },
+    // { to: "/dashboard", label: "Dashboard" },
     { to: "/blogs", label: "Blogs" },
     { to: "/creators", label: "Creators" },
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
-    { to: "/login", label: "LogIn" },
-    { to: "/signup", label: "SignUp" },
+    // { to: "/login", label: "LogIn" },
+    // { to: "/signup", label: "SignUp" },
   ];
 
   // function to handle toggling the menu
@@ -50,16 +50,18 @@ const Navebar = () => {
       <nav className="shadow-xl px-4 py-3">
         <div className="flex justify-between items-center md:mx-11">
           <div>
-            <span className="font-semibold text-blue-500 text-xl">BreezBlogs</span>
+            <span className="font-semibold text-blue-500 text-xl">
+              BreezBlogs
+            </span>
           </div>
 
           {/* Desktop menu */}
           <ul className="hidden md:flex gap-7">
             {menuLinks.map((link, index) => {
-              const excludedLabels = ['Dashboard', 'LogIn', 'SignUp'] //hide in mid size devices 
+              const excludedLabels = ["Dashboard", "LogIn", "SignUp"]; //hide in mid size devices
 
               if (!excludedLabels.includes(link.label)) {
-                return (  
+                return (
                   <Link
                     key={index}
                     to={link.to}
@@ -69,7 +71,6 @@ const Navebar = () => {
                   </Link>
                 );
               }
-              
             })}
           </ul>
 
@@ -80,19 +81,15 @@ const Navebar = () => {
 
           {/* Desktop Dashboard/Login Buttons */}
           <div className="hidden md:flex gap-5 border-b-2 border-t-2 shadow-xl duration-200 d px-3 py-2 rounded-lg">
-            {isAuthenticated ? (
-               <Link to="/dashboard">Dashboard</Link>
-            ) : " " }
-           
-            {/* <Link to="/signup">SignUp</Link> */}
-            {!isAuthenticated && profile?.role === "admin" ? (
-                <Link to="/login">LogIn</Link>
-            ) : <div>
-              <button onClick={handleLogoutBtn}>
-                Logout
-              </button>
-            </div> }
-           
+            {isAuthenticated && profile?.role === "admin" && (
+              <Link to="/dashboard">Dashboard</Link>
+            )}
+
+            {!isAuthenticated ? (
+              <Link to="/login">LogIn</Link>
+            ) : (
+                <button onClick={handleLogoutBtn}>Logout</button>
+            )}
           </div>
         </div>
 
@@ -110,6 +107,17 @@ const Navebar = () => {
                   {link.label}
                 </Link>
               ))}
+              {isAuthenticated ? (
+                <>
+                <Link to='/dashboard' className="hover:text-blue-500" onClick={toggleMenu}> Dashboard</Link>
+                <button onClick={handleLogoutBtn} className="hover:text-red-500">Logout</button>
+                </>
+              ) : (
+                <>
+                <Link to='/login' className="hover:text-blue-500" onClick={toggleMenu}>LogIn</Link>
+                <Link to='/signup' className="hover:text-green-500" onClick={toggleMenu}>SignUp</Link>
+                </>
+              )}
             </ul>
           </div>
         )}
