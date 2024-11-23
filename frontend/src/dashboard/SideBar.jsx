@@ -29,7 +29,7 @@ const SideBar = ({ setComponent }) => {
   const handleHomeBtn = () => {
     window.location.pathname = "/";
     // e.view.parent.location.pathname = '/';
-    console.log("Home clicked");
+    // console.log("Home clicked");
   };
 
   const handleLogoutBtn = async () => {
