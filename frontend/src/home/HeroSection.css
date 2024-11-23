@@ -1,0 +1,28 @@
+@keyframes infinity {
+  0% {
+    stroke-dasharray: 1, 300;
+    stroke-dashoffset: 0;
+  }
+  25% {
+    stroke-dasharray: 150, 300;
+    stroke-dashoffset: -75;
+  }
+  50% {
+    stroke-dasharray: 300, 300;
+    stroke-dashoffset: -150;
+  }
+  75% {
+    stroke-dasharray: 150, 300;
+    stroke-dashoffset: -25;
+  }
+  100% {
+    stroke-dasharray: 1, 300;
+    stroke-dashoffset: -300;
+  }
+}
+
+.infinity-path {
+  stroke-dasharray: 1, 300;
+  stroke-dashoffset: 0;
+  animation: infinity 4s infinite ease-in-out;
+}

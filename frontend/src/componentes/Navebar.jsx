@@ -5,6 +5,7 @@ import { RiMenu3Fill, RiCloseFill } from "react-icons/ri";
 import { useAuth } from "../context/AuthProvider.jsx";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { CgInfinity } from "react-icons/cg";
 
 const Navebar = () => {
   const { profile, isAuthenticated, setIsAuthenticated } = useAuth();
@@ -50,8 +51,9 @@ const Navebar = () => {
       <nav className="shadow-xl px-4 py-3">
         <div className="flex justify-between items-center md:mx-11">
           <div>
-            <span className="font-semibold text-blue-500 text-xl">
-              BreezBlogs
+            <span className=" flex items-center font-semibold text-blue-500 text-xl gap-1">
+            <CgInfinity className="text-3xl" /> 
+             BreezBlogs 
             </span>
           </div>
 

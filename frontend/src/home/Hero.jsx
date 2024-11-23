@@ -9,7 +9,9 @@ const Hero = () => {
   if (!blogs || blogs.length === 0) return <div />;
 
   return (
-    <div className='md:mx-10 px-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-5 my-5'>
+    <div  className=" md:mx-10 px-7">
+      <h1 className="text-2xl font-semibold ">Daily Blogs</h1>
+    <div className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-4'>
       {blogs.slice(0, 4).map(({ _id, blogImage, title, adminImage, adminName }) => (
         <Link 
           to={`/blog/view/${_id}`} 
@@ -42,6 +44,7 @@ const Hero = () => {
           </div>
         </Link>
       ))}
+    </div>
     </div>
   );
 };
