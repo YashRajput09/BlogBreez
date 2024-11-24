@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {  // takes {children} as a props,
         // if(parsedToken){
 
           const { data } = await axios.get(
-            "https://breezblogs.onrender.com/user/myprofile",
+            "http://localhost:3000/user/myprofile",
             {
               withCredentials: true, // This ensures cookies are sent
               headers: {
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {  // takes {children} as a props,
     const fetchBlogs = async () => {
       try {
         const { data } = await axios.get(     //fetch Blogs using axios 
-          "https://breezblogs.onrender.com/blog/all-blogs"
+          "http://localhost:3000/blog/all-blogs"
         );
         setBlogs(data); // store the data in the state, using setBlogs().
         // console.log(data);
