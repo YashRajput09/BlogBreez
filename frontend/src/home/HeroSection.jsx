@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider.jsx";
 import InfinityLogo from "./InfinityLogo"; // Adjust the path accordingly
 import toast from "react-hot-toast";
+import { GiArchiveResearch } from "react-icons/gi";
+
 
 
 const HeroSection = () => {
@@ -70,8 +72,8 @@ const HeroSection = () => {
              placeholder="What inspires you today?"
           className="w-full py-3 px-5 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:outline-none shadow text-sm"
            />
-         <button className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition shadow">
-           Search
+         <button className="absolute flex items-center gap-1 right-1 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition shadow">
+           Search <GiArchiveResearch />
          </button>
        </div>
      </div>

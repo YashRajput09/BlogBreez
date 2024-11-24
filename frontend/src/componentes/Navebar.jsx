@@ -51,10 +51,10 @@ const Navebar = () => {
       <nav className="shadow-xl px-4 py-3">
         <div className="flex justify-between items-center md:mx-11">
           <div>
-            <span className=" flex items-center font-semibold text-blue-500 text-xl gap-1">
+            <Link to={'/'} className=" flex items-center font-semibold text-blue-500 text-xl gap-1">
             <CgInfinity className="text-3xl" /> 
              BreezBlogs 
-            </span>
+            </Link>
           </div>
 
           {/* Desktop menu */}
