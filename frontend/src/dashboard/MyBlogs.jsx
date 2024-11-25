@@ -9,7 +9,7 @@ const MyBlogs = () => {
     const fetchBlogs = async()=>{
 
     try {
-      const {data} = await axios.get("http://localhost:3000/blog/myblogs",{
+      const {data} = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/blog/myblogs`,{
         withCredentials: true
       }
     )

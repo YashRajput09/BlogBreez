@@ -32,7 +32,7 @@ const UpdateBlog = () => {
     useEffect(() => {
         // fetch single blog data 
         const fetchBlog = async() => {
-            const {data} = await axios.get(`http://localhost:3000/blog/single-blog/${id}`,
+            const {data} = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/blog/single-blog/${id}`,
                 { withCredentials: true,
                     headers: {
                         "Content-Type":"multipart/form-data", 

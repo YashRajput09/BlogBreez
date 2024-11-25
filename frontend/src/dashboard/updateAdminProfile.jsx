@@ -30,7 +30,7 @@ const updateAdminImage = () => {
   useEffect(() => {
     const fetchAdminDetails = async () => {
         try {
-            const {data} = await axios.get("http://localhost:3000/user/myprofile",
+            const {data} = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/myprofile`,
                 { withCredentials: true,
                     headers: {
                         'Content-Type': 'multipart/form-data',
@@ -66,7 +66,7 @@ const updateAdminImage = () => {
   
     try {
       const {data} = await axios.put(
-        `http://localhost:3000/user/update/admin/profile/${id}`,
+        `${import.meta.env.VITE_APP_BACKEND_URL}/user/update/admin/profile/${id}`,
         formData, //sending form data to /signup endpoint
         {
           withCredentials: true, // This option allows sending cookies and other credentials (like authorization tokens) along with the request.

@@ -35,7 +35,7 @@ const SideBar = ({ setComponent }) => {
   const handleLogoutBtn = async () => {
     try {
       await axios.post(
-        "http://localhost:3000/user/logout",
+        `${import.meta.env.VITE_APP_BACKEND_URL}/user/logout`,
         {}, // Empty body for the logout request (if required)
         {
           withCredentials: true, // It Ensure credentials (cookies, tokens) are sent

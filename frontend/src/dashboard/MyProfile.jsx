@@ -8,7 +8,7 @@ const MyProfile = () => {
   useEffect(() => {
     const fetchCreatorsDetails = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/user/myprofile", {
+        const { data } = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/myprofile`, {
           withCredentials: true,
         });
         // console.log("creators data: ", data);

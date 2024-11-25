@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
+// dotenv.config();
+
 
 export const AuthContext = createContext(); //creates a context to that manage authenticated data (blog Info) golbally.
 
@@ -21,7 +23,8 @@ export const AuthProvider = ({ children }) => {  // takes {children} as a props,
         // if(parsedToken){
 
           const { data } = await axios.get(
-            "http://localhost:3000/user/myprofile",
+            `${import.meta.env.VITE_APP_BACKEND_URL}/user/myprofile`,
+            // "http://localhost:3000/user/myprofile",
             {
               withCredentials: true, // This ensures cookies are sent
               headers: {
@@ -44,7 +47,8 @@ export const AuthProvider = ({ children }) => {  // takes {children} as a props,
     const fetchBlogs = async () => {
       try {
         const { data } = await axios.get(     //fetch Blogs using axios 
-          "http://localhost:3000/blog/all-blogs"
+          // "http://localhost:3000/blog/all-blogs"
+           `${import.meta.env.VITE_APP_BACKEND_URL}/blog/all-blogs`
         );
         setBlogs(data); // store the data in the state, using setBlogs().
         // console.log(data);

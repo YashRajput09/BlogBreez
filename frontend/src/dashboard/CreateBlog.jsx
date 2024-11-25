@@ -30,7 +30,7 @@ const CreateBlog = () => {
       formData.append("category", category);
       formData.append("description", description);
       formData.append("blogImage", blogImage);
-     const {data} = await axios.post("http://localhost:3000/blog/create", formData, {
+     const {data} = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/blog/create`, formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",

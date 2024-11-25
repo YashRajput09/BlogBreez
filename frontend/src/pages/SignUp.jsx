@@ -43,7 +43,7 @@ const SignUp = () => {
     // console.log(formData);
     try {
       const {data} = await axios.post(
-        "http://localhost:3000/user/signup",
+        `${import.meta.env.VITE_APP_BACKEND_URL}/user/signup`,
         formData, //sending form data to /signup endpoint
         {
           withCredentials: true, // This option allows sending cookies and other credentials (like authorization tokens) along with the request.
