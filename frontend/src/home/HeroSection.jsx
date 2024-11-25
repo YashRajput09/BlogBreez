@@ -79,7 +79,7 @@ const HeroSection = () => {
      </div>
 
       {/* Testimonial Section */}
-      <div className="absolute bottom-7 md:bottom-7 w-full flex justify-center px-4">
+      <div className="absolute bottom-4 md:bottom-7 w-full flex justify-center px-4">
         <div className="bg-gray-100 text-black px-5 py-2 rounded-full shadow-md flex items-center space-x-2">
           <span className="font-medium text-blue-600">
             "BreezBlog transformed my blogging journey!"
