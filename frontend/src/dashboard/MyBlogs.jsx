@@ -25,7 +25,7 @@ fetchBlogs();
 
   const handleDelete= async(id) =>{
     try{
-    const {data} = await axios.delete(`http://localhost:3000/blog/delete/${id}`,
+    const {data} = await axios.delete(`${import.meta.env.VITE_APP_BACKEND_URL}/blog/delete/${id}`,
       {
         withCredentials: true,
       }
@@ -34,6 +34,7 @@ fetchBlogs();
     
       toast.success("Bloge deleted successfully");
       setMyBlogs((value) => value.filter((blog) => blog._id !== id));
+      window.location.pathname = '/dashboard'
     }
    catch(error){
     console.log(error);

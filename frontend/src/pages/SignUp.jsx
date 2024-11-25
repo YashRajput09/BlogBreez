@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -74,12 +75,12 @@ const SignUp = () => {
           </span>
           <span>
             Have account?{" "}
-            <a
-              href="http://localhost:5173/login"
+            <Link
+              to={'/login'}
               className="text-blue-600 hover:underline font-medium"
             >
               LogIn
-            </a>
+            </Link>
           </span>
         </div>
 

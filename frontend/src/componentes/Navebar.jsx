@@ -15,13 +15,10 @@ const Navebar = () => {
   // Menu links for both mobile and desktop
   const menuLinks = [
     { to: "/", label: "Home" },
-    // { to: "/dashboard", label: "Dashboard" },
     { to: "/blogs", label: "Blogs" },
     { to: "/creators", label: "Creators" },
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
-    // { to: "/login", label: "LogIn" },
-    // { to: "/signup", label: "SignUp" },
   ];
 
   // function to handle toggling the menu
@@ -31,7 +28,7 @@ const Navebar = () => {
   const handleLogoutBtn = async () => {
     try {
       await axios.post(
-        "http://localhost:3000/user/logout",
+        `${import.meta.env.VITE_APP_BACKEND_URL}/user/logout`,
         {}, // Empty body for the logout request (if required)
         {
           withCredentials: true, // It Ensure credentials (cookies, tokens) are sent

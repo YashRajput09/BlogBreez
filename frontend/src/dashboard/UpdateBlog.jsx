@@ -61,7 +61,7 @@ const UpdateBlog = () => {
             formData.append("description", description);
             formData.append("blogImage", blogImage);
 
-            const {data} = await axios.put(`http://localhost:3000/blog/update/${id}`,
+            const {data} = await axios.put(`${import.meta.env.VITE_APP_BACKEND_URL}/blog/update/${id}`,
                 formData,
                 {
                     withCredentials: true,
