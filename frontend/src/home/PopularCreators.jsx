@@ -7,7 +7,7 @@ function PopularCreators() {
   useEffect(() => {
     const fetchAdmins = async () => {
       const { data } = await axios.get(
-        "http://localhost:3000/user/admins",
+        `${import.meta.env.VITE_APP_BACKEND_URL}/user/admins`,
         {
           withCredentials: true,
         }
