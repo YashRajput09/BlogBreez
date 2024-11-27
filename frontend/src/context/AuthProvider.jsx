@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {  // takes {children} as a props,
 
           const { data } = await axios.get(
             `${import.meta.env.VITE_APP_BACKEND_URL}/user/myprofile`,
-            // "http://localhost:3000/user/myprofile",
             {
               withCredentials: true, // This ensures cookies are sent
               headers: {
@@ -47,7 +46,6 @@ export const AuthProvider = ({ children }) => {  // takes {children} as a props,
     const fetchBlogs = async () => {
       try {
         const { data } = await axios.get(     //fetch Blogs using axios 
-          // "http://localhost:3000/blog/all-blogs"
            `${import.meta.env.VITE_APP_BACKEND_URL}/blog/all-blogs`
         );
         setBlogs(data); // store the data in the state, using setBlogs().
