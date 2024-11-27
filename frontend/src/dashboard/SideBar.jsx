@@ -78,17 +78,17 @@ const SideBar = ({ setComponent }) => {
             <SideBarBtn
               icon={SiPaperswithcode}
               label="My Blogs"
-              onClick={() => handleComponent("My Blogs")}
+              onClick={() => {handleComponent("My Blogs"), setShow(!show)}}
             />
             <SideBarBtn
               icon={CgProfile}
               label="My Profile"
-              onClick={() => handleComponent("My Profile")}
+              onClick={() => {handleComponent("My Profile"), setShow(!show)}}
             />
             <SideBarBtn
               icon={GrScheduleNew}
               label="Create Blog"
-              onClick={() => handleComponent("Create Blog")}
+              onClick={() => {handleComponent("Create Blog"), setShow(!show)}}
             />
             <SideBarBtn icon={FaHome} label="Home" onClick={handleHomeBtn} />
             <SideBarBtn
