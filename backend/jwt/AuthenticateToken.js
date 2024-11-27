@@ -11,6 +11,9 @@ const createTokenAndSaveCookies = async (userId, res) => {
         httpOnly: false, //protect from xss attck 
         sameSite: "none", //protect from csrf attack
         secure: true,  // For development (set to true in production with HTTPS)    
+        // httpOnly: true, //protect from xss attck 
+        // sameSite: "lax", //protect from csrf attack
+        // secure: false,  // For development (set to true in production with HTTPS)    
     })
     await userModel.findByIdAndUpdate(userId, {token});
     return token;

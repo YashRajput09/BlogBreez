@@ -27,9 +27,8 @@ app.use(session(sessionOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    // origin:[process.env.FRONTEND_URL],
+    // origin:'http://localhost:5173',
     origin: "https://breezblogs.vercel.app",
-    // origin: "https:git //breezblogs.onrender.com",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
 }));

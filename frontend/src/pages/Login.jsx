@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [role, setRole] = useState("");
@@ -219,13 +220,13 @@ const Login = () => {
 
             <p className="mb-4 text-center">
               New on BreezBlogs?
-              <a
-                href="/signup"
+              <Link
+                to="/signup"
                 className="cursor-pointer text-indigo-500 no-underline hover:text-indigo-500"
               >
                 {" "}
                 Create an account{" "}
-              </a>
+              </Link>
             </p>
           </div>
         </div>
