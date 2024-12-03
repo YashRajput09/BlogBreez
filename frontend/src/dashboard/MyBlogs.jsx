@@ -13,7 +13,7 @@ const MyBlogs = () => {
         withCredentials: true
       }
     )
-      console.log(data);
+      // console.log(data);
       setMyBlogs(data);
       
     } catch (error) {
@@ -30,7 +30,7 @@ fetchBlogs();
         withCredentials: true,
       }
     )
-    console.log(data);
+    // console.log(data);
     
       toast.success("Bloge deleted successfully");
       setMyBlogs((value) => value.filter((blog) => blog._id !== id));

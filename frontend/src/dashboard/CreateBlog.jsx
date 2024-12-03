@@ -36,7 +36,7 @@ const CreateBlog = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(data);
+      // console.log(data);
       toast.success("Blog created successfully");
       setTitle("");
       setCategory("");

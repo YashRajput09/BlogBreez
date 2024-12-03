@@ -37,7 +37,7 @@ const updateAdminImage = () => {
                         }
                  }
             )
-            console.log("admin data : ",data);
+            // console.log("admin data : ",data);
             setName(data?.name);
             setEmail(data?.email);
             setMobileNumber(data?.mobileNumber);
@@ -75,7 +75,7 @@ const updateAdminImage = () => {
           },
         }
       );
-      console.log("updated data : ",data);
+      // console.log("updated data : ",data);
       toast.success("Welcome to BreezBlogs");
       window.location.pathname = "/dashboard";
       // console.log(window.location());

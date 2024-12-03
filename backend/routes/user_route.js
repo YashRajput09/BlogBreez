@@ -26,7 +26,8 @@ router.route("/logout").post(isAuthenticated, logOutUser);
 
 router.route("/myprofile").get(isAuthenticated, getMyProfile);
 
-router.route("/admins").get(isAdmin("admin"), getAdmins);
+// router.route("/admins").get(isAdmin("admin"), getAdmins);
+router.route("/admins").get( getAdmins);
 
 router
   .route("/update/admin/profile/:id")

@@ -128,7 +128,7 @@ export const logOutUser = async (req, res) => {
 };  
 
 export const getMyProfile = async (req, res) => {
-  console.log(req);
+  // console.log(req);
   
   const profileDetails = await req.user;
   // console.log(profileDetails);
@@ -143,8 +143,8 @@ export const getAdmins = async (req, res) => {
 export const editAdminProfile = async (req, res) => {
   const {id} = req.params;
   // console.log(id);
-  console.log("Request Body :",req.body);
-  console.log("File : ", req.files);
+  // console.log("Request Body :",req.body);
+  // console.log("File : ", req.files);
   
   
   try { 
@@ -154,7 +154,7 @@ export const editAdminProfile = async (req, res) => {
     return res.status(400).json({ message: "Invalid Admin Id, Admin not found" });
   }
   if (req.files && req.files.profileImage) {
-    console.log(req.files);
+    // console.log(req.files);
     const updatedImage = req.files.profileImage;
      cloudinaryResponse = await cloudinary.uploader.upload(
       updatedImage.tempFilePath,

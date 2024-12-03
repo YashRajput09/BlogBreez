@@ -10,7 +10,7 @@ const Creators = () => {
         const { data } = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/admins`, {
           withCredentials: true,
         });
-        console.log("creators data: ", data);
+        // console.log("creators data: ", data);
         setCreator(data);
       } catch (error) {
         console.error("Error fetching creators data:", error);

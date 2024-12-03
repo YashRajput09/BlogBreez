@@ -40,7 +40,7 @@ const UpdateBlog = () => {
                 }
                 
             )
-            console.log(data);
+            // console.log(data);
             setTitle(data?.blog?.title);
             setCategory(data?.blog?.category);
             setDescription(data?.blog?.description);
@@ -70,7 +70,7 @@ const UpdateBlog = () => {
                     }
                 }
             )
-            console.log(data);
+            // console.log(data);
             toast.success("Blog details updated")
             window.location.pathname = "/dashboard";
             

@@ -9,7 +9,7 @@ export const createBlog = async (req, res) => {
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).json({ message: "Blog Image is required" });
     }
-    console.log("file : ", req.files);
+    // console.log("file : ", req.files);
 
     const { blogImage } = req.files;
 
@@ -30,7 +30,7 @@ export const createBlog = async (req, res) => {
     }
 
     // 4. Log the user and ensure user data is available
-    console.log("Req.User : ", req.user);
+    // console.log("Req.User : ", req.user);
     const adminName = req?.user?.name;
     const adminImage = req?.user?.profileImage.url;
     const createdBy = req?.user?._id;
@@ -136,7 +136,7 @@ export const updateBlog = async (req, res) => {
     return res.status(400).json({ message: "Invalid Blog Id, Blog not found" });
   }
   if (req.files && req.files.blogImage) {
-    console.log(req.files);
+    // console.log(req.files);
     const updatedImage = req.files.blogImage;
      cloudinaryResponse = await cloudinary.uploader.upload(
       updatedImage.tempFilePath,
