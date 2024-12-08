@@ -24,7 +24,8 @@ const sessionOptions = {
 
 //MIDDLEWARES
 app.use(session(sessionOptions));
-app.use(express.json());
+app.use(express.json()); // Parse application/json
+app.use(express.urlencoded({ extended: true })); // Parse application/x-www-form-urlencoded
 app.use(cookieParser());
 app.use(cors({
     origin:'http://localhost:5173',

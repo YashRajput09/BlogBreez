@@ -18,6 +18,8 @@ const userSchema = new mongoose.Schema({
         select: false,
         minlength: 8,
     },
+    resetOtp: String,
+    resetOtpExpires: Date,
     mobileNumber:{
         type: Number,
         required: true,

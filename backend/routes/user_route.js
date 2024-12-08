@@ -7,6 +7,7 @@ import {
   getAdmins,
   editAdminProfile,
 } from "../controller/user_controller.js";
+import { forgotPassword, resetPassword } from "../controller/password_controller.js"
 import { isAuthenticated } from "../middleware/authenticateUser.js";
 import { isAdmin } from "../middleware/authorizeUser.js";
 import { saveRedirectUrl } from "../middleware/redirectUrl.js";
@@ -32,4 +33,10 @@ router.route("/admins").get( getAdmins);
 router
   .route("/update/admin/profile/:id")
   .put(isAuthenticated, isAdmin("admin"), editAdminProfile);
+
+router.route("/forgotpassword")
+  .post(forgotPassword)
+
+router.route("/resetpassword")
+  .post(resetPassword)
 export default router;
