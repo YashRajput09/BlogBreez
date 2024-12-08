@@ -2,9 +2,11 @@ import axios from 'axios';
 import {useEffect, useState} from 'react'
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import Loader from '../componentes/Loading';
 
 const MyBlogs = () => {
   const [myBlogs, setMyBlogs] = useState([]);
+  const [isLoader, setIsLoader] = useState(true);
   useEffect( ()=>{
     const fetchBlogs = async()=>{
 
@@ -15,6 +17,7 @@ const MyBlogs = () => {
     )
       // console.log(data);
       setMyBlogs(data);
+      setIsLoader(false);
       
     } catch (error) {
       console.log(error);
@@ -22,6 +25,10 @@ const MyBlogs = () => {
   }
 fetchBlogs();
   }, [])
+
+  // if (isLoader) {
+  //   return <Loader/>
+  // }
 
   const handleDelete= async(id) =>{
     try{
@@ -76,7 +83,7 @@ fetchBlogs();
       </Link>
     ))) : (
       <p className='text-center text-gray-500 font-semibold'>
-        You have not Posted any blog yet !
+       {isLoader}
       </p>
     )
   }
