@@ -28,8 +28,8 @@ app.use(express.json()); // Parse application/json
 app.use(express.urlencoded({ extended: true })); // Parse application/x-www-form-urlencoded
 app.use(cookieParser());
 app.use(cors({
-    origin:'http://localhost:5173',
-    // origin: "https://breezblogs.vercel.app",
+    // origin:'http://localhost:5173',
+    origin: "https://breezblogs.vercel.app",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
 }));
