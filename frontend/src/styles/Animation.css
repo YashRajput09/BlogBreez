@@ -1,0 +1,39 @@
+@keyframes move1 {
+    0%, 100% {
+      transform: translate(-50px, -50px) scale(1);
+    }
+    50% {
+      transform: translate(50px, 50px) scale(1.2);
+    }
+  }
+  
+  @keyframes move2 {
+    0%, 100% {
+      transform: translate(50px, 50px) scale(1);
+    }
+    50% {
+      transform: translate(-50px, -50px) scale(1.3);
+    }
+  }
+  
+  @keyframes move3 {
+    0%, 100% {
+      transform: translate(-20px, 50px) scale(1);
+    }
+    50% {
+      transform: translate(20px, -50px) scale(1.4);
+    }
+  }
+  
+  .animate-move1 {
+    animation: move1 8s infinite ease-in-out;
+  }
+  
+  .animate-move2 {
+    animation: move2 10s infinite ease-in-out;
+  }
+  
+  .animate-move3 {
+    animation: move3 12s infinite ease-in-out;
+  }
+  

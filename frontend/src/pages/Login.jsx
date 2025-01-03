@@ -176,12 +176,9 @@ const Login = () => {
                   >
                     Password
                   </label>
-                  <a
-                    href="auth-forgot-password-basic.html"
-                    className="cursor-pointer text-indigo-500 no-underline hover:text-indigo-500"
-                  >
+                    <Link to={`/user/forgotpassword`} className="cursor-pointer text-indigo-500 no-underline hover:text-indigo-500">
                     <small>Forgot Password?</small>
-                  </a>
+                    </Link>
                 </div>
                 <div className="relative flex w-full flex-wrap items-stretch">
                   <input

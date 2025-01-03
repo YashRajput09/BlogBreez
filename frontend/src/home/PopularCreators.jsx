@@ -4,7 +4,7 @@ import Loader from '../componentes/Loading';
 
 function PopularCreators() {
   const [admin, setAdmin] = useState([]);
-  const [isLoader, setIsLoader] = useState(true);
+  // const [isLoader, setIsLoader] = useState(true);
   // console.log(admin);
   useEffect(() => {
     const fetchAdmins = async () => {
@@ -16,14 +16,14 @@ function PopularCreators() {
       );
       console.log(data);
       setAdmin(data);
-      setIsLoader(false);
+      // setIsLoader(false);
     };
     fetchAdmins();
   }, []);
 
-  if (isLoader) {
-    return <Loader/>
-  }
+  // if (isLoader) {
+  //   return <Loader/>
+  // }
   return (
     <div className=" md:mx-10 px-5 p-5  my-5 mb-5">
       <h1 className="text-2xl font-semibold mb-6">Popular Creators</h1>
@@ -47,7 +47,7 @@ function PopularCreators() {
             );
           })
         ) : (
-          <div>{`${isLoader} please wait`}</div>
+          <div> </div>
         )}
       </div>
     </div>

@@ -15,6 +15,8 @@ import ViewBlog from './pages/ViewBlog';
 import UpdateAdminProfile from './dashboard/updateAdminProfile';
 import PageNotFound from './pages/PageNotFound';
 import { Toaster } from 'react-hot-toast';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   const location = useLocation();
@@ -38,6 +40,8 @@ function App() {
         <Route path="/blog/update/:id" element={<UpdateBlog/>}/>
         <Route path="/blog/view/:id" element={<ViewBlog/>}/>
         <Route path="/user/update/admin/profile/:id" element={<UpdateAdminProfile/>}/>
+        <Route path="/user/forgotpassword" element={<ForgotPassword/>}/>
+        <Route path="/user/resetpassword" element={<ResetPassword/>}/>
         <Route path='*' element={<PageNotFound/>}/>
        </Routes>
        <Toaster />
