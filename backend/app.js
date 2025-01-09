@@ -27,9 +27,22 @@ app.use(session(sessionOptions));
 app.use(express.json()); // Parse application/json
 app.use(express.urlencoded({ extended: true })); // Parse application/x-www-form-urlencoded
 app.use(cookieParser());
+
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://breezblogs.vercel.app',
+  ];
+
 app.use(cors({
     // origin:'http://localhost:5173',
-    origin: "https://breezblogs.vercel.app",
+    // origin: "https://breezblogs.vercel.app",
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
 }));
