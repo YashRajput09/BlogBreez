@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -12,6 +13,7 @@ const SignUp = () => {
   const [role, setRole] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
+  const navigate = useNavigate();
 
   const changeProfileImageHandler = (e) => {
     const file = e.target.files[0];
@@ -55,8 +57,7 @@ const SignUp = () => {
       );
       // console.log(data);
       toast.success("Welcome to BreezBlogs");
-      window.location.pathname = "/";
-      // console.log(window.location());
+      navigate('/');
       
 
       

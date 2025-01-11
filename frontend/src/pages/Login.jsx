@@ -2,11 +2,14 @@ import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 const Login = () => {
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -29,7 +32,7 @@ const Login = () => {
       setRole("");
       setEmail("");
       setPassword("");
-      window.location.pathname = "/";
+      navigate('/');
     } catch (error) {
       console.log(error);
       toast.error("role || email || password is incorrect")

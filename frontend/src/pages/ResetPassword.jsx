@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
@@ -8,6 +9,7 @@ const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +22,7 @@ const ResetPassword = () => {
         newPassword,
       });
       setMessage(response.data.message);
-      window.location.pathname = '/login';
+      navigate('/login');
     } catch (error) {
       setMessage('Error resetting password.');
     } finally {

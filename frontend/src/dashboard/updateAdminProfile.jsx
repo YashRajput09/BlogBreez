@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import {useParams} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 const updateAdminImage = () => {
     const {id} = useParams();
+    const navigate = useNavigate()
+
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -77,9 +81,7 @@ const updateAdminImage = () => {
       );
       // console.log("updated data : ",data);
       toast.success("Welcome to BreezBlogs");
-      window.location.pathname = "/dashboard";
-      // console.log(window.location());
-      
+      navigate('/dashboard');      
 
       
     } catch (error) {

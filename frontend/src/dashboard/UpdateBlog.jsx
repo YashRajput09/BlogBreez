@@ -2,6 +2,7 @@ import axios from "axios";
 import {useEffect, useState} from 'react'
 import toast from "react-hot-toast";
 import {useParams} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const UpdateBlog = () => {
     const {id} = useParams();
@@ -10,6 +11,7 @@ const UpdateBlog = () => {
     const [description, setDescription] = useState("");
     const [blogImage, setBLogImage] = useState("");
     const [blogImagePreview, setBlogImagePreview] = useState("");
+    const navigate = useNavigate();
 
     // blogImage preview handler
     const blogImageHandler = (e) => {
@@ -71,8 +73,8 @@ const UpdateBlog = () => {
                 }
             )
             // console.log(data);
-            toast.success("Blog details updated")
-            window.location.pathname = "/dashboard";
+            toast.success("Blog details updated");
+            navigate('/dashboard')
             
         } catch (error) {
             console.log(error);
