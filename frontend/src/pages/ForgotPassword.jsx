@@ -15,11 +15,13 @@ const ForgotPassword = () => {
     setMessage('');
     try {
       const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/forgotpassword`, { email });
-      // console.log(response);
+      console.log(response);
       setMessage(response.data.message);
       window.location.pathname = '/user/resetpassword';
     } catch (error) {
+      console.log(error);
       setMessage('Error sending OTP.');
+      
     } finally {
       setLoading(false);
     }
