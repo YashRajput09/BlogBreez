@@ -2,26 +2,28 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); 
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
-    try {
+       try {
       const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/forgotpassword`, { email });
       console.log(response);
       setMessage(response.data.message);
-      window.location.pathname = '/user/resetpassword';
+      navigate('/user/resetpassword');
+
     } catch (error) {
       console.log(error);
       setMessage('Error sending OTP.');
-      
     } finally {
       setLoading(false);
     }

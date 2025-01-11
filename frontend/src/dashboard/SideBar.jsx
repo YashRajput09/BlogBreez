@@ -9,6 +9,8 @@ import { SiPaperswithcode } from "react-icons/si";
 import { GrScheduleNew } from "react-icons/gr";
 import { FaHome } from "react-icons/fa";
 import { RiLogoutBoxRLine } from "react-icons/ri";
+import { useNavigate } from 'react-router-dom';
+
 
 const SideBarBtn = ({ icon: Icon, label, onClick }) => (
   <button
@@ -20,6 +22,8 @@ const SideBarBtn = ({ icon: Icon, label, onClick }) => (
 );
 
 const SideBar = ({ setComponent }) => {
+  const navigate = useNavigate();
+
   const { profile, setIsAuthenticated } = useAuth();
   const [show, setShow] = useState(false);
   // console.log(profile);
@@ -27,9 +31,7 @@ const SideBar = ({ setComponent }) => {
   const handleComponent = (value) => (setComponent(value), console.log(value));
 
   const handleHomeBtn = () => {
-    window.location.pathname = "/";
-    // e.view.parent.location.pathname = '/';
-    // console.log("Home clicked");
+    navigate('/');
   };
 
   const handleLogoutBtn = async () => {
@@ -42,7 +44,7 @@ const SideBar = ({ setComponent }) => {
         }
       );
       toast.success("User loggedOut successfully");
-      setIsAuthenticated(false);
+       setIsAuthenticated(false);
     } catch (error) {
       console.log(error);
       toast.error("Faild to logout");

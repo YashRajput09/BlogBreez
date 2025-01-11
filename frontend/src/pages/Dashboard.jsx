@@ -4,16 +4,18 @@ import MyProfile from "../dashboard/MyProfile.jsx";
 import CreateBlog from "../dashboard/CreateBlog.jsx";
 import MyBlogs from "../dashboard/MyBlogs.jsx"
 import { useAuth } from "../context/AuthProvider.jsx";
-// import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
  const Dashboard = () => {
   const [component, setComponent] = useState("My Blogs");
+  const navigate = useNavigate()
+
   const {isAuthenticated} = useAuth();
   // console.log(isAuthenticated);
   
   //check user is LoggedIn
   if(!isAuthenticated){ 
-    return window.location.pathname = '/';
-    // return <Navigate to={'/'}/>
+    navigate('/')
   }
 
   return( 

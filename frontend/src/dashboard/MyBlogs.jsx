@@ -3,10 +3,12 @@ import {useEffect, useState} from 'react'
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import Loader from '../componentes/Loading';
+import { useNavigate } from 'react-router-dom';
 
 const MyBlogs = () => {
   const [myBlogs, setMyBlogs] = useState([]);
-  const [isLoader, setIsLoader] = useState(true);
+  const [loader, setLoader] = useState(true);
+  const navigate = useNavigate();
   useEffect( ()=>{
     const fetchBlogs = async()=>{
 
@@ -17,7 +19,7 @@ const MyBlogs = () => {
     )
       // console.log(data);
       setMyBlogs(data);
-      setIsLoader(false);
+      setLoader(false);
       
     } catch (error) {
       console.log(error);
@@ -26,9 +28,9 @@ const MyBlogs = () => {
 fetchBlogs();
   }, [])
 
-  // if (isLoader) {
-  //   return <Loader/>
-  // }
+  if (loader) {
+    return <Loader/>
+  }
 
   const handleDelete= async(id) =>{
     try{
@@ -41,7 +43,7 @@ fetchBlogs();
     
       toast.success("Bloge deleted successfully");
       setMyBlogs((value) => value.filter((blog) => blog._id !== id));
-      window.location.pathname = '/dashboard'
+      navigate('/dashboard');
     }
    catch(error){
     console.log(error);
