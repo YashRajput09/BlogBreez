@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-
+import SubmitBtnLoader from "../loaders/SubmitBtnLoader";
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [blogImage, setBlogImage] = useState("");
   const [blogImagePreview, setBlogImagePreview] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const blogImageHandler = (e) => {
     const file = e.target.files[0];
@@ -23,6 +24,7 @@ const CreateBlog = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const formData = new FormData();
@@ -30,12 +32,16 @@ const CreateBlog = () => {
       formData.append("category", category);
       formData.append("description", description);
       formData.append("blogImage", blogImage);
-     const {data} = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/blog/create`, formData, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_APP_BACKEND_URL}/blog/create`,
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       // console.log(data);
       toast.success("Blog created successfully");
       setTitle("");
@@ -43,9 +49,11 @@ const CreateBlog = () => {
       setDescription("");
       setBlogImage("");
       setBlogImagePreview("");
+      setLoading(false);
     } catch (error) {
       console.log(error);
-      toast.error("Faild to create blog")
+      toast.error("Faild to create blog");
+      setLoading(false);
     }
   };
 
@@ -82,7 +90,7 @@ const CreateBlog = () => {
             />
           </div>
 
-              {/*check if imagePreview have value then show div otherwise hide div  */}
+          {/*check if imagePreview have value then show div otherwise hide div  */}
           {blogImagePreview && (
             <div className="w-36 h-40 rounded-md overflow-hidden profileImage mx-auto my-2">
               <img
@@ -122,8 +130,11 @@ const CreateBlog = () => {
               placeholder="Write about blog in detail"
             ></textarea>
           </div>
-          <button className="relative  bg-blue-500 text-white px-6 py-2 rounded-md">
-            Submit
+          <button
+            className="relative bg-blue-500 text-white px-6 py-2 rounded-md"
+            disabled={loading}
+          >
+            {loading ? <SubmitBtnLoader /> : "Create Blog"}
           </button>
         </form>
       </div>

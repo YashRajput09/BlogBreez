@@ -53,7 +53,7 @@ const SideBar = ({ setComponent }) => {
 
   return (
     <>
-      <div className={`sm:hidden fixed top-4 left-5`}>
+      <div className={`sm:hidden fixed top-4 left-5 z-10`}>
         <GiHamburgerMenu className="text-xl" onClick={() => setShow(!show)} />
       </div>
       <div

@@ -6,7 +6,7 @@ import Loader from '../componentes/Loading';
 import { useNavigate } from 'react-router-dom';
 import EmptyBlog from './EmptyBlog';
 
-const MyBlogs = () => {
+const MyBlogs = ({ setComponent }) => {
   const [myBlogs, setMyBlogs] = useState([]);
   const [loader, setLoader] = useState(true);
   const navigate = useNavigate();
@@ -84,9 +84,9 @@ fetchBlogs();
         </div>
       </Link>
     ))) : (
-      <div className="absolute right-52">
-        <p className='text-center text-gray-500 font-semibold'>
-       <EmptyBlog/>
+      <div className="absolute top-0 right-0 min-w-full z-0">
+        <p className='text-center text-gray-500 '>
+       <EmptyBlog setComponent={setComponent} />
       </p>
       </div>
     )

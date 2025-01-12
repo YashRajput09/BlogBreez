@@ -3,15 +3,18 @@ import {useEffect, useState} from 'react'
 import toast from "react-hot-toast";
 import {useParams} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import SubmitBtnLoader from "../loaders/SubmitBtnLoader";
 
 const UpdateBlog = () => {
     const {id} = useParams();
+    const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [description, setDescription] = useState("");
     const [blogImage, setBLogImage] = useState("");
     const [blogImagePreview, setBlogImagePreview] = useState("");
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+    
 
     // blogImage preview handler
     const blogImageHandler = (e) => {
@@ -56,6 +59,8 @@ const UpdateBlog = () => {
      // handleUpdate function
      const handleUpdate = async (e) =>{
         e.preventDefault();
+        setLoading(true);
+
         try {
             const formData = new FormData();
             formData.append("title", title);
@@ -75,11 +80,14 @@ const UpdateBlog = () => {
             // console.log(data);
             toast.success("Blog details updated");
             navigate('/dashboard')
+            setLoading(false);
+
             
         } catch (error) {
             console.log(error);
             toast.error("Please filll all required fields")
-            
+            setLoading(false);
+
         }
     }
     // handleUpdate();
@@ -161,7 +169,7 @@ const UpdateBlog = () => {
                 ></textarea>
               </div>
               <button type="submit" className="relative  bg-blue-500 text-white px-6 py-2 rounded-md">
-                Update
+              {loading ? <SubmitBtnLoader /> : "Update"}
               </button>
             </form>
           </div>
