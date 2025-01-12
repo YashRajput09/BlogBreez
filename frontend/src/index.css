@@ -18,3 +18,31 @@ h1,h2,h3,h4,h5,h6 {
 span{
     font-family: 'fredoka', 'sans-serif';
 }
+
+/* infinite loader style  */
+
+.loader-5 {
+    position: absolute;
+    scale: 0.325;
+  }
+  
+  .loader-5 svg {
+    --blue: #2663eb;
+    stroke: var(--blue);
+    stroke-width: 5;
+    fill: none;
+    stroke-dasharray: 50, 14;
+    stroke-dashoffset: 192;
+    animation: dash_682 1.8s linear infinite;
+  }
+  
+  @keyframes dash_682 {
+    72.5% {
+      opacity: 1;
+    }
+  
+    to {
+      stroke-dashoffset: 1;
+    }
+  }
+  

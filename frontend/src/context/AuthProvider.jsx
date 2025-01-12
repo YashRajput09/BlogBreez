@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 // import Cookies from "js-cookie";
 // dotenv.config();
-import Loading from "../componentes/Loading";
+import Loading from "../componentes/InfiniteLoader";
 
 export const AuthContext = createContext(); //creates a context to that manage authenticated data (blog Info) golbally.
 
@@ -26,9 +26,9 @@ export const AuthProvider = ({ children }) => {
             },
           }
         );
+        setIsAuthenticated(true);
         setProfile(data);
         // console.log("profiledata : ",data);
-        setIsAuthenticated(true);
 
         // }
       }  catch (error) {

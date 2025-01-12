@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import Loader from '../componentes/Loading';
 import { useNavigate } from 'react-router-dom';
+import EmptyBlog from './EmptyBlog';
 
 const MyBlogs = () => {
   const [myBlogs, setMyBlogs] = useState([]);
@@ -39,7 +40,6 @@ fetchBlogs();
         withCredentials: true,
       }
     )
-    // console.log(data);
     
       toast.success("Bloge deleted successfully");
       setMyBlogs((value) => value.filter((blog) => blog._id !== id));
@@ -84,9 +84,11 @@ fetchBlogs();
         </div>
       </Link>
     ))) : (
-      <p className='text-center text-gray-500 font-semibold'>
-       {isLoader}
+      <div className="absolute right-52">
+        <p className='text-center text-gray-500 font-semibold'>
+       <EmptyBlog/>
       </p>
+      </div>
     )
   }
   </div>
