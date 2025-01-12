@@ -7,10 +7,11 @@ import { useAuth } from "../context/AuthProvider.jsx";
 import { useNavigate } from "react-router-dom";
 
  const Dashboard = () => {
-  const [component, setComponent] = useState("My Profile");
+  const [component, setComponent] = useState("My Blogs");
   const navigate = useNavigate()
 
   const {isAuthenticated} = useAuth();
+  // console.log(isAuthenticated);
   
   //check user is LoggedIn
   if(!isAuthenticated){ 
@@ -26,7 +27,8 @@ import { useNavigate } from "react-router-dom";
       ) : component === "Create Blog" ? (
         <CreateBlog/>
       ) : (
-        <MyBlogs/>
+         // Pass setComponent to MyBlogs
+        <MyBlogs setComponent={setComponent}/>
       )
     }
     </div>

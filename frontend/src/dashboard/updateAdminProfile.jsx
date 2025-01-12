@@ -3,7 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import {useParams} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import SubmitBtnLoader from "../loaders/SubmitBtnLoader";
 
 const updateAdminImage = () => {
     const {id} = useParams();
@@ -17,6 +17,7 @@ const updateAdminImage = () => {
   const [role, setRole] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const changeProfileImageHandler = (e) => {
     const file = e.target.files[0];
@@ -59,6 +60,7 @@ const updateAdminImage = () => {
 
   const handleSubmit = async (e) => {
       e.preventDefault();
+      setLoading(true);
 
     const formData = new FormData();
     formData.append("name", name);
@@ -82,11 +84,11 @@ const updateAdminImage = () => {
       // console.log("updated data : ",data);
       toast.success("Welcome to BreezBlogs");
       navigate('/dashboard');      
-
-      
+      setLoading(false);
     } catch (error) {
       console.log(error);
       toast.error("All fields are required");
+      setLoading(false);
     }
   };
 
@@ -176,7 +178,7 @@ const updateAdminImage = () => {
             type="submit"
             className="w-full bg-blue-500 py-2 mt-5 rounded-md text-white"
           >
-            Update
+             {loading ? <SubmitBtnLoader /> : "Update"}
           </button>
         </form>
       </div>

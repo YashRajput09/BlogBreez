@@ -3,8 +3,11 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import SubmitBtnLoader from "../loaders/SubmitBtnLoader";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
@@ -13,7 +16,7 @@ const SignUp = () => {
   const [role, setRole] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const changeProfileImageHandler = (e) => {
     const file = e.target.files[0];
@@ -31,6 +34,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
@@ -57,6 +61,7 @@ const SignUp = () => {
       );
       // console.log(data);
       toast.success("Welcome to BreezBlogs");
+      setLoading(false);
       navigate('/');
       
 
@@ -64,6 +69,7 @@ const SignUp = () => {
     } catch (error) {
       console.log(error);
       toast.error("Error signing up");
+      setLoading(false);
     }
   };
 
@@ -166,7 +172,7 @@ const SignUp = () => {
             type="submit"
             className="w-full bg-blue-500 py-2 mt-5 rounded-md text-white"
           >
-            Submit
+                            {loading ? <SubmitBtnLoader /> : "Submit"}
           </button>
         </form>
       </div>

@@ -1,18 +1,22 @@
-// import React from 'react';
+import {useState} from 'react';
 import { PiPhoneCallFill } from "react-icons/pi";
 import { CgMail } from "react-icons/cg";
 import { FaLocationDot } from "react-icons/fa6";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import SubmitBtnLoader from "../loaders/SubmitBtnLoader";
 
 const Contact = () => {
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const onSubmit = async (data) => {
+    setLoading(true);
     const formData = {
       access_key: import.meta.env.VITE_APP_ACCESS_KEY,
       name: data.username,
@@ -25,9 +29,11 @@ const Contact = () => {
         formData
       );
       toast.success("Details sent successfully.");
+      setLoading(false);
     } catch (error) {
       console.log(error);
       toast.error("Error sending details.");
+      setLoading(false);
     }
   };
   return (
@@ -115,7 +121,7 @@ const Contact = () => {
                 type="submit"
                 className="w-5/6 bg-blue-400 hover:bg-blue-500 duration-300 text-white px-4 py-2 rounded-md text-sm md:text-base"
               >
-                Submit
+                {loading ? <SubmitBtnLoader /> : "Submit"}
               </button>
             </form>
           </div>

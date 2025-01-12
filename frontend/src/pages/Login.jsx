@@ -2,14 +2,19 @@ import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import SubmitBtnLoader from "../loaders/SubmitBtnLoader";
+
 
 const Login = () => {
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     if(!role || !email || !password){
       return toast.error("Please fill all the fields");
     }
@@ -26,6 +31,7 @@ const Login = () => {
       );
       // console.log(data);
       toast.success("Loggedin successfully");
+      setLoading(false);
       setRole("");
       setEmail("");
       setPassword("");
@@ -33,9 +39,11 @@ const Login = () => {
 
         window.location.pathname = "/"
       },300)
+      
     } catch (error) {
       console.log(error);
-      toast.error("role || email || password is incorrect")
+      toast.error("role || email || password is incorrect");
+      setLoading(false);
     }
   };
 
@@ -213,7 +221,7 @@ const Login = () => {
                   className="grid w-full cursor-pointer select-none rounded-md border border-indigo-500 bg-indigo-500 py-2 px-5 text-center align-middle text-sm text-white shadow hover:border-indigo-600 hover:bg-indigo-600 hover:text-white focus:border-indigo-600 focus:bg-indigo-600 focus:text-white focus:shadow-none"
                   type="submit"
                 >
-                  Log in
+                  {loading ? <SubmitBtnLoader /> : "LogIn"}
                 </button>
               </div>
             </form>
