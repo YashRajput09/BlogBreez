@@ -18,7 +18,7 @@
         setBlog(selectedBlog);
       }
     }, [blogs, id]);
-    // console.log(blog);
+    
 
         //character limit for preview text
     const previewLimit = 800;
