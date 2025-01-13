@@ -5,6 +5,7 @@ import createTokenAndSaveCookie from "../jwt/AuthenticateToken.js";
 import mongoose from "mongoose";
 
 
+// signup User
 export const signUpUser = async (req, res) => {
   try {
   if (!req.files || Object.keys(req.files).length === 0) {
@@ -78,6 +79,7 @@ export const signUpUser = async (req, res) => {
 }
 };
 
+// Login User
 export const logInUser = async (req, res) => {
   const { email, password, role } = req.body;
   try{
@@ -96,9 +98,9 @@ export const logInUser = async (req, res) => {
       return res.status(400).json({ message: `Invalid role ${role}`});
     }
     const token = await createTokenAndSaveCookie(user._id, res);
-    // const  redirectUrl = req.session.redirectTo || "/";
-    // res.redirect(redirectUrl);
+    console.log(token);
     
+
     res.status(200).json({
       message: "User loggedIn successfully",
       user: {
@@ -106,21 +108,17 @@ export const logInUser = async (req, res) => {
         name: user.name,
         email: user.email,
       }, token: token,
-      // redirectUrl: redirectUrl  // Send redirect URL as part of JSON response
     })
-    // let redirectUrl = res.locals.redirectUrl || "/";
-    // console.log("Original Url : ",req.originalUrl );
-    // console.log("Redirect Url : ",redirectUrl );
     
-    // res.redirect(redirectUrl);
   } catch(error){
     return res.status(400).json({ error: "Invalid credentials" });
   }
 };
 
+// Logout user
 export const logOutUser = async (req, res) => {
   try{
-    res.clearCookie("jwttoken");
+    res.clearCookie("jwttoken", { httpOnly: false, secure: true, sameSite:"none", path: "/" });
     res.status(200).json({ message: "User loggedOut successfully "});
   } catch(errro){
     return res.status(500).json({ message: "Internal server error "});

@@ -1,5 +1,5 @@
 import express from "express";
-import { createBlog, deleteBlog, getAllBlogs, getSingleBlog, getMyBlogs, updateBlog } from "../controller/blog_controller.js"
+import { createBlog, deleteBlog, getAllBlogs, getSingleBlog, getMyBlogs, updateBlog, searchBlogs } from "../controller/blog_controller.js"
 import { isAuthenticated } from "../middleware/authenticateUser.js";
 import { isAdmin } from "../middleware/authorizeUser.js";
 const router = express.Router();
@@ -27,5 +27,9 @@ router.
 
 router.
     route("/update/:id")
-    .put(isAuthenticated, isAdmin("admin"), updateBlog)
+    .put(isAuthenticated, isAdmin("admin"), updateBlog);
+
+router.
+    route("/api/search")
+    .get( searchBlogs);
 export default router;

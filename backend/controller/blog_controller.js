@@ -1,6 +1,21 @@
 import cloudinary from "../cloudConfig.js";
 import blogModel from "../models/blog_model.js";
 import mongoose from "mongoose";
+import {generateSearchQuery} from "../utils/search.js";
+
+// search blogs
+export const searchBlogs = async(req, res) =>{
+  const searchQuery = req.query.search || "" ; // Default to an empty string if search is not provided
+  console.log(req.query.search);
+  if(searchQuery){
+    const searchBlogs = generateSearchQuery(searchQuery);
+    console.log("searchBlogs", searchBlogs)
+    const allSearchBlogs = await blogModel.find(searchBlogs);
+    return res.status(200).json(allSearchBlogs); // Return search results as JSON
+  }  else {
+    return res.status(400).json({ message: "Search query is required" }); // Handle missing query
+  }
+};
 
 //create blog
 export const createBlog = async (req, res) => {
@@ -129,8 +144,7 @@ export const updateBlog = async (req, res) => {
   try {
     
   
-
-  //check blog is present in database with given id
+ //check blog is present in database with given id
   let cloudinaryResponse;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid Blog Id, Blog not found" });
@@ -168,4 +182,5 @@ export const updateBlog = async (req, res) => {
     console.log(error);
     res.status(400).json({message: "All fields are required"})
 }
+
 };
