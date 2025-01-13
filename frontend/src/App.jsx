@@ -17,7 +17,7 @@ import PageNotFound from './pages/PageNotFound';
 import { Toaster } from 'react-hot-toast';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
-import SearchBlogs from './pages/searchBlogs';
+import SearchBlogs from './pages/SearchBlogs';
 
 function App() {
   const location = useLocation();

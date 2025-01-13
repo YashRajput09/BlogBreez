@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthProvider.jsx";
 import InfinityLogo from "./InfinityLogo"; // Adjust the path accordingly
 import toast from "react-hot-toast";
 import { GiArchiveResearch } from "react-icons/gi";
-import SearchBar from "../pages/searchBar.jsx";
+import SearchBar from "../pages/SearchBar.jsx";
 
 const HeroSection = () => {
   const { isAuthenticated, profile } = useAuth();
