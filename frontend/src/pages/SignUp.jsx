@@ -125,7 +125,7 @@ const SignUp = () => {
             <input
               type="password"
               value={password}
-              placeholder="Create Password"
+              placeholder="Create Password, minimum 8 character"
               className=" w-full p-2 px-4  focus:outline-none"
               onChange={(e) => setPassword(e.target.value)}
             />

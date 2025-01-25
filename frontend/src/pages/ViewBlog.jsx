@@ -4,24 +4,45 @@
     import { motion } from 'framer-motion';
     import { useParams, Link } from 'react-router-dom';
     import { useAuth } from '../context/AuthProvider.jsx';
-
+    import { useInteraction } from '../context/InteractionProvider.jsx';
+    import toast from 'react-hot-toast';
 
     const ViewBlog = () => {
    
-    const { blogs } = useAuth(); // Assuming blogs come from useAuth context
+    const { blogs, profile } = useAuth(); // Assuming blogs come from useAuth context
+    const {likes, blogLikes} = useInteraction();
+    const [localLikes, setLocalLikes] = useState(0); // Local state for likes count
+    
     const { id } = useParams();
     const [blog, setBlog] = useState(null);
-  
+    const handleLikes = () =>{
+
+        // console.log("ViewBlog Blog id: ", id) // fetch corerctly - ViewBlog Blog id:  66eae3b90099cd15baed4a8c
+
+        if (!profile) {
+            toast.error("You need to log in to like a blog.");
+            return;
+          }
+        const userId = profile._id;
+        blogLikes(blog._id, userId);
+    }
+
+
     useEffect(() => {
       if (blogs && id) {
         const selectedBlog = blogs.find(blog => blog._id === id);
         setBlog(selectedBlog);
-      }
-    }, [blogs, id]);
+        // Initialize likes from the backend
+        if (selectedBlog && likes[selectedBlog._id] === undefined) {
+            setLocalLikes(selectedBlog.likes || 0); // Fallback to 0 if likes are undefined
+          } else {
+            setLocalLikes(likes[selectedBlog._id]);
+          }
+        }
+      }, [blogs, id, likes]);
     
-
         //character limit for preview text
-    const previewLimit = 800;
+    const previewLimit = 800;  
     if (blog === null) return <div>Loading...</div>;
         if (!blog) return <div>Blog not found</div>
     
@@ -62,6 +83,9 @@
             <span>by {blog?.adminName}</span>
             <span className="font-light">|</span>
             <span>24-07-2024</span>
+            <span className="font-light">|</span>
+            {/* <button onClick={handleLikes}>👍 Like {likes[blog?._id] || 0}</button> */}
+            <button onClick={handleLikes}>👍 Like {localLikes || 0}</button>
             </div>
             <Link to={`/blog/update/${id}`} className="underline text-blue-500">update</Link>
             </div>
