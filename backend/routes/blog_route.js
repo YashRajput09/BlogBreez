@@ -1,5 +1,5 @@
 import express from "express";
-import { createBlog, deleteBlog, getAllBlogs, getSingleBlog, getMyBlogs, updateBlog, searchBlogs } from "../controller/blog_controller.js"
+import { createBlog, deleteBlog, getAllBlogs, getSingleBlog, getMyBlogs, updateBlog, searchBlogs, blogLikes, blogLikedBy } from "../controller/blog_controller.js"
 import { isAuthenticated } from "../middleware/authenticateUser.js";
 import { isAdmin } from "../middleware/authorizeUser.js";
 const router = express.Router();
@@ -32,4 +32,9 @@ router.
 router.
     route("/api/search")
     .get( searchBlogs);
+
+router.
+    route("/:id/likes")
+    .get(blogLikes)
+    .post(blogLikedBy)
 export default router;

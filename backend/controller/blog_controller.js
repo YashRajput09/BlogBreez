@@ -182,5 +182,37 @@ export const updateBlog = async (req, res) => {
     console.log(error);
     res.status(400).json({message: "All fields are required"})
 }
-
+}
+// blog Like feature
+export const blogLikes = async(req, res) =>{
+ try {
+   const blog = await blogModel.findById(req.params.id);
+   if(!blog) return res.status(400).json({message: "Blog not found"});
+   res.json({ likes: blog.likes});
+ } catch (error) {
+   console.error(error);
+   res.status(500).json({error: error.message});
+ }
 };
+
+//  blog likedBy feature
+export const blogLikedBy = async(req, res) =>{
+  const userId  = req.body.userId; // Ensure this is sent from the frontend
+  try {
+   const blog = await blogModel.findById(req.params.id);
+   if(!blog) return res.status(400).json({message: "Blog not found"});
+    
+   if(blog.likedBy.includes(userId)){
+    blog.likes -= 1;
+    blog.likedBy = blog.likedBy.filter((id) => id.toString()!== userId);
+   } else {
+    blog.likes += 1;
+    blog.likedBy.push(userId);
+   }
+   await blog.save();
+   res.json({ likes: blog.likes, likedBy: blog.likedBy })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: error.message });
+  }
+}
