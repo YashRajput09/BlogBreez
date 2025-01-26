@@ -3,7 +3,7 @@ import userModel from "../models/user_model.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import { hashPassword, comparePassword } from "../utils/passwordUtils.js";
 
-export const forgotPassword = async (req, res, next) => {
+export const forgotPassword = async (req, res) => {
   const { email } = req.body;
   try {
     const user = await userModel.findOne({ email });
