@@ -4,8 +4,11 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useParams, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider.jsx";
-import { useInteraction } from "../context/InteractionProvider.jsx";
+import { useInteraction } from "../context/InteractionProvider.jsx";  
 import toast from "react-hot-toast";
+import CommentButton from "../componentes/Interactions/CommentButton.jsx";
+import { Heart } from "lucide-react"; // Using lucide-react for the heart icon
+
 
 const ViewBlog = () => {
   const { id } = useParams();
@@ -69,8 +72,7 @@ const ViewBlog = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="w-full h-64 object-cover rounded-lg mb-5 group-hover:h-96 transition-all ease-in-out"
-            //  className="w-full h-64 object-cover rounded-lg mb-5 hover:scale-105 transition-transform duration-500"
+            className="w-full h-64 object-cover rounded-lg mb-5 hover:h-96 transition-all ease-in-out"
           />
 
           {/* Title */}
@@ -85,13 +87,21 @@ const ViewBlog = () => {
 
           {/* Author & Date */}
           <div className="mt-3 flex items-center justify-between text-sm">
-            <div className="space-x-4 text-gray-500">
+              <div className="flex gap-4">
+                {/* Likes Section */}
+              <button className="flex text-gray-500 text-xs items-center" onClick={handleLikes}><Heart size={18}/> &nbsp;{localLikes || 0}</button>
+              <span className="font-light">|</span>
+
+               {/* Comments Section */}
+               <CommentButton blogId={id} />
+              <span className="font-light">|</span>
+
+              </div>
+            <div className=" flex items-center space-x-4 text-gray-500 ">
+              <span className="font-light">|</span>
               <span>by {blog?.adminName}</span>
               <span className="font-light">|</span>
               <span>24-07-2024</span>
-              <span className="font-light">|</span>
-              {/* <button onClick={handleLikes}>👍 Like {likes[blog?._id] || 0}</button> */}
-              <button onClick={handleLikes}>👍 Like {localLikes || 0}</button>
             </div>
             <Link to={`/blog/update/${id}`} className="underline text-blue-500">
               update

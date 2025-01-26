@@ -84,7 +84,7 @@ export const createBlog = async (req, res) => {
 
     // 8. Save the blog in the database
     const blog = await blogModel.create(blogData);
-    console.log(blog);
+    // console.log(blog);
 
     // 9. Send success response
     res.status(201).json({
