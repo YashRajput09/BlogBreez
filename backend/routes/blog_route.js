@@ -38,8 +38,8 @@ router.route("/:id/likes").get(blogLikes).post(blogLikedBy);
 
 // router.route("/comments").post(createBlogComments);
 
-router.route("/comments/:id").post(isAuthenticated, createBlogComments);
 router.route("/comments/:id").get(getBlogComments)
+router.route("/comment/:id").post(isAuthenticated, createBlogComments);
 // router.route("/comments/:id").get(getBlogComments);
 
 export default router;
