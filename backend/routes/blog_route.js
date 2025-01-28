@@ -10,7 +10,12 @@ import {
   blogLikes,
   blogLikedBy,
 } from "../controller/blog_controller.js";
-import {createBlogComments, getBlogComments } from "../controller/activity_controller.js";
+import {
+  createBlogComments,
+  getBlogComments,
+  updateBlogComments,
+  deleteBlogComments
+} from "../controller/activity_controller.js";
 import { isAuthenticated } from "../middleware/authenticateUser.js";
 import { isAdmin } from "../middleware/authorizeUser.js";
 const router = express.Router();
@@ -38,8 +43,12 @@ router.route("/:id/likes").get(blogLikes).post(blogLikedBy);
 
 // router.route("/comments").post(createBlogComments);
 
-router.route("/comments/:id").get(getBlogComments)
-router.route("/comment/:id").post(isAuthenticated, createBlogComments);
+router.route("/comments/:id").get(getBlogComments);
+router
+  .route("/comment/:id")
+  .post(isAuthenticated, createBlogComments)
+  .put(isAuthenticated, updateBlogComments)
+  .delete(isAuthenticated, deleteBlogComments);
 // router.route("/comments/:id").get(getBlogComments);
 
 export default router;
