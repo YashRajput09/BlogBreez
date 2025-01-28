@@ -17,7 +17,7 @@ const commentSchema  = new mongoose.Schema({
             required: true,
             maxlength: 500,
         },
-        perentCommentId: {
+        parentCommentId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Comment', //for nested replies
             default: null

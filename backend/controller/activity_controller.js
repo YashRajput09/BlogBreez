@@ -4,7 +4,7 @@ import commentModel from '../models/comment_model.js';
 export const createBlogComments = async(req, res) => {
     const  { id } = req.params;
     const blogId = id;
-    const {comment} = req.body;
+    const {comment, parentCommentId} = req.body;
     console.log("req.body : ",req.body);
     
     const userId = req.user._id;
@@ -14,7 +14,7 @@ export const createBlogComments = async(req, res) => {
     }
   
     try {
-      const newComment = new commentModel({ blogId, userId, comment });
+      const newComment = new commentModel({ blogId, userId, comment, parentCommentId });
       console.log("comment : ",newComment);
       await newComment.save();
       res.status(201).json({ message: "Comment added successfully!", newComment });

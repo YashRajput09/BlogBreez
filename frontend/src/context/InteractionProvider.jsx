@@ -36,17 +36,17 @@ export const InteractionProvider = ({ children }) => {
   };
 
   //  Add a comment to a blog
-  const addComment = async (blogId, comment, userId) => {
+  const addComment = async (blogId, comment, userId, parentCommentId = null) => {
     try {
       const { data } = await axios.post(
         `${import.meta.env.VITE_APP_BACKEND_URL}/blog/comment/${blogId}`,
-        { comment, userId },
+        { comment, userId, parentCommentId },
         { withCredentials: true }
       );
       console.log("Comment added: ", data);
       setComments((prevComments) => ({
         ...prevComments,
-        [blogId]: [...prevComments[blogId], data.newComment],
+        [blogId]: [...(prevComments[blogId] || []), data.newComment],
       }));
     } catch (error) {
       console.error("Error adding comment: ", error);
