@@ -7,6 +7,7 @@ import { useAuth } from "../context/AuthProvider.jsx";
 import { useInteraction } from "../context/InteractionProvider.jsx";  
 import toast from "react-hot-toast";
 import CommentButton from "../componentes/Interactions/CommentButton.jsx";
+import ShareButton from "../componentes/Interactions/ShareButton.jsx";
 import { Heart } from "lucide-react"; // Using lucide-react for the heart icon
 
 
@@ -96,6 +97,11 @@ const ViewBlog = () => {
                <CommentButton blogId={id} />
               <span className="font-light">|</span>
 
+     {/* New Share Section */}
+  <ShareButton 
+    url={window.location.href} 
+    title={blog?.title} 
+  />
               </div>
             <div className=" flex items-center space-x-4 text-gray-500 ">
               <span className="font-light">|</span>
