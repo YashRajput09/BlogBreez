@@ -4,12 +4,12 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useParams, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider.jsx";
-import { useInteraction } from "../context/InteractionProvider.jsx";  
+import { useInteraction } from "../context/InteractionProvider.jsx";
 import toast from "react-hot-toast";
 import CommentButton from "../componentes/Interactions/CommentButton.jsx";
 import ShareButton from "../componentes/Interactions/ShareButton.jsx";
+import VoiceReader from "../componentes/Interactions/VoiceReader.jsx";
 import { Heart } from "lucide-react"; // Using lucide-react for the heart icon
-
 
 const ViewBlog = () => {
   const { id } = useParams();
@@ -47,7 +47,7 @@ const ViewBlog = () => {
   if (!blog) return <div>Blog not found</div>;
 
   //character limit for preview text
-  const previewLimit = 800;
+  const previewLimit = 400;
 
   const handleShowMore = () => {
     setIsFullDesctiption(true);
@@ -88,21 +88,23 @@ const ViewBlog = () => {
 
           {/* Author & Date */}
           <div className="mt-3 flex items-center justify-between text-sm">
-              <div className="flex gap-4">
-                {/* Likes Section */}
-              <button className="flex text-gray-500 text-xs items-center" onClick={handleLikes}><Heart size={18}/> &nbsp;{localLikes || 0}</button>
+            <div className="flex gap-4">
+              {/* Likes Section */}
+              <button
+                className="flex text-gray-500 text-xs items-center"
+                onClick={handleLikes}
+              >
+                <Heart size={18} /> &nbsp;{localLikes || 0}
+              </button>
               <span className="font-light">|</span>
 
-               {/* Comments Section */}
-               <CommentButton blogId={id} />
+              {/* Comments Section */}
+              <CommentButton blogId={id} />
               <span className="font-light">|</span>
 
-     {/* New Share Section */}
-  <ShareButton 
-    url={window.location.href} 
-    title={blog?.title} 
-  />
-              </div>
+              {/* New Share Section */}
+              <ShareButton url={window.location.href} title={blog?.title} />
+            </div>
             <div className=" flex items-center space-x-4 text-gray-500 ">
               <span className="font-light">|</span>
               <span>by {blog?.adminName}</span>
@@ -122,37 +124,42 @@ const ViewBlog = () => {
             className="mt-3 border-t border-gray-300"
           />
 
+          
+
           {/* Content */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.7 }}
-            className="mt-6 text-gray-700 leading-relaxed text-lg"
+            className="mt-6 text-gray-700 leading-relaxed text-lg  blog-post-content"
           >
             {isFullDescription
               ? blog?.description
               : `${blog?.description.slice(0, previewLimit)}...`}
           </motion.div>
+
+          
           <div className=" text-center mt-5">
+             {/*  VoiceReader  */}
+           <div className="my-">
+            <VoiceReader />
+          </div>
             {isFullDescription ? (
               <button
                 onClick={handleShowLess}
                 className="border border-blue-500 px-4 py-1 rounded-md text-blue-500 text-sm"
               >
                 show less
-
               </button>
             ) : (
               <button
                 onClick={handleShowMore}
                 className=" border border-blue-500 px-4 py-1 rounded-md text-blue-500 text-sm"
               >
-                show more 
-
+                show more
               </button>
             )}
           </div>
-
           {/* Floating Icons */}
           <div className="absolute hidden lg:block md:right-12 md:bottom-12">
             <motion.div
