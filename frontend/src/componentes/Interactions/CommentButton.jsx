@@ -214,7 +214,7 @@ const CommentButton = ({ blogId }) => {
       </button>
 
       {showComments && (
-        <div className="absolute top-8 -left-16 w-96 bg-white border rounded-lg shadow-lg p-4 z-50">
+        <div className="absolute top-8 -left-16 w-80 md:w-80 bg-white border rounded-lg shadow-lg p-4 z-50">
           <div className="mb-4">
             <textarea
               value={newComment}
