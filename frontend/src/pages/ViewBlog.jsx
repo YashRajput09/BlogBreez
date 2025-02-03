@@ -10,6 +10,7 @@ import CommentButton from "../componentes/Interactions/CommentButton.jsx";
 import ShareButton from "../componentes/Interactions/ShareButton.jsx";
 import VoiceReader from "../componentes/Interactions/VoiceReader.jsx";
 import { Heart } from "lucide-react"; // Using lucide-react for the heart icon
+import BlogSummarization from "../ai/BlogSummarizer.jsx"
 
 const ViewBlog = () => {
   const { id } = useParams();
@@ -138,11 +139,13 @@ const ViewBlog = () => {
               : `${blog?.description.slice(0, previewLimit)}...`}
           </motion.div>
 
-          
           <div className=" text-center mt-5">
              {/*  VoiceReader  */}
-           <div className="my-">
+           <div className="">
             <VoiceReader />
+          </div>
+          <div className="flex justify-end">
+            <BlogSummarization blogDescription={blog?.description} />
           </div>
             {isFullDescription ? (
               <button
