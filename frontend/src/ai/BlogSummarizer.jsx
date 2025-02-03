@@ -46,7 +46,7 @@ const BlogSummarization = ({ blogDescription }) => {
     <div className="relative inline-block">
       {/* Button with Tooltip */}
       <button
-        onClick={() => {summarizeBlog(); showSummaryHandler();}}
+        onClick={summarizeBlog}
         disabled={loading}
         className="relative"
         onMouseEnter={() => setHovered(true)}
@@ -58,7 +58,7 @@ const BlogSummarization = ({ blogDescription }) => {
       {/* Tooltip */}
       {hovered && (
         <div
-         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-500 text-white text-xs px-2 py-1 rounded-md shadow-lg"
+         className="absolute md:bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-500 text-white text-xs px-2 py-1 rounded-md shadow-lg"
          >
           Summarize Blog
         </div>
