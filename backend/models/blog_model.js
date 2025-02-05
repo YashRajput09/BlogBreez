@@ -47,7 +47,19 @@ const blogSchema = new mongoose.Schema({
     likedBy:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-        }]
+        }],
+    category: [{
+        type: String,
+        required: true,
+    }],
+    tags: [{
+        type: String,
+        required: true,
+}],
+    view: {
+        type: Number,
+        default: 0, // Track views
+    }
 })
 
 const Blog = mongoose.model("Blog", blogSchema);

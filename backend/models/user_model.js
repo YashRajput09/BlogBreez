@@ -49,7 +49,11 @@ const userSchema = new mongoose.Schema({
     createdAt:{
         type: Date,
         default: Date.now,
-    }
+    },
+    readBy: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Blog',
+    }],  // Blogs they read
 })
 
 const User = mongoose.model("User", userSchema);

@@ -14,9 +14,10 @@ import {
   createBlogComments,
   getBlogComments,
   updateBlogComments,
-  deleteBlogComments
+  deleteBlogComments,
 } from "../controller/activity_controller.js";
-import { chatBot } from "../controller/chatbot_controller.js";  
+import { chatBot } from "../controller/chatbot_controller.js";
+import { trackView } from "../controller/recommandetion_controller.js";
 import { isAuthenticated } from "../middleware/authenticateUser.js";
 import { isAdmin } from "../middleware/authorizeUser.js";
 const router = express.Router();
@@ -51,5 +52,6 @@ router
   .put(isAuthenticated, updateBlogComments)
   .delete(isAuthenticated, deleteBlogComments);
 router.route("/chatbot").post(chatBot);
+router.route("/track-view").post(isAuthenticated, trackView);
 
 export default router;
