@@ -128,7 +128,7 @@ const VoiceReader = () => {
   };
 
   return (
-    <div className="bg-gray-50 rounded-lg shadow-sm ">
+    <div className="">
       <div className="flex flex-wrap gap-4 items-center">
         <button
           onClick={() => { handlePlayPause(); handleVoiceOpetions(); }}
