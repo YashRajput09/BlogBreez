@@ -10,6 +10,7 @@ const UpdateBlog = () => {
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
+    const [tags, setTags] = useState("");
     const [description, setDescription] = useState("");
     const [blogImage, setBLogImage] = useState("");
     const [blogImagePreview, setBlogImagePreview] = useState("");
@@ -48,6 +49,7 @@ const UpdateBlog = () => {
             // console.log(data);
             setTitle(data?.blog?.title);
             setCategory(data?.blog?.category);
+            setTags(data?.blog?.tags);
             setDescription(data?.blog?.description);
             setBLogImage(data?.blog?.blogImage?.url);
             setBlogImagePreview(data?.blog?.blogImage?.url);
@@ -65,6 +67,7 @@ const UpdateBlog = () => {
             const formData = new FormData();
             formData.append("title", title);
             formData.append("category", category);
+            formData.append("tags", tags);
             formData.append("description", description);
             formData.append("blogImage", blogImage);
 
@@ -125,6 +128,23 @@ const UpdateBlog = () => {
                   placeholder="Category"
                 />
               </div>
+
+              <div>
+            <label
+              htmlFor="tags"
+              className="text-gray-400 font-medium px-1"
+            >
+              Tags
+            </label>
+            <input
+              type="text"
+              name="tags"
+                value={tags}
+              onChange={(e) => setTags(e.target.value)}
+              className="w-full border-2 rounded-md px-2 py-1"
+              placeholder="ex: tag1, tag2, tag3"
+            />
+          </div>
     
                   {/*check if imagePreview have value then show div otherwise hide div  */}
               {blogImagePreview && (

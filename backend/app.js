@@ -8,6 +8,7 @@ import userRoute from './routes/user_route.js'
 import blogRoute from './routes/blog_route.js'
 import cookieParser from 'cookie-parser';
 import cors from "cors";
+import recommadedRoute from './routes/recommendation_route.js';
 const app = express();
 
 // define session options
@@ -71,4 +72,5 @@ dbConnection();
 // ROUTES
 app.use("/user", userRoute);
 app.use("/blog", blogRoute);
+app.use("/blog/recommanded", recommadedRoute);
 

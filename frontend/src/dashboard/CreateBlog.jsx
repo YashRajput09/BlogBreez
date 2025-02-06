@@ -6,6 +6,7 @@ const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
+  const [tags, setTags] = useState("");
   const [blogImage, setBlogImage] = useState("");
   const [blogImagePreview, setBlogImagePreview] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,6 +32,7 @@ const CreateBlog = () => {
       formData.append("title", title);
       formData.append("category", category);
       formData.append("description", description);
+      formData.append("tags", tags);
       formData.append("blogImage", blogImage);
       const { data } = await axios.post(
         `${import.meta.env.VITE_APP_BACKEND_URL}/blog/create`,
@@ -47,6 +49,7 @@ const CreateBlog = () => {
       setTitle("");
       setCategory("");
       setDescription("");
+      setTags("");
       setBlogImage("");
       setBlogImagePreview("");
       setLoading(false);
@@ -87,6 +90,21 @@ const CreateBlog = () => {
               onChange={(e) => setCategory(e.target.value)}
               className="w-full border-2 rounded-md px-2 py-1"
               placeholder="Category"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="tags"
+              className="text-gray-400 font-medium px-1"
+            >
+              Tags
+            </label>
+            <input
+              type="text"
+              name="tags"
+              onChange={(e) => setTags(e.target.value)}
+              className="w-full border-2 rounded-md px-2 py-1"
+              placeholder="ex: tag1, tag2, tag3"
             />
           </div>
 

@@ -37,11 +37,11 @@ export const createBlog = async (req, res) => {
     }
 
     // 3. Validate required fields in req.body
-    const { category, title, description } = req.body;
-    if (!category || !title || !description) {
+    const { category, title, description, tags } = req.body;
+    if (!category || !title || !description || !tags) {
       return res
         .status(400)
-        .json({ message: "Category, title, description are required" });
+        .json({ message: "Category, title, description, tags are required" });
     }
 
     // 4. Log the user and ensure user data is available
@@ -73,6 +73,7 @@ export const createBlog = async (req, res) => {
       category,
       title,
       description,
+      tags,
       adminName,
       adminImage,
       createdBy,
