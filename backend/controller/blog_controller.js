@@ -37,8 +37,19 @@ export const createBlog = async (req, res) => {
     }
 
     // 3. Validate required fields in req.body
-    const { category, title, description, tags } = req.body;
-    if (!category || !title || !description || !tags) {
+    const { category, title, description, tags} = req.body;
+  
+    let formattedTags;
+    if (!tags) {
+      formattedTags = [];
+    } else if (typeof tags === "string") {
+      formattedTags = tags.includes("[") ? JSON.parse(tags) : tags.split(",").map(tag => tag.trim());
+    } else {
+      formattedTags = tags; // Assume it's already an array
+    }
+
+
+    if (!category || !title || !description || !formattedTags.length) {
       return res
         .status(400)
         .json({ message: "Category, title, description, tags are required" });
@@ -73,7 +84,7 @@ export const createBlog = async (req, res) => {
       category,
       title,
       description,
-      tags,
+      tags: formattedTags,
       adminName,
       adminImage,
       createdBy,
@@ -144,12 +155,19 @@ export const updateBlog = async (req, res) => {
   const { id } = req.params;
   try {
     
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid Blog Id, Blog not found" });
+    }
+
+    // ✅ Fetch existing blog
+    const existingBlog = await blogModel.findById(id);
+    if (!existingBlog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
   
  //check blog is present in database with given id
   let cloudinaryResponse;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ message: "Invalid Blog Id, Blog not found" });
-  }
   if (req.files && req.files.blogImage) {
     // console.log(req.files);
     const updatedImage = req.files.blogImage;
@@ -170,6 +188,22 @@ export const updateBlog = async (req, res) => {
     // updatedData.blogImage.public_id = cloudinaryResponse.public_id;
     // updatedData.blogImage.url = cloudinaryResponse.secure_url;
   }
+
+  if (req.body.tags) {
+    try {
+      let newTags = JSON.parse(req.body.tags); // Convert JSON string to array
+      if (!Array.isArray(newTags)) {
+        return res.status(400).json({ message: "Tags must be an array" });
+      }
+
+        // ✅ Merge existing tags with new ones, ensuring a **flat structure**
+        updatedData.tags = [...existingBlog.tags, ...newTags].flat();
+              // ✅ Remove duplicate tags
+
+        updatedData.tags = [...new Set(updatedData.tags)];
+      } catch (error) {
+        return res.status(400).json({ message: "Invalid tags format" });
+      }}
   console.log(updatedData);
   
   const updatedBlog = await blogModel.findByIdAndUpdate(
@@ -184,6 +218,7 @@ export const updateBlog = async (req, res) => {
     res.status(400).json({message: "All fields are required"})
 }
 }
+
 // blog Like feature
 export const blogLikes = async(req, res) =>{
  try {

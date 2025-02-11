@@ -53,8 +53,9 @@ const blogSchema = new mongoose.Schema({
         required: true,
     }],
     tags: [{
-        type: String,
+        type: [String],
         required: true,
+        default: []
 }],
     view: {
         type: Number,
