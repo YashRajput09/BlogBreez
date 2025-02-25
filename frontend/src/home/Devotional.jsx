@@ -28,7 +28,7 @@ const Devotional = () => {
   // console.log("Hero : ", blogs);
 
   if (!blogs || blogs.length === 0) return <div />;
-  const devotionalBlogs = blogs?.filter((blog) => blog.category === "Devotional");
+  const devotionalBlogs = blogs?.filter((blog) => blog.category[0] === "Devotional");
 
   return (
     <div className='md:mx-10 px-5 my-5 mb-5'>
