@@ -33,7 +33,7 @@ router
   // .get(isAuthenticated, getAllBlogs);
   .get(getAllBlogs);
 
-router.route("/single-blog/:id").get(isAuthenticated, getSingleBlog);
+router.route("/single-blog/:id").get(isAuthenticated, getSingleBlog)
 
 router.route("/myblogs").get(isAuthenticated, isAdmin("admin"), getMyBlogs);
 
@@ -52,6 +52,6 @@ router
   .put(isAuthenticated, updateBlogComments)
   .delete(isAuthenticated, deleteBlogComments);
 router.route("/chatbot").post(chatBot);
-router.route("/track-view").post(isAuthenticated, trackView);
+// router.route("/track-view").post(isAuthenticated, trackView);
 
 export default router;

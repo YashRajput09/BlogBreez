@@ -159,7 +159,7 @@ export const updateBlog = async (req, res) => {
       return res.status(400).json({ message: "Invalid Blog Id, Blog not found" });
     }
 
-    // ✅ Fetch existing blog
+    //  Fetch existing blog
     const existingBlog = await blogModel.findById(id);
     if (!existingBlog) {
       return res.status(404).json({ message: "Blog not found" });

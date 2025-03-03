@@ -55,7 +55,7 @@ const blogSchema = new mongoose.Schema({
     tags: [{
         type: [String],
         required: true,
-        default: []
+        // default: []
 }],
     view: {
         type: Number,
