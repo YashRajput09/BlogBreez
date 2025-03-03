@@ -53,13 +53,17 @@ const blogSchema = new mongoose.Schema({
         required: true,
     }],
     tags: [{
-        type: String,
+        type: [String],
         required: true,
 }],
-    view: {
+    views: {
         type: Number,
         default: 0, // Track views
-    }
+    },
+    viewers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    }],// Track users who viewed the blog   
 })
 
 const Blog = mongoose.model("Blog", blogSchema);

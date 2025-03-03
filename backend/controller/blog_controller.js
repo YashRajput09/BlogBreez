@@ -122,6 +122,11 @@ export const getAllBlogs = async (req, res) => {
 // get only single blog
 export const getSingleBlog = async (req, res) => {
   const { id } = req.params;
+  const userId = req.user;
+  // console.log(userId);
+  // console.log(id);
+  
+  
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid Blog Id" });
   }
@@ -129,8 +134,25 @@ export const getSingleBlog = async (req, res) => {
   if (!blog) {
     return res.status(404).json({ message: "Blog not found" });
   }
+  // const hasViewed = blog.viewers.includes(userId);
+  // const hasViewed = blog.viewers.some((viewer) => viewer.equals(userId));
+  // if (!hasViewed) {
+  //   blog.views += 1;
+  //   blog.viewers.push(userId);
+  //   await blog.save();
+  // };
+  // Atomic update to increment views and add user to viewers only if not present
+  if (userId) {
+    await blogModel.updateOne(
+      { _id: id, viewers: { $ne: userId } }, // Check if user hasn't viewed
+      {
+        $addToSet: { viewers: userId }, // Add user to viewers (ensures no duplicates)
+        $inc: { views: 1 } // Increment views by 1
+      }
+    );
+  }
   res.status(200).json({ blog });
-};
+}
 
 // admin can see their all blog
 export const getMyBlogs = async (req, res) => {

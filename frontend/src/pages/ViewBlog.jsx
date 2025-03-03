@@ -11,9 +11,14 @@ import ShareButton from "../componentes/Interactions/ShareButton.jsx";
 import VoiceReader from "../componentes/Interactions/VoiceReader.jsx";
 import { Heart } from "lucide-react"; // Using lucide-react for the heart icon
 import BlogSummarization from "../ai/BlogSummarizer.jsx"
+import axios from "axios";
+import { IoIosEye } from "react-icons/io";
+
 
 const ViewBlog = () => {
   const { id } = useParams();
+  // console.log(id);
+  
   const { blogs, profile } = useAuth(); // Assuming blogs come from useAuth context
   const { likes, blogLikes } = useInteraction();
   const [blog, setBlog] = useState(null);
@@ -32,16 +37,27 @@ const ViewBlog = () => {
   };
 
   useEffect(() => {
-    if (blogs && id) {
-      const selectedBlog = blogs.find((blog) => blog._id === id);
-      setBlog(selectedBlog);
-      // Initialize likes from the backend
-      if (selectedBlog && likes[selectedBlog._id] === undefined) {
-        setLocalLikes(selectedBlog.likes || 0); // Fallback to 0 if likes are undefined
+
+    const fetchBlog = async()=>{
+      const res = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/blog/single-blog/${id}`,{
+        withCredentials: true, // This ensures cookies are sent
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log("data : ",res.data.blog);
+      const singleBlog = res.data.blog;
+      setBlog(singleBlog);// Assuming res.data.blog is the blog object
+  
+      if (singleBlog && likes[singleBlog._id] === undefined) {
+        setLocalLikes(singleBlog.likes || 0); // Fallback to 0 if likes are undefined
       } else {
-        setLocalLikes(likes[selectedBlog._id]);
+        setLocalLikes(likes[singleBlog._id]);
       }
-    }
+  }
+  if (id) {
+    fetchBlog();
+  }
   }, [blogs, id, likes]);
 
   if (blog === null) return <div>Loading...</div>;
@@ -105,6 +121,14 @@ const ViewBlog = () => {
 
               {/* New Share Section */}
               <ShareButton url={window.location.href} title={blog?.title} />
+              <span className="font-light">|</span>
+
+              {/* views section */}
+              <div className="flex gap-1 items-center">
+              <IoIosEye size={18} className="text-gray-500"/>
+              <span className="text-xs ">{blog.views}</span>
+              </div>
+            
             </div>
             <div className=" flex items-center space-x-4 text-gray-500 ">
               <span className="font-light">|</span>
