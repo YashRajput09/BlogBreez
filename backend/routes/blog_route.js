@@ -52,6 +52,6 @@ router
   .put(isAuthenticated, updateBlogComments)
   .delete(isAuthenticated, deleteBlogComments);
 router.route("/chatbot").post(chatBot);
-router.route("/track-view").post(isAuthenticated, trackView);
+// router.route("/track-view").post(isAuthenticated, trackView);
 
 export default router;
