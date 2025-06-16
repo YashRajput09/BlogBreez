@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 import dbgr from "debug";
 import mongoStore from "connect-mongo";
 const debugMongoose = dbgr("development:mongoose");
@@ -13,7 +13,7 @@ mongoose
     debugMongoose("connected");
   })
   .catch((error) => {
-    console.log("Error connrcting to mongoDB : ", error);
+    console.log("Error connecting to mongoDB : ", error);
   });
 
 const store = mongoStore.create({

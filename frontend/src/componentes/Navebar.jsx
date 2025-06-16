@@ -6,6 +6,8 @@ import { useAuth } from "../context/AuthProvider.jsx";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { CgInfinity } from "react-icons/cg";
+import DarkModeToggle from "./DarkModeToggle";
+
 
 const Navebar = () => {
   const { profile, isAuthenticated, setIsAuthenticated } = useAuth();
@@ -79,7 +81,7 @@ const Navebar = () => {
           </div>
 
           {/* Desktop Dashboard/Login Buttons */}
-          <div className="hidden md:flex gap-5 border-b-2 border-t-2 shadow-xl duration-200 d px-3 py-2 rounded-lg">
+          <div className="hidden md:flex items-center gap-5 border-b-2 border-t-2 shadow-xl duration-200 d px-3 py-2 rounded-lg">
             {isAuthenticated && profile?.role === "admin" && (
               <Link to="/dashboard">Dashboard</Link>
             )}
@@ -87,8 +89,9 @@ const Navebar = () => {
             {!isAuthenticated ? (
               <Link to="/login">LogIn</Link>
             ) : (
-                <button onClick={handleLogoutBtn}>Logout</button>
+              <button onClick={handleLogoutBtn}>Logout</button>
             )}
+            {/* <DarkModeToggle /> */}
           </div>
         </div>
 
@@ -106,6 +109,7 @@ const Navebar = () => {
                   {link.label}
                 </Link>
               ))}
+               {/* <DarkModeToggle /> */}
               {isAuthenticated ? (
                 <>
                 <Link to='/dashboard' className="hover:text-blue-500" onClick={toggleMenu}> Dashboard</Link>
