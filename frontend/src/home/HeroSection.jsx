@@ -20,7 +20,8 @@ const HeroSection = () => {
   }
 
   return (
-    <section className="relative bg-gradient-to-b from-white to-gray-50 text-black min-h-screen flex flex-col justify-center items-center py-10 px-4 md:px-8">
+    // <section className="relative bg-gradient-to-b from-white to-gray-50 text-black min-h-screen flex flex-col justify-center items-center py-10 px-4 md:px-8">
+    <section className="relative text-black min-h-screen flex flex-col justify-center items-center py-10 px-4 md:px-8">
       {/* Infinity Sign Animation */}
        <div className="absolute top-5">
         <InfinityLogo />

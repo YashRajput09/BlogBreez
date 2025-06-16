@@ -9,6 +9,13 @@
 body{
     font-family: 'poppins', 'sans-serif';
     background-color: rgba(240, 248, 255, 0.662);
+    /* background-color: rgba(240, 248, 255, 0.662); */
+    color: black;
+}
+/* Dark Mode */
+.dark body {
+  background-color: #0A192F; /* Dark Blue */
+  color: #E0E7FF; /* Light Blue-Gray */
 }
 
 h1,h2,h3,h4,h5,h6 {

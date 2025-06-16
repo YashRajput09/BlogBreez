@@ -13,6 +13,7 @@ import { Heart } from "lucide-react"; // Using lucide-react for the heart icon
 import BlogSummarization from "../ai/BlogSummarizer.jsx"
 import axios from "axios";
 import { IoIosEye } from "react-icons/io";
+import ExportToPDF from "../componentes/Interactions/ExportToPDF.jsx";
 
 
 const ViewBlog = () => {
@@ -24,6 +25,7 @@ const ViewBlog = () => {
   const [blog, setBlog] = useState(null);
   const [localLikes, setLocalLikes] = useState(0); // Local state for likes count
   const [isFullDescription, setIsFullDesctiption] = useState(false);
+  const [hide, setHide] = useState(false);
 
   const handleLikes = () => {
     // console.log("ViewBlog Blog id: ", id) // fetch corerctly - ViewBlog Blog id:  66eae3b90099cd15baed4a8c
@@ -60,7 +62,7 @@ const ViewBlog = () => {
   }
   }, [blogs, id, likes]);
 
-  if (blog === null) return <div>Loading...</div>;
+  if (blog == null) return <div>Login to read the blogs</div>;
   if (!blog) return <div>Blog not found</div>;
 
   //character limit for preview text
@@ -76,7 +78,7 @@ const ViewBlog = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 via-blue-50 to-gray-100 p-2 md:p-5  flex justify-center items-center ">
-      <div className="group">
+      <div id="pdf-content" className="group" >
         <motion.div
           className="w-full max-w-3xl p-6 bg-white shadow-lg rounded-lg"
           initial={{ opacity: 0, y: 50 }}
@@ -104,7 +106,9 @@ const ViewBlog = () => {
           </motion.h1>
 
           {/* Author & Date */}
-          <div className="mt-3 flex items-center justify-between text-sm">
+          <div className="mt-6 flex items-center justify-between text-sm">
+            { !hide ? (
+
             <div className="flex gap-4">
               {/* Likes Section */}
               <button
@@ -130,6 +134,11 @@ const ViewBlog = () => {
               </div>
             
             </div>
+              ):
+               <Link to={`/blog/view/${id}`} className="underline text-blue-500">
+              www.breezblogs.com
+            </Link>}
+
             <div className=" flex items-center space-x-4 text-gray-500 ">
               <span className="font-light">|</span>
               <span>by {blog?.adminName}</span>
@@ -163,12 +172,16 @@ const ViewBlog = () => {
               : `${blog?.description.slice(0, previewLimit)}...`}
           </motion.div>
 
+              {!hide ? (
+
           <div className=" text-center mt-5">
+            
              {/*  VoiceReader  */}
            <div className="">
             <VoiceReader />
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-3">
+             <ExportToPDF blog={blog} descriptionState={setIsFullDesctiption} hide={setHide}/>
             <BlogSummarization blogDescription={blog?.description} />
           </div>
             {isFullDescription ? (
@@ -187,6 +200,8 @@ const ViewBlog = () => {
               </button>
             )}
           </div>
+              ): ""}
+
           {/* Floating Icons */}
           <div className="absolute hidden lg:block md:right-12 md:bottom-12">
             <motion.div
@@ -206,6 +221,7 @@ const ViewBlog = () => {
               </button>
             </motion.div>
           </div>
+        
         </motion.div>
       </div>
     </div>
