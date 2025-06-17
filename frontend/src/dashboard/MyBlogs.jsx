@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Loader from '../componentes/Loading';
 import { useNavigate } from 'react-router-dom';
 import EmptyBlog from './EmptyBlog';
+import SkeletonLoader from '../loaders/SkeletonLoader';
 
 const MyBlogs = ({ setComponent }) => {
   const [myBlogs, setMyBlogs] = useState([]);
@@ -30,7 +31,7 @@ fetchBlogs();
   }, [])
 
   if (loader) {
-    return <Loader/>
+    return <SkeletonLoader/>
   }
 
   const handleDelete= async(id) =>{

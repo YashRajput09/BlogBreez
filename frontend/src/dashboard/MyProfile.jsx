@@ -1,13 +1,13 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const MyProfile = () => {
   const [creator, setCreator] = useState([]);
-  console.log(
-    "import.meta.env.VITE_APP_BACKEND_URL",
-    import.meta.env.VITE_APP_BACKEND_URL
-  );
+  // console.log(
+  //   "import.meta.env.VITE_APP_BACKEND_URL",
+  //   import.meta.env.VITE_APP_BACKEND_URL
+  // );
   useEffect(() => {
     const fetchCreatorsDetails = async () => {
       try {

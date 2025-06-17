@@ -3,6 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 // import Cookies from "js-cookie";
 // dotenv.config();
 import Loading from "../componentes/InfiniteLoader";
+import SkeletonLoader from "../loaders/SkeletonLoader";
 
 export const AuthContext = createContext(); //creates a context to that manage authenticated data (blog Info) golbally.
 
@@ -59,7 +60,7 @@ export const AuthProvider = ({ children }) => {
       value={{ blogs, profile, isAuthenticated, setIsAuthenticated }}
     >
       {/* {children} */}
-      {loading ? <Loading /> : children} {/* Show loading spinner if loading is true */}
+      {loading ? <SkeletonLoader count={6} /> : children} {/* Show loading spinner if loading is true */}
     </AuthContext.Provider> // provides the data to the childrean via the value prop
   );
 };
