@@ -181,7 +181,10 @@ const ViewBlog = () => {
             <VoiceReader />
           </div>
           <div className="flex justify-end gap-3">
+            {/* Export blog */}
              <ExportToPDF blog={blog} descriptionState={setIsFullDesctiption} hide={setHide}/>
+
+             {/* Summarize blog */}
             <BlogSummarization blogDescription={blog?.description} />
           </div>
             {isFullDescription ? (

@@ -11,6 +11,7 @@ import { forgotPassword, resetPassword } from "../controller/password_controller
 import { isAuthenticated } from "../middleware/authenticateUser.js";
 import { isAdmin } from "../middleware/authorizeUser.js";
 import { saveRedirectUrl } from "../middleware/redirectUrl.js";
+import { followUser } from "../controller/feed_controller.js";
 const router = express.Router();
 
 router
@@ -39,4 +40,6 @@ router.route("/forgotpassword")
 
 router.route("/resetpassword")
   .post(resetPassword)
+
+router.route("/follow/:id").post(isAuthenticated, followUser)
 export default router;
