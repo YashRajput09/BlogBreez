@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 // import SubmitBtnLoader from "../loaders/SubmitBtnLoader";
 
 const UserFeedContext = createContext();
@@ -7,6 +7,24 @@ const UserFeedContext = createContext();
 export const UserFeedProvider = ({ children }) => {
   const [follow, setFollow] = useState([]);
   const [loader, setLoader] = useState(false);
+
+    // load following list on mount
+    useEffect(() => {
+    const loadFollowing = async () =>{
+        try{
+            const res = await axios.get(
+                `${import.meta.env.VITE_APP_BACKEND_URL}/user/following`,
+                {withCredentials: true}
+            );
+            setFollow(res.data.following); // Populate follow state
+        }catch(error){
+            console.log("Error loading following list:", error);
+            
+        }
+    }
+    loadFollowing();
+    }, [])
+
 
   const toggleFollow = async (userToFollowId, currentUserId) => {
       
