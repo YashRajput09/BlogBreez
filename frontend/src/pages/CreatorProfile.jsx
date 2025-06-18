@@ -1,15 +1,15 @@
 import { motion } from "framer-motion";
 import { FaUserCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useFollow } from "../context/UserFeedProvider";
 import { useAuth } from "../context/AuthProvider";
 
 const CreatorProfile = () => {
   const { follow, toggleFollow, loader } = useFollow();
-    const {profile} = useAuth();
-  
+  const { profile } = useAuth();
+
   const [creatorProfile, setCreatorProfile] = useState(null);
   const { id } = useParams();
   // console.log(id);
@@ -24,6 +24,8 @@ const CreatorProfile = () => {
     };
     fetchCreatorProfile();
   }, [follow]);
+  // console.log(creatorProfile);
+
   return (
     <motion.div
       className="min-h-screen bg-[#e3e7ec] p-6 text-white flex items-center justify-center"
@@ -102,11 +104,13 @@ const CreatorProfile = () => {
         {/* Blog Section */}
         <div className="space-y-6 text-black">
           <h3 className="text-2xl font-semibold border-b border-white/20 pb-2">
-            Recent Blogs
+            {creatorProfile?.blogs?.length > 0
+              ? "Recent Blogs"
+              : "No Blog Posted"}
           </h3>
           <div className="grid sm:grid-cols-2 gap-4">
-            {creatorProfile?.blogs
-              ?.map((blog) => (
+            {creatorProfile?.blogs?.map((blog) => (
+              <Link to={`/blog/view/${blog?._id}`}>
                 <motion.div
                   key={blog}
                   className="bg-white/10 backdrop-blur-md p-4 rounded-lg shadow hover:scale-[1.01] transition"
@@ -117,10 +121,11 @@ const CreatorProfile = () => {
                     {`${blog.description.substring(0, 113)}...`}
                   </p>
                   <div className="mt-3 text-xs text-gray-600">
-                    Published: {new Date(blog.createdAt).toLocaleDateString()}
+                    Published: {new Date(blog?.createdAt).toLocaleDateString()}
                   </div>
                 </motion.div>
-              ))}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
