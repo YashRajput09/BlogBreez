@@ -4,11 +4,12 @@ import { motion } from "framer-motion";
 import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
 import SkeletonLoader from "../loaders/SkeletonLoader";
 import { useFollow } from "../context/UserFeedProvider";
-import {useAuth} from "../context/AuthProvider";
+import { useAuth } from "../context/AuthProvider";
+import { Link } from "react-router-dom";
 
 const Creators = () => {
   const { follow, toggleFollow, loader } = useFollow();
-  const {profile} = useAuth();
+  const { profile } = useAuth();
   const [creator, setCreator] = useState([]);
   const [loading, setLoading] = useState(true); //  loading state
 
@@ -31,18 +32,12 @@ const Creators = () => {
       }
     };
     fetchCreatorsDetails();
-  }, []);
-
-  // const toggleFollow = (id) => {
-  //   setFollowed((prev) => ({
-  //     ...prev,
-  //     [id]: !prev[id],
-  //   }));
-  // };
+  }, [follow]);
 
   const renderCreatorCard = (item) => (
-    <div
+    <Link
       key={item._id}
+      to={`/creator/profile/${item._id}`}
       className="w-96 flex justify-center items-center bg-gradient-to-br to-blue-100 px-4"
     >
       <motion.div
@@ -69,7 +64,11 @@ const Creators = () => {
               </h1>
               <div className="flex gap-4 ">
                 <button
-                  onClick={() => toggleFollow(item._id, profile._id)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleFollow(item._id, profile._id);
+                  }}
                   disabled={loader}
                   className={`btn-primary text-base w-20 rounded-md text-white ${
                     follow.includes(item._id) ? "bg-gray-400" : "bg-blue-400"
@@ -77,7 +76,13 @@ const Creators = () => {
                 >
                   {follow.includes(item._id) ? "Unfollow" : "Follow"}
                 </button>
-                <button className="btn-primary text-base px-3 rounded-md bg-gray-400 text-white">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                  className="btn-primary text-base px-3 rounded-md bg-gray-400 text-white"
+                >
                   Message
                 </button>
               </div>
@@ -136,7 +141,7 @@ const Creators = () => {
           ))}
         </div>
       </motion.div>
-    </div>
+    </Link>
   );
   return (
     <div className="w-full flex justify-center flex-wrap py-4 gap-5">

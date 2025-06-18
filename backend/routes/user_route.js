@@ -5,6 +5,7 @@ import {
   logOutUser,
   getMyProfile,
   getAdmins,
+  getAdminProfile,
   editAdminProfile,
 } from "../controller/user_controller.js";
 import { forgotPassword, resetPassword } from "../controller/password_controller.js"
@@ -30,6 +31,7 @@ router.route("/myprofile").get(isAuthenticated, getMyProfile);
 
 // router.route("/admins").get(isAdmin("admin"), getAdmins);
 router.route("/admins").get( getAdmins);
+router.route("/admin/profile/:id").get(getAdminProfile)
 
 router
   .route("/update/admin/profile/:id")
