@@ -7,6 +7,7 @@ import Blogs from './pages/Blogs';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Creators from './pages/Creators';
+import CreatorProfie from './pages/CreatorProfile';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
@@ -35,6 +36,7 @@ function App() {
         <Route path="/about" element={<About/>}/>
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/creators" element={<Creators/>}/>
+        <Route path="/creator/profile/:id" element={<CreatorProfie/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/dashboard" element={<Dashboard/>}/>
