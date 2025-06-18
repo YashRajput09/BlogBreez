@@ -8,40 +8,36 @@ export const UserFeedProvider = ({ children }) => {
   const [follow, setFollow] = useState([]);
   const [loader, setLoader] = useState(false);
 
-    // load following list on mount
-    useEffect(() => {
-    const loadFollowing = async () =>{
-        try{
-            const res = await axios.get(
-                `${import.meta.env.VITE_APP_BACKEND_URL}/user/following`,
-                {withCredentials: true}
-            );
-            setFollow(res.data.following); // Populate follow state
-        }catch(error){
-            console.log("Error loading following list:", error);
-            
-        }
-    }
+  // load following list on mount
+  useEffect(() => {
+    const loadFollowing = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_APP_BACKEND_URL}/user/following`,
+          { withCredentials: true }
+        );
+        setFollow(res.data.following); // Populate follow state
+      } catch (error) {
+        console.log("Error loading following list:", error);
+      }
+    };
     loadFollowing();
-    }, [])
-
+  }, []);
 
   const toggleFollow = async (userToFollowId, currentUserId) => {
-      
-      setLoader(true);
-      try {
-        console.log(currentUserId);
+    setLoader(true);
+    try {
+      console.log(currentUserId);
       await axios.post(
         `${import.meta.env.VITE_APP_BACKEND_URL}/user/follow/${userToFollowId}`,
-        {currentUserId},
+        { currentUserId },
         { withCredentials: true }
-    ),
-
-      setFollow((prev) =>
-        prev.includes(userToFollowId)
-          ? prev.filter((id) => id !== userToFollowId)
-          : [...prev, userToFollowId]
-      );
+      ),
+        setFollow((prev) =>
+          prev.includes(userToFollowId)
+            ? prev.filter((id) => id !== userToFollowId)
+            : [...prev, userToFollowId]
+        );
     } catch (error) {
       console.log("Error during toggleFollow : ", error);
     } finally {
@@ -49,10 +45,11 @@ export const UserFeedProvider = ({ children }) => {
     }
   };
 
-  return(
-    <UserFeedContext.Provider value={{follow, toggleFollow, loader}}>{children}</UserFeedContext.Provider>
-  )
+  return (
+    <UserFeedContext.Provider value={{ follow, toggleFollow, loader }}>
+      {children}
+    </UserFeedContext.Provider>
+  );
 };
 
-export const useFollow =() => useContext(UserFeedContext);
-
+export const useFollow = () => useContext(UserFeedContext);

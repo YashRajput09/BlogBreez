@@ -3,6 +3,7 @@
   import bcrypt from "bcryptjs";
   import createTokenAndSaveCookie from "../jwt/AuthenticateToken.js";
   import mongoose from "mongoose";
+  import blogModel from "../models/blog_model.js";
 
 
   // signup User
@@ -135,7 +136,30 @@
 
   export const getAdmins = async (req, res) => {
     const admins = await userModel.find({ role: "admin"});
-    res.status(200).json(admins);
+     const blogCounts = await blogModel.aggregate([
+      {
+        $group: {
+          _id: "$createdBy", // Group by author id
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    // Convert array to map for quick lookup
+    const blogCountMap = {};
+    blogCounts.forEach((entry) => {
+      blogCountMap[entry._id.toString()] = entry.count;
+    });
+    // console.log(blogCounts);
+    // console.log(blogCountMap);
+        const adminsWithBlogCount = admins.map((admin) => {
+      return {
+        ...admin.toObject(), // convert Mongoose doc to plain object
+        blogCount: blogCountMap[admin._id.toString()] || 0
+      };
+    });
+
+    res.status(200).json( adminsWithBlogCount);
   }
 
   export const editAdminProfile = async (req, res) => {
