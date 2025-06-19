@@ -5,13 +5,15 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useFollow } from "../context/UserFeedProvider";
 import { useAuth } from "../context/AuthProvider";
+import FollowerModal from "../componentes/Profile/FollowersList";
 
 const CreatorProfile = () => {
+  const { id } = useParams();
   const { follow, toggleFollow, loader } = useFollow();
   const { profile } = useAuth();
 
   const [creatorProfile, setCreatorProfile] = useState(null);
-  const { id } = useParams();
+  const [isFollowerOpen, setIsFollowerOpen] = useState(false);
   // console.log(id);
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const CreatorProfile = () => {
               className="object-cover w-full h-full"
               src={creatorProfile?.profileImage?.url}
               alt=""
-              srcset=""
+              srcSet=""
             />
             {/* <FaUserCircle className="w-full h-full text-gray-600" /> */}
           </motion.div>
@@ -86,16 +88,30 @@ const CreatorProfile = () => {
                 <p className="text-xs text-gray-600">Blogs</p>
               </div>
               <div>
-                <p className="text-xl font-bold">
+              {/* <div to={`/creator/profile/${id}/followers`}> */}
+                <p  onClick={() => setIsFollowerOpen(true)} className="text-xl font-bold">
                   {creatorProfile?.followers.length}
                 </p>
                 <p className="text-xs text-gray-600">Followers</p>
+                 <FollowerModal
+                  isOpen={isFollowerOpen}
+                  onClose={() => setIsFollowerOpen(false)}
+                  type="Followers"
+                />
               </div>
               <div>
-                <p className="text-xl font-bold">
+                <p
+                  onClick={() => setIsFollowerOpen(true)}
+                  className="text-xl font-bold"
+                >
                   {creatorProfile?.following.length}
                 </p>
                 <p className="text-xs text-gray-600">Following</p>
+                <FollowerModal
+                  isOpen={isFollowerOpen}
+                  onClose={() => setIsFollowerOpen(false)}
+                  type="Followers"
+                />
               </div>
             </div>
           </div>
@@ -110,7 +126,7 @@ const CreatorProfile = () => {
           </h3>
           <div className="grid sm:grid-cols-2 gap-4">
             {creatorProfile?.blogs?.map((blog) => (
-              <Link to={`/blog/view/${blog?._id}`}>
+              <Link to={`/blog/view/${blog?._id}`} key={blog._id}>
                 <motion.div
                   key={blog}
                   className="bg-white/10 backdrop-blur-md p-4 rounded-lg shadow hover:scale-[1.01] transition"

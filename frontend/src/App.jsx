@@ -19,6 +19,7 @@ import { Toaster } from 'react-hot-toast';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import SearchBlogs from './pages/SearchBlogs';
+// import FollowerModal from './componentes/Profile/FollowersList';
 
 function App() {
   const location = useLocation();
@@ -37,6 +38,7 @@ function App() {
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/creators" element={<Creators/>}/>
         <Route path="/creator/profile/:id" element={<CreatorProfie/>}/>
+        {/* <Route path="/creator/profile/:id/followers" element={<FollowerModal/>}/> */}
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/dashboard" element={<Dashboard/>}/>
