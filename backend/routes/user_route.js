@@ -12,7 +12,7 @@ import { forgotPassword, resetPassword } from "../controller/password_controller
 import { isAuthenticated } from "../middleware/authenticateUser.js";
 import { isAdmin } from "../middleware/authorizeUser.js";
 import { saveRedirectUrl } from "../middleware/redirectUrl.js";
-import { followUser, getFollowing } from "../controller/feed_controller.js";
+import { followUser, getFollowing, getSingleUserFollowing, getSingleUserFollower } from "../controller/feed_controller.js";
 const router = express.Router();
 
 router
@@ -45,4 +45,6 @@ router.route("/resetpassword")
 
 router.route("/follow/:id").post(isAuthenticated, followUser);
 router.route("/following").get(isAuthenticated, getFollowing);
+router.route("/following/:id").get(isAuthenticated, getSingleUserFollowing)
+router.route("/followers/:id").get(isAuthenticated, getSingleUserFollower)
 export default router;

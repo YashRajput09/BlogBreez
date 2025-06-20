@@ -38,7 +38,8 @@ export const followUser = async (req, res) => {
 export const getFollowing = async (req, res) => {
   try {
     // console.log("req id: ",req.user);
-    const user = await userModel.findById(req.user._id).select("following");
+    // const user = await userModel.findById(req.user._id).select("following");
+    const user = await userModel.findById(req.user._id).populate("following", "name profileImage");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -49,3 +50,24 @@ export const getFollowing = async (req, res) => {
     return res.status(500).json({ message: "faild to fetch following list" });
   }
 };
+
+// Single user following
+export const getSingleUserFollowing = async (req, res) =>{
+  try {
+    const user = await userModel.findById(req.params.id).populate("following", "name profileImage");
+    res.status(200).json({user})
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+// Single user follower
+export const getSingleUserFollower = async (req, res) =>{
+  try {
+    const user = await userModel.findById(req.params.id).populate("followers", "name profileImage");
+    res.status(200).json({user})
+  } catch (error) {
+    console.log(error);
+  }
+
+}

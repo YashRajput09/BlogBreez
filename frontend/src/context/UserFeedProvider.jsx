@@ -6,6 +6,8 @@ const UserFeedContext = createContext();
 
 export const UserFeedProvider = ({ children }) => {
   const [follow, setFollow] = useState([]);
+  const [followers, setFollowers] = useState([]);
+  const [followings, setFollowings] = useState([]);
   const [loader, setLoader] = useState(false);
 
   // load following list on mount
@@ -27,7 +29,7 @@ export const UserFeedProvider = ({ children }) => {
   const toggleFollow = async (userToFollowId, currentUserId) => {
     setLoader(true);
     try {
-      console.log(currentUserId);
+      // console.log(currentUserId);
       await axios.post(
         `${import.meta.env.VITE_APP_BACKEND_URL}/user/follow/${userToFollowId}`,
         { currentUserId },
@@ -45,8 +47,37 @@ export const UserFeedProvider = ({ children }) => {
     }
   };
 
+  // single user follower
+  const singleUserFollowers = async(id)=>{
+    // console.log("data");
+        try {
+      
+          const res = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/follower/${id}`,
+            {withCredentials: true}
+          )
+          setFollowers(res.data);
+          // console.log(res.data);
+          
+    } catch (error) {
+      console.error(error);
+      
+    }
+    
+  }
+  // single user follower
+
+  const singleUserFollowings = async(id)=>{
+
+    const res = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/user/following/${id}`,
+      {withCredentials: true}
+    )
+    setFollowings(res.data);
+
+  }
+
+
   return (
-    <UserFeedContext.Provider value={{ follow, toggleFollow, loader }}>
+    <UserFeedContext.Provider value={{ follow, toggleFollow, loader, followers, followings, singleUserFollowers, singleUserFollowings }}>
       {children}
     </UserFeedContext.Provider>
   );

@@ -23,7 +23,6 @@ const Creators = () => {
             withCredentials: true,
           }
         );
-        console.log("creators data: ", data);
         setCreator(data);
       } catch (error) {
         console.error("Error fetching creators data:", error);

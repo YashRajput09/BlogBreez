@@ -9,24 +9,44 @@ import FollowerModal from "../componentes/Profile/FollowersList";
 
 const CreatorProfile = () => {
   const { id } = useParams();
-  const { follow, toggleFollow, loader } = useFollow();
+  const {
+    follow,
+    toggleFollow,
+    loader
+  } = useFollow();
   const { profile } = useAuth();
 
   const [creatorProfile, setCreatorProfile] = useState(null);
-  const [isFollowerOpen, setIsFollowerOpen] = useState(false);
-  // console.log(id);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState(""); // "Followers" or "Following"
+  const [modalUsers, setModalUsers] = useState([]);
 
   useEffect(() => {
     const fetchCreatorProfile = async () => {
       const creatorProfile = await axios.get(
         `${import.meta.env.VITE_APP_BACKEND_URL}/user/admin/profile/${id}`
       );
-      // console.log(creatorProfile.data);
       setCreatorProfile(creatorProfile.data);
     };
     fetchCreatorProfile();
   }, [follow]);
-  // console.log(creatorProfile);
+
+  const openModal = async (type) => {
+    setModalType(type);
+    setIsModalOpen(true);
+
+    try {
+      const res = await axios.get(
+        `${
+          import.meta.env.VITE_APP_BACKEND_URL
+        }/user/${type.toLowerCase()}/${id}`,
+        { withCredentials: true }
+      );
+      setModalUsers(res.data);
+    } catch (err) {
+      console.error("Error loading list: ", err);
+    }
+  };
 
   return (
     <motion.div
@@ -87,31 +107,21 @@ const CreatorProfile = () => {
                 <p className="text-xl font-bold">{creatorProfile?.blogCount}</p>
                 <p className="text-xs text-gray-600">Blogs</p>
               </div>
-              <div>
-              {/* <div to={`/creator/profile/${id}/followers`}> */}
-                <p  onClick={() => setIsFollowerOpen(true)} className="text-xl font-bold">
+              <div  onClick={() => openModal("Followers")}>
+                <p
+                  className="text-xl font-bold"
+                >
                   {creatorProfile?.followers.length}
                 </p>
                 <p className="text-xs text-gray-600">Followers</p>
-                 <FollowerModal
-                  isOpen={isFollowerOpen}
-                  onClose={() => setIsFollowerOpen(false)}
-                  type="Followers"
-                />
               </div>
-              <div>
+              <div onClick={() => openModal("Following")}>
                 <p
-                  onClick={() => setIsFollowerOpen(true)}
                   className="text-xl font-bold"
                 >
                   {creatorProfile?.following.length}
                 </p>
                 <p className="text-xs text-gray-600">Following</p>
-                <FollowerModal
-                  isOpen={isFollowerOpen}
-                  onClose={() => setIsFollowerOpen(false)}
-                  type="Followers"
-                />
               </div>
             </div>
           </div>
@@ -142,9 +152,19 @@ const CreatorProfile = () => {
                 </motion.div>
               </Link>
             ))}
+            
+ {/* Reusable Modal */}
+      <FollowerModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        type={modalType}
+        users={modalUsers}
+      />
+
           </div>
         </div>
       </div>
+     
     </motion.div>
   );
 };
