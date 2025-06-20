@@ -2,17 +2,15 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaUserCircle } from "react-icons/fa";
 
-const dummyUsers = Array(20).fill({
-  name: "John Doe",
-  bio: "Frontend Developer at XYZ",
-  image: "", // Leave empty to use placeholder icon
-});
 
-const FollowerModal = ({ isOpen, onClose, type = "Followers" }) => {
+const FollowerModal = ({ isOpen, onClose, type, users }) => {
   const [search, setSearch] = useState("");
 
-  const filteredUsers = dummyUsers.filter((user) =>
-    user.name.toLowerCase().includes(search.toLowerCase())
+  const list = users?.user?.[type.toLowerCase()] || [];
+  console.log(type.toLowerCase());
+
+  const filteredUsers = list.filter((user) =>
+    user?.name?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -30,7 +28,7 @@ const FollowerModal = ({ isOpen, onClose, type = "Followers" }) => {
 
           {/* Slide-in Modal from Right */}
           <motion.div
-            className="fixed top-0 right-0 md:h-2/5 w-full max-w-md bg-white rounded-md z-50 shadow-xl px-6 pt-3 flex flex-col"
+            className="fixed top-0 right-0  md:h-2/5 w-full max-w-md bg-white rounded-md z-50 shadow-xl px-6 pt-3 flex flex-col"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -54,7 +52,7 @@ const FollowerModal = ({ isOpen, onClose, type = "Followers" }) => {
               placeholder="Search users..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full px-3 py-1 mb-3 border border-gray-300 rounded-md focus:outline-none text-sm"
+              className="w-full px-3 py-1 mb-3 border border-gray-300 rounded-md focus:outline-none text-sm text-gray-500"
             />
 
             {/* Scrollable List */}
@@ -65,9 +63,9 @@ const FollowerModal = ({ isOpen, onClose, type = "Followers" }) => {
                   className="flex items-center gap-3 border-b pb-3"
                 >
                   <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-                    {user.image ? (
+                    {user.profileImage.url ? (
                       <img
-                        src={user.image}
+                        src={user.profileImage.url}
                         alt="profile"
                         className="w-full h-full rounded-full object-cover"
                       />
@@ -76,8 +74,12 @@ const FollowerModal = ({ isOpen, onClose, type = "Followers" }) => {
                     )}
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-semibold">{user.name}</span>
-                    <span className="text-sm text-gray-500">{user.bio}</span>
+                    <span className="font-semibold text-black">
+                      {user.name}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      {user.bio || "Webdeveloper | Blogger | Educator"}
+                    </span>
                   </div>
                 </div>
               ))}
