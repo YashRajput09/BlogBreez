@@ -6,20 +6,18 @@ import axios from "axios";
 import { useFollow } from "../context/UserFeedProvider";
 import { useAuth } from "../context/AuthProvider";
 import FollowerModal from "../componentes/Profile/FollowersList";
+import SubmitBtnLoader from "../loaders/SubmitBtnLoader";
 
 const CreatorProfile = () => {
   const { id } = useParams();
-  const {
-    follow,
-    toggleFollow,
-    loader
-  } = useFollow();
+  const { follow, toggleFollow, loader } = useFollow();
   const { profile } = useAuth();
 
   const [creatorProfile, setCreatorProfile] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(""); // "Followers" or "Following"
   const [modalUsers, setModalUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchCreatorProfile = async () => {
@@ -79,15 +77,21 @@ const CreatorProfile = () => {
             </h2>
             <div className="space-x-4 ">
               <button
-                onClick={() => toggleFollow(creatorProfile._id, profile._id)}
-                disabled={loader}
+                onClick={async(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setLoading(true);
+                  await toggleFollow(creatorProfile._id, profile._id);
+                  setLoading(false);
+                }}
+                // disabled={loader}
                 className={`btn-primary text-base w-20 rounded-md text-white ${
                   follow.includes(creatorProfile?._id)
                     ? "bg-gray-400"
                     : "bg-blue-400"
                 }`}
               >
-                {follow.includes(creatorProfile?._id) ? "Unfollow" : "Follow"}
+                {loading ? <SubmitBtnLoader/> : follow.includes(creatorProfile?._id) ? "Unfollow" : "Follow"}
               </button>
               <button className="btn-primary text-base px-3 rounded-md bg-gray-400 text-white">
                 Message
@@ -107,18 +111,14 @@ const CreatorProfile = () => {
                 <p className="text-xl font-bold">{creatorProfile?.blogCount}</p>
                 <p className="text-xs text-gray-600">Blogs</p>
               </div>
-              <div  onClick={() => openModal("Followers")}>
-                <p
-                  className="text-xl font-bold"
-                >
+              <div onClick={() => openModal("Followers")}>
+                <p className="text-xl font-bold">
                   {creatorProfile?.followers.length}
                 </p>
                 <p className="text-xs text-gray-600">Followers</p>
               </div>
               <div onClick={() => openModal("Following")}>
-                <p
-                  className="text-xl font-bold"
-                >
+                <p className="text-xl font-bold">
                   {creatorProfile?.following.length}
                 </p>
                 <p className="text-xs text-gray-600">Following</p>
@@ -152,19 +152,17 @@ const CreatorProfile = () => {
                 </motion.div>
               </Link>
             ))}
-            
- {/* Reusable Modal */}
-      <FollowerModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        type={modalType}
-        users={modalUsers}
-      />
 
+            {/* Reusable Modal */}
+            <FollowerModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              type={modalType}
+              users={modalUsers}
+            />
           </div>
         </div>
       </div>
-     
     </motion.div>
   );
 };

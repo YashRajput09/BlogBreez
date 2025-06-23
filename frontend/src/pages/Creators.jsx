@@ -6,16 +6,17 @@ import SkeletonLoader from "../loaders/SkeletonLoader";
 import { useFollow } from "../context/UserFeedProvider";
 import { useAuth } from "../context/AuthProvider";
 import { Link } from "react-router-dom";
+import SubmitBtnLoader from "../loaders/SubmitBtnLoader";
 
 const Creators = () => {
-  const { follow, toggleFollow, loader } = useFollow();
+  const { follow, toggleFollow } = useFollow();
   const { profile } = useAuth();
   const [creator, setCreator] = useState([]);
-  const [loading, setLoading] = useState(true); //  loading state
+  const [loading, setLoading] = useState(false); //  loading state
 
   useEffect(() => {
     const fetchCreatorsDetails = async () => {
-      setLoading(true);
+      // setLoading(true);
       try {
         const { data } = await axios.get(
           `${import.meta.env.VITE_APP_BACKEND_URL}/user/admins`,
@@ -27,7 +28,7 @@ const Creators = () => {
       } catch (error) {
         console.error("Error fetching creators data:", error);
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     };
     fetchCreatorsDetails();
@@ -63,17 +64,25 @@ const Creators = () => {
               </h1>
               <div className="flex gap-4 ">
                 <button
-                  onClick={(e) => {
+                  onClick={async(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    toggleFollow(item._id, profile._id);
+                    setLoading(item._id);
+                    await toggleFollow(item._id, profile._id);
+                    setLoading(false);
                   }}
-                  disabled={loader}
+                  // disabled={loader}
                   className={`btn-primary text-base w-20 rounded-md text-white ${
                     follow.includes(item._id) ? "bg-gray-400" : "bg-blue-400"
                   }`}
                 >
-                  {follow.includes(item._id) ? "Unfollow" : "Follow"}
+                  {loading == item._id ? (
+                    <SubmitBtnLoader />
+                  ) : follow.includes(item._id) ? (
+                    "Unfollow"
+                  ) : (
+                    "Follow"
+                  )}
                 </button>
                 <button
                   onClick={(e) => {
@@ -144,11 +153,7 @@ const Creators = () => {
   );
   return (
     <div className="w-full flex justify-center flex-wrap py-4 gap-5">
-      {creator.length > 0 ? (
-        creator.map(renderCreatorCard)
-      ) : (
-        <p>No creators found</p>
-      )}
+      {creator.length > 0 ? creator.map(renderCreatorCard) : <SkeletonLoader />}
     </div>
   );
 };
