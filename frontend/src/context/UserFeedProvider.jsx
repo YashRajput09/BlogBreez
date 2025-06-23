@@ -8,7 +8,7 @@ export const UserFeedProvider = ({ children }) => {
   const [follow, setFollow] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [followings, setFollowings] = useState([]);
-  const [loader, setLoader] = useState(false);
+  // const [loader, setLoader] = useState(false);
 
   // load following list on mount
   useEffect(() => {
@@ -27,7 +27,7 @@ export const UserFeedProvider = ({ children }) => {
   }, []);
 
   const toggleFollow = async (userToFollowId, currentUserId) => {
-    setLoader(true);
+    // setLoader(true);
     try {
       // console.log(currentUserId);
       await axios.post(
@@ -43,7 +43,7 @@ export const UserFeedProvider = ({ children }) => {
     } catch (error) {
       console.log("Error during toggleFollow : ", error);
     } finally {
-      setLoader(false);
+      // setLoader(false);
     }
   };
 
@@ -77,7 +77,7 @@ export const UserFeedProvider = ({ children }) => {
 
 
   return (
-    <UserFeedContext.Provider value={{ follow, toggleFollow, loader, followers, followings, singleUserFollowers, singleUserFollowings }}>
+    <UserFeedContext.Provider value={{ follow, toggleFollow, followers, followings, singleUserFollowers, singleUserFollowings }}>
       {children}
     </UserFeedContext.Provider>
   );
