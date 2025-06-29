@@ -14,6 +14,8 @@ import BlogSummarization from "../ai/BlogSummarizer.jsx";
 import axios from "axios";
 import { IoIosEye } from "react-icons/io";
 import ExportToPDF from "../componentes/Interactions/ExportToPDF.jsx";
+import ViewBlogSkeletonLoader from "../loaders/SkeletonLoader.jsx";
+
 
 const ViewBlog = () => {
   const { id } = useParams();
@@ -25,6 +27,7 @@ const ViewBlog = () => {
   const [localLikes, setLocalLikes] = useState(0); // Local state for likes count
   const [isFullDescription, setIsFullDesctiption] = useState(false);
   const [hide, setHide] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleLikes = () => {
     if (!profile) {
@@ -36,20 +39,18 @@ const ViewBlog = () => {
   };
 
   useEffect(() => {
-    const fetchBlog = async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_APP_BACKEND_URL}/blog/single-blog/${id}`,
-        {
-          withCredentials: true, // This ensures cookies are sent
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+
+    const fetchBlog = async()=>{
+      const res = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/blog/single-blog/${id}`,{
+        withCredentials: true, // This ensures cookies are sent
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       // console.log("data : ",res.data.blog);
       const singleBlog = res.data.blog;
-      setBlog(singleBlog); // Assuming res.data.blog is the blog object
-
+      setBlog(singleBlog);// Assuming res.data.blog is the blog object
+  
       if (singleBlog && likes[singleBlog._id] === undefined) {
         setLocalLikes(singleBlog.likes || 0); // Fallback to 0 if likes are undefined
       } else {
@@ -61,8 +62,9 @@ const ViewBlog = () => {
     }
   }, [blogs, id, likes]);
 
-  if (blog == null) return <div>Login to read the blogs</div>;
-  if (!blog) return <div>Blog not found</div>;
+  if (!profile) return <div>Login to View Blog</div>
+  if (!blog) return <div><ViewBlogSkeletonLoader/></div>;
+  // if (!blog) return <div>Blog not found</div>;
 
   //character limit for preview text
   const previewLimit = 400;

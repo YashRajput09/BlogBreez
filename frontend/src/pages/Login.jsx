@@ -19,7 +19,7 @@ const Login = () => {
       return toast.error("Please fill all the fields");
     }
     try {
-      const { data } = await axios.post(
+      await axios.post(
         `${import.meta.env.VITE_APP_BACKEND_URL}/user/login`,
         { role, email, password },
         {

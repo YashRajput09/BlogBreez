@@ -1,5 +1,3 @@
-import React from 'react'
-
 const SubmitBtnLoader = () => {
   return (
     <div className="flex justify-center items-center space-x-2">
@@ -23,7 +21,7 @@ const SubmitBtnLoader = () => {
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.28.805 4.373 2.143 6.027l1.857-1.736z"
                   ></path>
                 </svg>
-                <span>Processing...</span>
+                {/* <span>Processing...</span> */}
               </div>
   )
 }
