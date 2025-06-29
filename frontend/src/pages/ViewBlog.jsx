@@ -10,16 +10,15 @@ import CommentButton from "../componentes/Interactions/CommentButton.jsx";
 import ShareButton from "../componentes/Interactions/ShareButton.jsx";
 import VoiceReader from "../componentes/Interactions/VoiceReader.jsx";
 import { Heart } from "lucide-react"; // Using lucide-react for the heart icon
-import BlogSummarization from "../ai/BlogSummarizer.jsx"
+import BlogSummarization from "../ai/BlogSummarizer.jsx";
 import axios from "axios";
 import { IoIosEye } from "react-icons/io";
 import ExportToPDF from "../componentes/Interactions/ExportToPDF.jsx";
 
-
 const ViewBlog = () => {
   const { id } = useParams();
   // console.log(id);
-  
+
   const { blogs, profile } = useAuth(); // Assuming blogs come from useAuth context
   const { likes, blogLikes } = useInteraction();
   const [blog, setBlog] = useState(null);
@@ -28,8 +27,6 @@ const ViewBlog = () => {
   const [hide, setHide] = useState(false);
 
   const handleLikes = () => {
-    // console.log("ViewBlog Blog id: ", id) // fetch corerctly - ViewBlog Blog id:  66eae3b90099cd15baed4a8c
-
     if (!profile) {
       toast.error("You need to log in to like a blog.");
       return;
@@ -39,27 +36,29 @@ const ViewBlog = () => {
   };
 
   useEffect(() => {
-
-    const fetchBlog = async()=>{
-      const res = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/blog/single-blog/${id}`,{
-        withCredentials: true, // This ensures cookies are sent
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    const fetchBlog = async () => {
+      const res = await axios.get(
+        `${import.meta.env.VITE_APP_BACKEND_URL}/blog/single-blog/${id}`,
+        {
+          withCredentials: true, // This ensures cookies are sent
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       // console.log("data : ",res.data.blog);
       const singleBlog = res.data.blog;
-      setBlog(singleBlog);// Assuming res.data.blog is the blog object
-  
+      setBlog(singleBlog); // Assuming res.data.blog is the blog object
+
       if (singleBlog && likes[singleBlog._id] === undefined) {
         setLocalLikes(singleBlog.likes || 0); // Fallback to 0 if likes are undefined
       } else {
         setLocalLikes(likes[singleBlog._id]);
       }
-  }
-  if (id) {
-    fetchBlog();
-  }
+    };
+    if (id) {
+      fetchBlog();
+    }
   }, [blogs, id, likes]);
 
   if (blog == null) return <div>Login to read the blogs</div>;
@@ -78,7 +77,7 @@ const ViewBlog = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 via-blue-50 to-gray-100 p-2 md:p-5  flex justify-center items-center ">
-      <div id="pdf-content" className="group" >
+      <div id="pdf-content" className="group">
         <motion.div
           className="w-full max-w-3xl p-6 bg-white shadow-lg rounded-lg"
           initial={{ opacity: 0, y: 50 }}
@@ -107,37 +106,36 @@ const ViewBlog = () => {
 
           {/* Author & Date */}
           <div className="mt-6 flex items-center justify-between text-sm">
-            { !hide ? (
+            {!hide ? (
+              <div className="flex gap-4">
+                {/* Likes Section */}
+                <button
+                  className="flex text-gray-500 text-xs items-center"
+                  onClick={handleLikes}
+                >
+                  <Heart size={18} /> &nbsp;{localLikes || 0}
+                </button>
+                <span className="font-light">|</span>
 
-            <div className="flex gap-4">
-              {/* Likes Section */}
-              <button
-                className="flex text-gray-500 text-xs items-center"
-                onClick={handleLikes}
-              >
-                <Heart size={18} /> &nbsp;{localLikes || 0}
-              </button>
-              <span className="font-light">|</span>
+                {/* Comments Section */}
+                <CommentButton blogId={id} />
+                <span className="font-light">|</span>
 
-              {/* Comments Section */}
-              <CommentButton blogId={id} />
-              <span className="font-light">|</span>
+                {/* New Share Section */}
+                <ShareButton url={window.location.href} title={blog?.title} />
+                <span className="font-light">|</span>
 
-              {/* New Share Section */}
-              <ShareButton url={window.location.href} title={blog?.title} />
-              <span className="font-light">|</span>
-
-              {/* views section */}
-              <div className="flex gap-1 items-center">
-              <IoIosEye size={18} className="text-gray-500"/>
-              <span className="text-xs ">{blog.views}</span>
+                {/* views section */}
+                <div className="flex gap-1 items-center">
+                  <IoIosEye size={18} className="text-gray-500" />
+                  <span className="text-xs ">{blog.views}</span>
+                </div>
               </div>
-            
-            </div>
-              ):
-               <Link to={`/blog/view/${id}`} className="underline text-blue-500">
-              www.breezblogs.com
-            </Link>}
+            ) : (
+              <Link to={`/blog/view/${id}`} className="underline text-blue-500">
+                www.breezblogs.com
+              </Link>
+            )}
 
             <div className=" flex items-center space-x-4 text-gray-500 ">
               <span className="font-light">|</span>
@@ -158,8 +156,6 @@ const ViewBlog = () => {
             className="mt-3 border-t border-gray-300"
           />
 
-          
-
           {/* Content */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -167,43 +163,54 @@ const ViewBlog = () => {
             transition={{ delay: 0.5, duration: 0.7 }}
             className="mt-6 text-gray-700 leading-relaxed text-lg  blog-post-content"
           >
-            {isFullDescription
+            {/* {isFullDescription
               ? blog?.description
-              : `${blog?.description.slice(0, previewLimit)}...`}
+              : `${blog?.description.slice(0, previewLimit)}...`} */}
+            {isFullDescription
+              ?  blog?.description
+              : `${(blog?.description).slice(
+                  0,
+                  previewLimit
+                )}...`}
           </motion.div>
 
-              {!hide ? (
+          {!hide ? (
+            <div className=" text-center mt-5">
+              {/*  VoiceReader  */}
+              <div className="">
+                <VoiceReader />
+              </div>
+              <div className="flex justify-end gap-3">
 
-          <div className=" text-center mt-5">
-            
-             {/*  VoiceReader  */}
-           <div className="">
-            <VoiceReader />
-          </div>
-          <div className="flex justify-end gap-3">
-            {/* Export blog */}
-             <ExportToPDF blog={blog} descriptionState={setIsFullDesctiption} hide={setHide}/>
+                {/* Export blog */}
+                <ExportToPDF
+                  blog={blog}
+                  descriptionState={setIsFullDesctiption}
+                  hide={setHide}
+                />
 
-             {/* Summarize blog */}
-            <BlogSummarization blogDescription={blog?.description} />
-          </div>
-            {isFullDescription ? (
-              <button
-                onClick={handleShowLess}
-                className="border border-blue-500 px-4 py-1 rounded-md text-blue-500 text-sm"
-              >
-                show less
-              </button>
-            ) : (
-              <button
-                onClick={handleShowMore}
-                className=" border border-blue-500 px-4 py-1 rounded-md text-blue-500 text-sm"
-              >
-                show more
-              </button>
-            )}
-          </div>
-              ): ""}
+                {/* Summarize blog */}
+                <BlogSummarization blogDescription={blog?.description} />
+              </div>
+              {isFullDescription ? (
+                <button
+                  onClick={handleShowLess}
+                  className="border border-blue-500 px-4 py-1 rounded-md text-blue-500 text-sm"
+                >
+                  show less
+                </button>
+              ) : (
+                <button
+                  onClick={handleShowMore}
+                  className=" border border-blue-500 px-4 py-1 rounded-md text-blue-500 text-sm"
+                >
+                  show more
+                </button>
+              )}
+            </div>
+          ) : (
+            ""
+          )}
 
           {/* Floating Icons */}
           <div className="absolute hidden lg:block md:right-12 md:bottom-12">
@@ -224,7 +231,6 @@ const ViewBlog = () => {
               </button>
             </motion.div>
           </div>
-        
         </motion.div>
       </div>
     </div>
