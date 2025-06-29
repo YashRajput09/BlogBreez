@@ -47,12 +47,12 @@ const Contact = () => {
             <div className="grid grid-cols-1 gap-2 md:flex md:space-x-3 p-4">
               {[
                 {
-                  text: "+91 1234567890",
+                  text: "+91 8517044161",
                   rotate: "rotate-2",
                   icon: <PiPhoneCallFill />,
                 },
                 {
-                  text: "breezblogs@gmail.com",
+                  text: "rajputyash8561@gmail.com",
                   rotate: "-rotate-2",
                   icon: <CgMail />,
                 },

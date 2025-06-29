@@ -20,7 +20,9 @@ const updateAdminImage = () => {
   const [loading, setLoading] = useState(false);
 
   const changeProfileImageHandler = (e) => {
+    try {
     const file = e.target.files[0];
+     if (!file) return;
     const reader = new FileReader(); // object is created to read the contents of the file
 
     reader.readAsDataURL(file); //reads the file and converts it to a data URL (base64-encoded string). Used to display the image before it is uploaded
@@ -28,7 +30,11 @@ const updateAdminImage = () => {
       //triggered when the file reading is completed.
       setImagePreview(reader.result); //reader.result contains the data URL (the base64-encoded image).
       setProfileImage(file);
-    };
+    };  
+    } catch (error) {
+     console.log(error);
+      
+    }
   };
 
 //   fetch admin details to show in form before changes or update
@@ -48,7 +54,7 @@ const updateAdminImage = () => {
             setMobileNumber(data?.mobileNumber);
             setRole(data?.role);
             setEducation(data?.education);
-            setProfileImage(data?.profileImage?.url);
+            // setProfileImage(data?.profileImage?.url);
             setImagePreview(data?.profileImage?.url);
 
         } catch (error) {
@@ -68,7 +74,8 @@ const updateAdminImage = () => {
     formData.append("mobileNumber", mobileNumber);
     formData.append("education", education);
     formData.append("role", role);
-    formData.append("profileImage", profileImage);
+    if(profileImage) formData.append("profileImage", profileImage); // Only append if changed
+    // formData.append("profileImage", profileImage);
   
     try {
       const {data} = await axios.put(

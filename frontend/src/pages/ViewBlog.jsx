@@ -1,6 +1,6 @@
 // ViewBlog.js
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useParams, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider.jsx";
@@ -27,7 +27,6 @@ const ViewBlog = () => {
   const [localLikes, setLocalLikes] = useState(0); // Local state for likes count
   const [isFullDescription, setIsFullDesctiption] = useState(false);
   const [hide, setHide] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const handleLikes = () => {
     if (!profile) {
@@ -61,6 +60,7 @@ const ViewBlog = () => {
       fetchBlog();
     }
   }, [blogs, id, likes]);
+console.log(blog);
 
   if (!profile) return <div>Login to View Blog</div>
   if (!blog) return <div><ViewBlogSkeletonLoader/></div>;
@@ -145,9 +145,12 @@ const ViewBlog = () => {
               <span className="font-light">|</span>
               <span>24-07-2024</span>
             </div>
+            {
+              (blog?.createdBy?._id == profile?._id) ?
             <Link to={`/blog/update/${id}`} className="underline text-blue-500">
               update
-            </Link>
+            </Link> : ''
+            }
           </div>
 
           {/* Divider */}

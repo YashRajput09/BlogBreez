@@ -21,7 +21,7 @@ export const chatBot = async (req, res) => {
 
     res.status(200).json({ message: response.data });
   } catch (error) {
-    console.log(error);
+    console.log("error: ",error);
     return res.status(500).json({ message: "Internal server error", error });
     
   }

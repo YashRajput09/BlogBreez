@@ -141,7 +141,7 @@ export const getSingleBlog = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid Blog Id" });
   }
-  const blog = await blogModel.findById(id);
+  const blog = await blogModel.findById(id).populate('createdBy');  
   if (!blog) {
     return res.status(404).json({ message: "Blog not found" });
   }
@@ -181,7 +181,7 @@ export const updateBlog = async (req, res) => {
       return res.status(400).json({ message: "Invalid Blog Id, Blog not found" });
     }
 
-    // ✅ Fetch existing blog
+    //Fetch existing blog
     const existingBlog = await blogModel.findById(id);
     if (!existingBlog) {
       return res.status(404).json({ message: "Blog not found" });
@@ -218,9 +218,9 @@ export const updateBlog = async (req, res) => {
         return res.status(400).json({ message: "Tags must be an array" });
       }
 
-        // ✅ Merge existing tags with new ones, ensuring a **flat structure**
+        //Merge existing tags with new ones, ensuring a **flat structure**
         updatedData.tags = [...existingBlog.tags, ...newTags].flat();
-              // ✅ Remove duplicate tags
+              //remove duplicate tags
 
         updatedData.tags = [...new Set(updatedData.tags)];
       } catch (error) {
