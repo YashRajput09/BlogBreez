@@ -20,6 +20,8 @@ import { chatBot } from "../controller/chatbot_controller.js";
 // import { trackView } from "../controller/recommandetion_controller.js";
 import { isAuthenticated } from "../middleware/authenticateUser.js";
 import { isAdmin } from "../middleware/authorizeUser.js";
+import {getAnalysisData} from "../controller/blog_analysis.js";
+
 const router = express.Router();
 
 router.route("/create").post(isAuthenticated, isAdmin("admin"), createBlog); // isAdmin("admin"), the parameter "admin" defines only admin are allowed
@@ -52,6 +54,10 @@ router
   .put(isAuthenticated, updateBlogComments)
   .delete(isAuthenticated, deleteBlogComments);
 router.route("/chatbot").post(chatBot);
+
+router
+  .route("/dashboard/analysis")
+  .get(isAuthenticated,  getAnalysisData);
 // router.route("/track-view").post(isAuthenticated, trackView);
 
 export default router;

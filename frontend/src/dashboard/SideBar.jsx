@@ -92,6 +92,11 @@ const SideBar = ({ setComponent }) => {
               label="Create Blog"
               onClick={() => {handleComponent("Create Blog"), setShow(!show)}}
             />
+            <SideBarBtn
+              icon={GrScheduleNew}
+              label="Blogs Analysis"
+              onClick={() => {handleComponent("Blogs Analysis"), setShow(!show)}}
+            />
             <SideBarBtn icon={FaHome} label="Home" onClick={handleHomeBtn} />
             <SideBarBtn
               icon={RiLogoutBoxRLine}

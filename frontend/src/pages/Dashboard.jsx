@@ -2,7 +2,8 @@ import React, {useState} from "react";
 import SideBar from "../dashboard/SideBar.jsx";
 import MyProfile from "../dashboard/MyProfile.jsx";
 import CreateBlog from "../dashboard/CreateBlog.jsx";
-import MyBlogs from "../dashboard/MyBlogs.jsx"
+import MyBlogs from "../dashboard/MyBlogs.jsx";
+import BlogsAnalysis from "../dashboard/Analysis/BlogsAnalysis.jsx"
 import { useAuth } from "../context/AuthProvider.jsx";
 import { useNavigate } from "react-router-dom";
 
@@ -26,6 +27,8 @@ import { useNavigate } from "react-router-dom";
         <MyProfile/>
       ) : component === "Create Blog" ? (
         <CreateBlog/>
+      ) : component === "Blogs Analysis" ? (
+        <BlogsAnalysis/>
       ) : (
          // Pass setComponent to MyBlogs
         <MyBlogs setComponent={setComponent}/>
