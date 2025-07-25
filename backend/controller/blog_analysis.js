@@ -15,14 +15,16 @@ function getDateRange(period) {
 export const getAnalysisData = async(req, res)=>{
   try {
     const period = req.query.period || '1y';
-    console.log(period);
+    // console.log(period);
     
     const {from, to} = getDateRange(period);
+    const adminId = req.user._id;
 
     const data = await blogModel.aggregate([
         {
             $match:{
-                createdAt: { $gte: from, $lte: to }
+                createdAt: { $gte: from, $lte: to },
+                createdBy: adminId
             }
         },
         {
@@ -38,8 +40,18 @@ export const getAnalysisData = async(req, res)=>{
         {$sort: {_id: 1}}
     ]);
     console.log(data);
-    
-    res.json({ success: true, data });
+    const totalSummary = data.reduce((acc, data) =>{
+        acc.totalBlogs += data.totalBlogs;
+        acc.totalViews += data.totalViews;
+        acc.totalLikes += data.totalLikes;
+        return acc;
+    },
+{
+    totalBlogs: 0, totalViews: 0, totalLikes: 0
+})
+console.log(totalSummary);  
+
+    res.json({ success: true, data, totalSummary });
   } catch (error) {
     console.log(error);
        res.status(500).json({ success: false, message: "Server Error" });

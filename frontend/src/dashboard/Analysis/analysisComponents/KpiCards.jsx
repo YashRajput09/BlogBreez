@@ -1,9 +1,14 @@
 import { TrendingDown, TrendingUp, FileText, Users, Eye, Heart } from 'lucide-react';
+import {useBlogAnalytics} from '../../../context/BlogAnalyticsProvider';
 
- const kpiData = [
+const KpiCards = () => {
+
+const {analytics} = useBlogAnalytics();
+console.log(analytics);
+const kpiData = [
     {
       title: "Total Articles",
-      value: "1,247",
+      value: `${analytics.totalSummary.totalBlogs}`,
       change: "+18 this week",
       trend: "up",
       icon: FileText,
@@ -11,7 +16,7 @@ import { TrendingDown, TrendingUp, FileText, Users, Eye, Heart } from 'lucide-re
     },
     {
       title: "Active Readers",
-      value: "24,891",
+      value: "891",
       change: "+12.3%",
       trend: "up",
       icon: Users,
@@ -19,15 +24,15 @@ import { TrendingDown, TrendingUp, FileText, Users, Eye, Heart } from 'lucide-re
     },
     {
       title: "Page Views",
-      value: "187,423",
+      value: `${analytics.totalSummary.totalViews}`,
       change: "+8.7%",
       trend: "up",
       icon: Eye,
       color: "text-purple-600",
     },
     {
-      title: "Engagement Rate",
-      value: "6.4%",
+      title: "Total Likes",
+      value: `${analytics.totalSummary.totalLikes}`,
       change: "-0.3%",
       trend: "down",
       icon: Heart,
@@ -35,7 +40,7 @@ import { TrendingDown, TrendingUp, FileText, Users, Eye, Heart } from 'lucide-re
     },
   ];
 
-const KpiCards = () => {
+
   return (
    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {kpiData.map((kpi, index) => {
