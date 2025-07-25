@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Download, RefreshCw, PenTool } from "lucide-react";
-import KpiCards from "./analysisComponents/KpiCards";
-import ReadersAndPageViews from "./analysisComponents/ReadersAndPageViews";
-import ContentByCategory from "./analysisComponents/ContentByCategory";
-import ReaderEngagement from "./analysisComponents/ReaderEngagement";
-import TopArticles from "./analysisComponents/TopArticles";
-import RecentActivity from "./analysisComponents/RecentActivity";
+import KpiCards from "./AnalysisComponents/KpiCards";
+import ReadersAndPageViews from "./AnalysisComponents/ReadersAndPageViews";
+import ContentByCategory from "./AnalysisComponents/ContentByCategory";
+import ReaderEngagement from "./AnalysisComponents/ReaderEngagement";
+import TopArticles from "./AnalysisComponents/TopArticles";
+import RecentActivity from "./AnalysisComponents/RecentActivity";
 const BlogsAnalysis = () => {
   const [selectedPeriod, setSelectedPeriod] = useState("7d");
   const [isLoading, setIsLoading] = useState(false);

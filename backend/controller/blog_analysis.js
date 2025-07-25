@@ -1,4 +1,6 @@
 import blogModel from "../models/blog_model.js";
+import commentModel from "../models/comment_model.js";
+
 function getDateRange(period) {
   const now = new Date();
   const past = new Date();
@@ -57,4 +59,32 @@ console.log(totalSummary);
        res.status(500).json({ success: false, message: "Server Error" });
     
   }
+}
+
+export const getTopPerformaceArticle = async(req, res) =>{
+     try {
+    const userId = req.user._id;
+
+    const blogs = await blogModel.find({ createdBy: userId })
+      .sort({ views: -1 }) // highest viewed first
+      .limit(5)
+      .select('title views category') // only required fields
+    //   .populate('comments');
+
+    const blogsWithCommentCount = await Promise.all(
+      blogs.map(async (blog) => {
+        const commentCount = await commentModel.countDocuments({ blogId: blog._id });
+        return {
+          ...blog.toObject(),
+          commentCount
+        };
+      })
+    );
+
+    res.json({ success: true, blogsWithCommentCount });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, message: 'Server Error', err });
+  }
+
 }
