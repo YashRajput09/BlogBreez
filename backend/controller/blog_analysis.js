@@ -66,9 +66,9 @@ export const getTopPerformaceArticle = async(req, res) =>{
     const userId = req.user._id;
 
     const blogs = await blogModel.find({ createdBy: userId })
-      .sort({ views: -1 }) // highest viewed first
+      .sort({ views: -1 }) // highest viewed blog view first
       .limit(5)
-      .select('title views category') // only required fields
+      .select('title views category')
     //   .populate('comments');
 
     const blogsWithCommentCount = await Promise.all(

@@ -1,3 +1,5 @@
+import {useState, useEffect} from 'react';  
+  
   const topArticles = [
     { title: '10 JavaScript Tips Every Developer Should Know', views: 15420, comments: 89, category: 'Technology' },
     { title: 'Ultimate Guide to Minimalist Living', views: 12340, comments: 67, category: 'Lifestyle' },
