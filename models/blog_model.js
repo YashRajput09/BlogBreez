@@ -26,16 +26,49 @@ const blogSchema = new mongoose.Schema({
     },
     adminImage: {
         type: String,
-        // required: true
+        required: true
     },
     adminName: {
         type: String,
-        // required: true
+        required: true
     },
-    craetedBy: {
+    createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-    }
+    },
+    createdAt:{
+        type: Date,
+        default: Date.now,
+    },
+    likes:{
+        type: Number,
+        default: 0
+    },
+    likedBy:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+        }],
+        comments:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comment'
+        },
+    category: [{
+        type: String,
+        required: true,
+    }],
+    tags: [{
+        type: [String],
+        required: true,
+        default: []
+}],
+    views: {
+        type: Number,
+        default: 0, // Track views
+    },
+    viewers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    }],// Track users who viewed the blog   
 })
 
 const Blog = mongoose.model("Blog", blogSchema);
