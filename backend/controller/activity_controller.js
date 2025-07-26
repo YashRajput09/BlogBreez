@@ -16,15 +16,19 @@ export const createBlogComments = async(req, res) => {
   
     try {
       const newComment = new commentModel({ blogId, userId, comment, parentCommentId });
-      console.log("comment : ",newComment);
+      // console.log("comment : ",newComment);
       await newComment.save();
 
         // Save recent activity
-  await activityModel.create({
-    action: 'Commented on a blog',
-    title: blog.title,
-    type: 'comment',
+   const commentActivity = await activityModel.create({
+     user: req.user._id,
+      actionType: "comment",
+       contentId: blogId, // blog being commented on
+        contentType: "Blog",
+    message: 'Commented on a blog',
   });
+    // console.log("commentActivity: ", commentActivity);
+    
 
       res.status(201).json({ message: "Comment added successfully!", newComment });
     } catch (error) {
