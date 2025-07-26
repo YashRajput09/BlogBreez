@@ -284,7 +284,7 @@ export const blogLikedBy = async(req, res) =>{
   const likedActivity =  await activityModel.create({
     user: userId,
     actionType: "like",
-    contentId: blogId,
+    contentId: blog._id,
     contentType: "Blog",
     message: `Article liked`,
   });

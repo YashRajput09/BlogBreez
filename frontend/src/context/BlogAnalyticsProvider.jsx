@@ -12,7 +12,7 @@ export const BlogAnalyticsProvider = ({ children }) => {
     const fetchAnalyticsData = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_APP_BACKEND_URL}/blog/dashboard/analysis`,
+          `${import.meta.env.VITE_APP_BACKEND_URL}/user/dashboard/analytics`,
           // {range},
           { withCredentials: true }
         );
