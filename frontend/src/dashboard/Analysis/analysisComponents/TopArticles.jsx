@@ -5,17 +5,6 @@ const TopArticles = () => {
 
 const [topBlogs, setTopBlogs] = useState([]);
 
-  const topArticles = [
-    { title: '10 JavaScript Tips Every Developer Should Know', views: 15420, comments: 89, category: 'Technology' },
-    { title: 'Ultimate Guide to Minimalist Living', views: 12340, comments: 67, category: 'Lifestyle' },
-    { title: 'Hidden Gems of Southeast Asia', views: 11200, comments: 45, category: 'Travel' },
-    { title: 'Healthy Breakfast Recipes for Busy Mornings', views: 9850, comments: 34, category: 'Food & Recipe' },
-    { title: 'Building Your First React App', views: 8760, comments: 52, category: 'Technology' }
-  ];
-
-  console.log("topBlogs",topBlogs);
-  
-
 useEffect(() => {
 const fetchTopBlogs = async()=>{
   try {
@@ -23,7 +12,6 @@ const fetchTopBlogs = async()=>{
     {
        withCredentials: true
     })
-    // console.log(res.data.blogsWithCommentCount);
     
     setTopBlogs(res.data.blogsWithCommentCount)
   } catch (error) {

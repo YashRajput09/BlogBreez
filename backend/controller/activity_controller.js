@@ -1,4 +1,5 @@
 import commentModel from '../models/comment_model.js';
+import activityModel from '../models/activity_model.js';
 
 // Create a comment
 export const createBlogComments = async(req, res) => {
@@ -17,6 +18,14 @@ export const createBlogComments = async(req, res) => {
       const newComment = new commentModel({ blogId, userId, comment, parentCommentId });
       console.log("comment : ",newComment);
       await newComment.save();
+
+        // Save recent activity
+  await activityModel.create({
+    action: 'Commented on a blog',
+    title: blog.title,
+    type: 'comment',
+  });
+
       res.status(201).json({ message: "Comment added successfully!", newComment });
     } catch (error) {
       console.log(error);
