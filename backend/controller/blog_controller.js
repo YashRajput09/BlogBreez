@@ -20,6 +20,7 @@ export const searchBlogs = async(req, res) =>{
 
 //create blog
 export const createBlog = async (req, res) => {
+  const userId = req.user._id;
   try {
     // 1. Check if files are present
     if (!req.files || Object.keys(req.files).length === 0) {
@@ -39,6 +40,7 @@ export const createBlog = async (req, res) => {
 
     // 3. Validate required fields in req.body
     const { category, title, description, tags} = req.body;
+  console.log(category, title, tags);
   
     let formattedTags;
     if (!tags) {
@@ -99,11 +101,15 @@ export const createBlog = async (req, res) => {
     const blog = await blogModel.create(blogData);
 
       // Save recent activity automatically 
-  await activityModel.create({
-    action: 'New blog published',
-    title: newBlog.title,
-    type: 'publish',
+  const createBlogActivity = await activityModel.create({
+   user: userId,
+    actionType: "publish",
+    contentId: blog._id,
+    contentType: "Blog",
+    message: `New article publish`,
   });
+        // console.log("createBlogActivity : ",createBlogActivity);
+
 
     // 9. Send success response
     res.status(201).json({
@@ -263,6 +269,7 @@ export const blogLikes = async(req, res) =>{
 //  blog likedBy feature
 export const blogLikedBy = async(req, res) =>{
   const userId  = req.body.userId; // Ensure this is sent from the frontend
+  const {blogId} = req.params.id;
   try {
    const blog = await blogModel.findById(req.params.id);
    if(!blog) return res.status(400).json({message: "Blog not found"});
@@ -274,12 +281,14 @@ export const blogLikedBy = async(req, res) =>{
     blog.likes += 1;
     blog.likedBy.push(userId);
          // Save recent activity
-  const liked = await activityModel.create({
-    action: 'Liked a blog',
-    title: blog.title,
-    type: 'like',
+  const likedActivity =  await activityModel.create({
+    user: userId,
+    actionType: "like",
+    contentId: blogId,
+    contentType: "Blog",
+    message: `Article liked`,
   });
-  console.log(liked)
+  // console.log(likedActivity)
    }
    await blog.save();
 
