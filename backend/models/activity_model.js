@@ -1,22 +1,28 @@
-import mongoose from 'mongoose';
+// models/activity.model.js
+import mongoose from "mongoose";
 
 const activitySchema = new mongoose.Schema({
-  action: {
-    type: String,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
-  title: String,
-  time: {
+  actionType: {
+    type: String, // 'post', 'like', 'comment', 'share', 'subscribe'
+    required: true,
+  },
+  contentId: {
+    type: mongoose.Schema.Types.ObjectId,
+    refPath: 'contentType', // dynamic reference to Blog, Comment, etc.
+  },
+  contentType: {
+    type: String, // e.g. 'Blog', 'Comment'
+  },
+  message: String, // e.g. "Yash commented on 'X blog'"
+  createdAt: {
     type: Date,
     default: Date.now,
   },
-  type: {
-    type: String,
-    enum: ['publish', 'comment', 'share', 'subscriber', 'like'],
-    required: true,
-  },
 });
 
-const Activity = mongoose.model('Activity', activitySchema);
-
-export default Activity;
+export const Activity = mongoose.model("Activity", activitySchema);
