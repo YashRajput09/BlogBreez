@@ -1,5 +1,6 @@
 import cloudinary from "../cloudConfig.js";
 import blogModel from "../models/blog_model.js";
+import activityModel from "../models/activity_model.js";
 import mongoose from "mongoose";
 import {generateSearchQuery} from "../utils/search.js";
 
@@ -96,7 +97,13 @@ export const createBlog = async (req, res) => {
 
     // 8. Save the blog in the database
     const blog = await blogModel.create(blogData);
-    // console.log(blog);
+
+      // Save recent activity automatically 
+  await activityModel.create({
+    action: 'New blog published',
+    title: newBlog.title,
+    type: 'publish',
+  });
 
     // 9. Send success response
     res.status(201).json({
@@ -266,8 +273,16 @@ export const blogLikedBy = async(req, res) =>{
    } else {
     blog.likes += 1;
     blog.likedBy.push(userId);
+         // Save recent activity
+  const liked = await activityModel.create({
+    action: 'Liked a blog',
+    title: blog.title,
+    type: 'like',
+  });
+  console.log(liked)
    }
    await blog.save();
+
    res.json({ likes: blog.likes, likedBy: blog.likedBy })
   } catch (error) {
     console.error(error)
