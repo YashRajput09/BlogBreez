@@ -20,11 +20,11 @@ export const followUser = async (req, res) => {
 
         // recent activity store
        const followActivity =  await activityModel.create({
-        user: currentUser._id,
+        user: userToFollow._id,
         actionType: "subscriber",
-        contentId: userToFollow._id,
+        contentId: currentUser._id,
         contentType: "User",
-        message: `New Subscriber: ${userToFollow.name}`,
+        message: `New Subscriber: ${currentUser.name}`,
       });
       // console.log("follow activity: ",followActivity);
       
