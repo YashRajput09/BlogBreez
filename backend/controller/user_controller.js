@@ -79,7 +79,7 @@ export const signUpUser = async (req, res) => {
           token: token,
         });
     }
-    console.log("New response : ", newUser);
+    // console.log("New response : ", newUser);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error", error });
@@ -105,7 +105,7 @@ export const logInUser = async (req, res) => {
       return res.status(400).json({ message: `Invalid role ${role}` });
     }
     const token = await createTokenAndSaveCookie(user._id, res);
-    console.log(token);
+    // console.log(token);
 
     res.status(200).json({
       message: "User loggedIn successfully",
@@ -221,7 +221,7 @@ export const editAdminProfile = async (req, res) => {
         url: cloudinaryResponse.secure_url,
       };
     }
-    console.log(updatedData);
+    // console.log(updatedData);
 
     // Find and update the user based on the extracted id
     const updatedUser = await userModel.findOneAndUpdate(
@@ -234,7 +234,7 @@ export const editAdminProfile = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    console.log(updatedUser);
+    // console.log(updatedUser);
 
     res.status(200).json({ updatedUser });
   } catch (error) {

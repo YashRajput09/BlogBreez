@@ -14,7 +14,7 @@ import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxi
 const ReaderEngagement = () => {
   return (
        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 mb-8">
-          <div className="flex items-center justify-between mb-6">
+          <div className="md:flex items-center justify-between mb-6">
             <h3 className="text-lg font-semibold text-gray-900">Reader Engagement</h3>
             <div className="flex items-center gap-4 text-sm text-gray-600">
               <div className="flex items-center gap-2">
