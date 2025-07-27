@@ -282,7 +282,7 @@ export const blogLikedBy = async(req, res) =>{
     blog.likedBy.push(userId);
          // Save recent activity
   const likedActivity =  await activityModel.create({
-    user: userId,
+    user: blog.createdBy,
     actionType: "like",
     contentId: blog._id,
     contentType: "Blog",
