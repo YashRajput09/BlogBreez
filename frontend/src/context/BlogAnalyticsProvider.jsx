@@ -16,10 +16,7 @@ export const BlogAnalyticsProvider = ({ children }) => {
           // {range},
           { withCredentials: true }
         );
-        // console.log(res.data.data);
-        console.log(res.data);
         setAnalytics(res.data);
-        // setSummaryAnalytics(res.data.totalSummary)
       } catch (error) {
         console.log(error);
       }

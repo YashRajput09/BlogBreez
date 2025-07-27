@@ -4,7 +4,6 @@ import {useBlogAnalytics} from '../../../context/BlogAnalyticsProvider';
 const KpiCards = () => {
 
 const {analytics} = useBlogAnalytics();
-console.log(analytics);
 const kpiData = [
     {
       title: "Total Articles",
