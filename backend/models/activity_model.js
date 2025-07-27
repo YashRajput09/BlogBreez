@@ -19,6 +19,10 @@ const activitySchema = new mongoose.Schema({
     type: String, // e.g. 'Blog', 'Comment'
   },
   message: String, // e.g. "Yash commented on 'X blog'"
+  meta: {            //for comment
+  type: Object,
+  default: {}
+},
   createdAt: {
     type: Date,
     default: Date.now,

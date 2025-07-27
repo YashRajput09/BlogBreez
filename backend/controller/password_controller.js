@@ -35,7 +35,7 @@ export const resetPassword = async (req, res, next) => {
   try {
    const hashedPassword = await hashPassword(newPassword);
     const user = await userModel.findOne({ email });
-    console.log(user);
+    // console.log(user);
     if (!user) return res.status(404).json({ message: "User not found" });
     if (user.resetOtpExpires < Date.now())
       return res.status(400).json({ message: "OTP has expired" });

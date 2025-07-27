@@ -20,7 +20,7 @@ const RecentActivity = () => {
             withCredentials: true,
           }
         );
-        console.log("Recent Activity: ", res.data.activities);
+        // console.log("Recent Activity: ", res.data.activities);
 
         setRecentActivity(res.data.activities);
       } catch (error) {
@@ -40,7 +40,7 @@ const RecentActivity = () => {
       </div>
       <div className="space-y-4">
         {recentActivity && recentActivity?.length > 0 ? (
-          recentActivity.map((activity, index) => (
+          recentActivity.slice(0,5).map((activity, index) => (
             <div
               key={index}
               className="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition-colors"
@@ -71,13 +71,13 @@ const RecentActivity = () => {
                 )}
               </div>
               <div className="flex-1">
-                <p className="text-gray-900 font-medium">{activity.message}</p>
+                <p className="text-gray-900 font-medium">{activity?.message}</p>
                 <p className="text-gray-600 text-sm">
-                  {activity.contentId.title}
+                  {activity.meta ? `${(activity.meta.commentText).slice(0, 30)}...` : activity?.contentId?.title}
                 </p>
               </div>
-              <span className="text-gray-500 text-sm">
-                {dayjs(activity.createdAt).fromNow()}
+            <span className="text-gray-500 text-sm">
+                {dayjs(activity?.createdAt).fromNow()}
               </span>
             </div>
           ))

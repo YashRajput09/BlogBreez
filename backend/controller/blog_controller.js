@@ -7,10 +7,10 @@ import {generateSearchQuery} from "../utils/search.js";
 // search blogs
 export const searchBlogs = async(req, res) =>{
   const searchQuery = req.query.search || "" ; // Default to an empty string if search is not provided
-  console.log(req.query.search);
+  // console.log(req.query.search);
   if(searchQuery){
     const searchBlogs = generateSearchQuery(searchQuery);
-    console.log("searchBlogs", searchBlogs)
+    // console.log("searchBlogs", searchBlogs)
     const allSearchBlogs = await blogModel.find(searchBlogs);
     return res.status(200).json(allSearchBlogs); // Return search results as JSON
   }  else {
@@ -40,7 +40,7 @@ export const createBlog = async (req, res) => {
 
     // 3. Validate required fields in req.body
     const { category, title, description, tags} = req.body;
-  console.log(category, title, tags);
+  // console.log(category, title, tags);
   
     let formattedTags;
     if (!tags) {
@@ -76,10 +76,10 @@ export const createBlog = async (req, res) => {
       }
     );
 
-    console.log("CloudinaryResponse : ", cloudinaryResponse);
+    // console.log("CloudinaryResponse : ", cloudinaryResponse);
     // 6. Handle Cloudinary upload errors
     if (!cloudinaryResponse || cloudinaryResponse.error) {
-      console.log(cloudinaryResponse.error);
+      // console.log(cloudinaryResponse.error);
     }
 
     // 7. Prepare blog data
@@ -239,7 +239,7 @@ export const updateBlog = async (req, res) => {
       } catch (error) {
         return res.status(400).json({ message: "Invalid tags format" });
       }}
-  console.log(updatedData);
+  // console.log(updatedData);
   
   const updatedBlog = await blogModel.findByIdAndUpdate(
     id,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Download, RefreshCw, PenTool } from "lucide-react";
 import KpiCards from "./analysisComponents/KpiCards";
-import ReadersAndPageViews from "./analysisComponents/ReaderEngagement"
+import ReadersAndPageViews from "./analysisComponents/ReadersAndPageViews"
 import ContentByCategory from "./analysisComponents/ContentByCategory";
 import ReaderEngagement from "./analysisComponents/ReaderEngagement";
 import TopArticles from "./analysisComponents/TopArticles";
@@ -46,7 +46,7 @@ const BlogsAnalysis = () => {
                 Track your blog performance and reader engagement
               </p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <select
                 value={selectedPeriod}
                 onChange={(e) => setSelectedPeriod(e.target.value)}
