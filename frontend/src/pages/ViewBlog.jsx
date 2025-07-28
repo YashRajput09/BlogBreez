@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider.jsx";
 import { useInteraction } from "../context/InteractionProvider.jsx";
 import toast from "react-hot-toast";
@@ -19,6 +19,8 @@ import ViewBlogSkeletonLoader from "../loaders/SkeletonLoader.jsx";
 
 const ViewBlog = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   // console.log(id);
 
   const { blogs, profile } = useAuth(); // Assuming blogs come from useAuth context
@@ -29,16 +31,16 @@ const ViewBlog = () => {
   const [hide, setHide] = useState(false);
 
   const handleLikes = () => {
-    if (!profile) {
-      toast.error("You need to log in to like a blog.");
-      return;
-    }
     const userId = profile._id;
     blogLikes(blog._id, userId);
   };
 
   useEffect(() => {
 
+  if (!profile) {
+    toast.error("You need to log in to read the blog.");
+    navigate("/login");
+  }
     const fetchBlog = async()=>{
       const res = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/blog/single-blog/${id}`,{
         withCredentials: true, // This ensures cookies are sent
@@ -60,9 +62,8 @@ const ViewBlog = () => {
       fetchBlog();
     }
   }, [blogs, id, likes]);
-console.log(blog);
+// console.log(blog);
 
-  if (!profile) return <div>Login to View Blog</div>
   if (!blog) return <div><ViewBlogSkeletonLoader/></div>;
   // if (!blog) return <div>Blog not found</div>;
 
