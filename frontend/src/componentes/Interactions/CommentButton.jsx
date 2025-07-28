@@ -118,25 +118,31 @@ const CommentButton = ({ blogId }) => {
           ) : (
             <div>
               <p className="text-gray-800">{comment.comment}</p>
-              <div className="flex items-center gap-2 mt-1">
+              <div className="flex items-center justify-between gap-2 mt-1">
                 <span className="text-xs text-gray-500">
                   {new Date(comment.createdAt).toLocaleString()}
                 </span>
-                <button
-                  className="text-blue-500 text-sm"
-                  onClick={() => {
-                    setEditingCommentId(comment._id);
-                    setEditedComment(comment.comment);
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  className="text-red-500 text-sm"
-                  onClick={() => deleteComment(comment._id, blogId)}
-                >
-                  Delete
-                </button>
+            
+                {comment?.userId?._id === profile?._id && (
+                  <>
+                    <button
+                      className="text-blue-500 text-sm"
+                      onClick={() => {
+                        setEditingCommentId(comment._id);
+                        setEditedComment(comment.comment);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="text-red-500 text-sm"
+                      onClick={() => deleteComment(comment._id, blogId)}
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
+
                 <button
                   className="text-green-500 text-sm"
                   onClick={() => setActiveReplyId(comment._id)}
