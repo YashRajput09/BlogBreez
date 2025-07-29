@@ -41,8 +41,6 @@ const ViewBlog = () => {
       toast.error("You need to log in to read the blog.");
       navigate("/login");
     }
-    const hasLiked = blog?.likedUsers?.includes(profile._id);
-    setLiked(hasLiked);
 
     const fetchBlog = async () => {
       const res = await axios.get(
@@ -65,8 +63,8 @@ const ViewBlog = () => {
       }
 
       // Check if user has already liked the blog
-      // const hasLiked = singleBlog.likedUsers?.includes(profile._id);
-      // setLiked(hasLiked || false);
+      const hasLiked = singleBlog.likedUsers?.includes(profile._id);
+      setLiked(hasLiked || false);
     };
     if (id) {
       fetchBlog();
@@ -131,7 +129,7 @@ const ViewBlog = () => {
                   <motion.div
                     whileTap={{ scale: 1.3 }}
                     transition={{ type: "spring", stiffness: 300 }}
-                    className="flex text-gray-500 text-xs items-center0"
+                    className="flex text-gray-500 text-xs items-center"
                   >
                     <Heart
                       size={18}
