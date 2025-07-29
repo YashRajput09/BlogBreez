@@ -2,20 +2,21 @@ import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import SubmitBtnLoader from "../loaders/SubmitBtnLoader";
-
 
 const Login = () => {
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    if(!role || !email || !password){
+    if (!role || !email || !password) {
       return toast.error("Please fill all the fields");
     }
     try {
@@ -35,11 +36,9 @@ const Login = () => {
       setRole("");
       setEmail("");
       setPassword("");
-      setTimeout(() =>{
-
-        window.location.pathname = "/"
-      },300)
-      
+      setTimeout(() => {
+        window.location.pathname = "/";
+      }, 300);
     } catch (error) {
       console.log(error);
       toast.error("role || email || password is incorrect");
@@ -187,13 +186,16 @@ const Login = () => {
                   >
                     Password
                   </label>
-                    <Link to={`/user/forgotpassword`} className="cursor-pointer text-indigo-500 no-underline hover:text-indigo-500">
+                  <Link
+                    to={`/user/forgotpassword`}
+                    className="cursor-pointer text-indigo-500 no-underline hover:text-indigo-500"
+                  >
                     <small>Forgot Password?</small>
-                    </Link>
+                  </Link>
                 </div>
                 <div className="relative flex w-full flex-wrap items-stretch">
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     id="password"
@@ -201,6 +203,12 @@ const Login = () => {
                     name="password"
                     placeholder="············"
                   />
+                  <span
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-2.5 cursor-pointer text-gray-500 hover:text-indigo-500"
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </span>
                 </div>
               </div>
               <div className="mb-4">

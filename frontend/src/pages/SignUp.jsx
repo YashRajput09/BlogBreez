@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import SubmitBtnLoader from "../loaders/SubmitBtnLoader";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const SignUp = () => {
   const [profileImage, setProfileImage] = useState("");
   const [imagePreview, setImagePreview] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const changeProfileImageHandler = (e) => {
     const file = e.target.files[0];
@@ -49,7 +51,7 @@ const SignUp = () => {
     // }
     // console.log(formData);
     try {
-      const {data} = await axios.post(
+      const { data } = await axios.post(
         `${import.meta.env.VITE_APP_BACKEND_URL}/user/signup`,
         formData, //sending form data to /signup endpoint
         {
@@ -62,10 +64,7 @@ const SignUp = () => {
       // console.log(data);
       toast.success("Welcome to BreezBlogs");
       setLoading(false);
-      navigate('/');
-      
-
-      
+      navigate("/");
     } catch (error) {
       console.log(error);
       toast.error("Error signing up");
@@ -83,7 +82,7 @@ const SignUp = () => {
           <span>
             Have account?{" "}
             <Link
-              to={'/login'}
+              to={"/login"}
               className="text-blue-600 hover:underline font-medium"
             >
               LogIn
@@ -123,12 +122,18 @@ const SignUp = () => {
 
           <div className="focus-within:border-b-blue-500 border-b-2 rounded-md relative flex overflow-hidden transition mb-3">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={password}
               placeholder="Create Password, minimum 8 character"
               className=" w-full p-2 px-4  focus:outline-none"
               onChange={(e) => setPassword(e.target.value)}
             />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-2.5 cursor-pointer text-gray-500 hover:text-indigo-500"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
 
           <div className="focus-within:border-b-blue-500 border-b-2 rounded-md relative flex overflow-hidden transition mb-3">
@@ -151,7 +156,7 @@ const SignUp = () => {
             />
           </div>
 
-          <div  iv className="flex ">
+          <div iv className="flex ">
             <div className="w-12 h-14 rounded-full overflow-hidden profileImage">
               <img
                 src={imagePreview ? `${imagePreview}` : "Image Preview"}
@@ -172,7 +177,7 @@ const SignUp = () => {
             type="submit"
             className="w-full bg-blue-500 py-2 mt-5 rounded-md text-white"
           >
-                            {loading ? <SubmitBtnLoader /> : "Submit"}
+            {loading ? <SubmitBtnLoader /> : "Submit"}
           </button>
         </form>
       </div>

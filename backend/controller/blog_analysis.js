@@ -137,16 +137,7 @@ export const categoryStats = async (req, res) => {
           _id: 0,
         },
       },
-      // {
-      //   $project: {
-      //     lowerCaseCategory: { $arrayElemAt: [ "$category", 0]},
-      //   },
-      // },
-      // { $group: { _id: "$category", count: { $sum: 1 } } },
-      // { $project: { category: "$_id", count: 1, _id: 0 } },
     ]);
-
-    console.log(categoryCount);
 
     res.status(200).json({ success: true, categoryCount });
   } catch (error) {

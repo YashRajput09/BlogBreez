@@ -1,30 +1,36 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ResetPassword = () => {
-  const [email, setEmail] = useState('');
-  const [otp, setOtp] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setMessage('');
+    setMessage("");
     try {
-      const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/user/resetpassword`, {
-        email,
-        otp,
-        newPassword,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_APP_BACKEND_URL}/user/resetpassword`,
+        {
+          email,
+          otp,
+          newPassword,
+        }
+      );
       setMessage(response.data.message);
-      navigate('/login');
+      navigate("/login");
     } catch (error) {
-      setMessage('Error resetting password.');
+      setMessage("Error resetting password.");
     } finally {
       setLoading(false);
     }
@@ -75,12 +81,12 @@ const ResetPassword = () => {
               required
             />
           </div>
-          <div className="flex flex-col">
+          <div className="relative flex flex-col">
             <label htmlFor="newPassword" className="text-sm text-gray-300">
               New Password
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="newPassword"
               placeholder="Enter your new password"
               value={newPassword}
@@ -88,6 +94,12 @@ const ResetPassword = () => {
               className="mt-1 px-4 py-2 bg-transparent border border-white-400 rounded-md text-white placeholder-gray-200 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               required
             />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-9 cursor-pointer text-gray-500 hover:text-indigo-500"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
           <motion.button
             type="submit"
@@ -95,13 +107,13 @@ const ResetPassword = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            {loading ? 'Resetting...' : 'Reset Password'}
+            {loading ? "Resetting..." : "Reset Password"}
           </motion.button>
         </form>
         {message && (
           <motion.p
             className={`mt-4 text-center text-base font-semibold ${
-              message.includes('Error') ? 'text-red-700' : 'text-green-700'
+              message.includes("Error") ? "text-red-700" : "text-green-700"
             }`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -116,4 +128,3 @@ const ResetPassword = () => {
 };
 
 export default ResetPassword;
-  
