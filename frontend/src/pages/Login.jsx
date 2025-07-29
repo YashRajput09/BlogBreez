@@ -11,6 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +23,7 @@ const Login = () => {
     try {
       await axios.post(
         `${import.meta.env.VITE_APP_BACKEND_URL}/user/login`,
-        { role, email, password },
+        { role, email, password, rememberMe },
         {
           withCredentials: true,
           headers: {
@@ -217,6 +218,7 @@ const Login = () => {
                     className="mt-1 mr-2 h-5 w-5 appearance-none rounded border border-gray-300 bg-contain bg-no-repeat align-top text-black shadow checked:bg-indigo-500 focus:border-indigo-500 focus:shadow"
                     type="checkbox"
                     id="remember-me"
+                     onChange={() => setRememberMe(!rememberMe)}
                   />
                   <label className="inline-block" htmlFor="remember-me">
                     {" "}

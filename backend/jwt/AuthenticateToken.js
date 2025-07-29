@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken';
 import userModel from '../models/user_model.js';
 
-const createTokenAndSaveCookies = async (userId, res) => {
+const createTokenAndSaveCookies = async (userId, res, rememberMe = false) => {
     // console.log(process.env.JWT_SECRET);
     
     const token = jwt.sign({ userId }, process.env.JWT_SECRET,{
-        expiresIn: "7d"
+        expiresIn: rememberMe ? "7d" : "1h",
     });
     res.cookie("jwttoken", token , {
         httpOnly: false, //protect from xss attck 
