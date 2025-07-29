@@ -96,17 +96,64 @@ export const getTopPerformaceArticle = async (req, res) => {
 
 export const getRecentActivities = async (req, res) => {
   const userId = req.user._id;
-try {
-  const activities = await activityModel
-    .find({ user: userId })
-    .sort({ createdAt: -1 })
-    .limit(10)
-    .populate("contentId")
-    .exec();
-    console.log(activities)
-  res.status(200).json({ success: true, activities });
-} catch (error) {
-  console.error(error);
+  try {
+    const activities = await activityModel
+      .find({ user: userId })
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .populate("contentId")
+      .exec();
+    console.log(activities);
+    res.status(200).json({ success: true, activities });
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ success: false, message: "Server Error", error });
-}
+  }
+};
+
+// Category count
+export const categoryStats = async (req, res) => {
+  try {
+    const categoryCount = await blogModel.aggregate([
+      {
+        $match: {
+          createdBy: req.user._id,
+          category: { $exists: true, $not: { $size: 0 } },
+        },
+      },
+      {
+        $unwind: "$category",
+      },
+      {
+        $group: {
+          _id: { $toLower: { $trim: { input: "$category" } } }, // normalize (lowercase + trim)
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          category: "$_id",
+          count: 1,
+          _id: 0,
+        },
+      },
+      // {
+      //   $project: {
+      //     lowerCaseCategory: { $arrayElemAt: [ "$category", 0]},
+      //   },
+      // },
+      // { $group: { _id: "$category", count: { $sum: 1 } } },
+      // { $project: { category: "$_id", count: 1, _id: 0 } },
+    ]);
+
+    console.log(categoryCount);
+
+    res.status(200).json({ success: true, categoryCount });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "faild to fetch category stats",
+      error,
+    });
+  }
 };
