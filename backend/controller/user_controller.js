@@ -22,7 +22,7 @@ export const signUpUser = async (req, res) => {
       });
     }
 
-    const { name, email, password, mobileNumber, education, role, createdAt } =
+    const { name, email, password, mobileNumber, education, role } =
       req.body;
     if (
       !name ||
@@ -88,7 +88,7 @@ export const signUpUser = async (req, res) => {
 
 // Login User
 export const logInUser = async (req, res) => {
-  const { email, password, role } = req.body;
+  const { email, password, role, rememberMe } = req.body;
   try {
     if (!email || !password || !role) {
       return res.status(400).json({ message: "Please fill required fields" });
@@ -104,7 +104,7 @@ export const logInUser = async (req, res) => {
     if (user.role !== role) {
       return res.status(400).json({ message: `Invalid role ${role}` });
     }
-    const token = await createTokenAndSaveCookie(user._id, res);
+    const token = await createTokenAndSaveCookie(user._id, res, rememberMe);
     // console.log(token);
 
     res.status(200).json({

@@ -41,7 +41,6 @@ export const getAnalysisData = async (req, res) => {
       },
       { $sort: { _id: 1 } },
     ]);
-    console.log(data);
     const totalSummary = data.reduce(
       (acc, data) => {
         acc.totalBlogs += data.totalBlogs;
