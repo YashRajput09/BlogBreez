@@ -16,7 +16,6 @@ import { IoIosEye } from "react-icons/io";
 import ExportToPDF from "../componentes/Interactions/ExportToPDF.jsx";
 import ViewBlogSkeletonLoader from "../loaders/SkeletonLoader.jsx";
 
-
 const ViewBlog = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -29,42 +28,58 @@ const ViewBlog = () => {
   const [localLikes, setLocalLikes] = useState(0); // Local state for likes count
   const [isFullDescription, setIsFullDesctiption] = useState(false);
   const [hide, setHide] = useState(false);
+  const [liked, setLiked] = useState(false);
 
   const handleLikes = () => {
     const userId = profile._id;
+    setLiked((prev) => !prev); // Toggle liked state
     blogLikes(blog._id, userId);
   };
 
   useEffect(() => {
+    if (!profile) {
+      toast.error("You need to log in to read the blog.");
+      navigate("/login");
+    }
+    const hasLiked = blog?.likedUsers?.includes(profile._id);
+    setLiked(hasLiked);
 
-  if (!profile) {
-    toast.error("You need to log in to read the blog.");
-    navigate("/login");
-  }
-    const fetchBlog = async()=>{
-      const res = await axios.get(`${import.meta.env.VITE_APP_BACKEND_URL}/blog/single-blog/${id}`,{
-        withCredentials: true, // This ensures cookies are sent
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    const fetchBlog = async () => {
+      const res = await axios.get(
+        `${import.meta.env.VITE_APP_BACKEND_URL}/blog/single-blog/${id}`,
+        {
+          withCredentials: true, // This ensures cookies are sent
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       // console.log("data : ",res.data.blog);
       const singleBlog = res.data.blog;
-      setBlog(singleBlog);// Assuming res.data.blog is the blog object
-  
+      setBlog(singleBlog); // Assuming res.data.blog is the blog object
+
       if (singleBlog && likes[singleBlog._id] === undefined) {
         setLocalLikes(singleBlog.likes || 0); // Fallback to 0 if likes are undefined
       } else {
         setLocalLikes(likes[singleBlog._id]);
       }
+
+      // Check if user has already liked the blog
+      // const hasLiked = singleBlog.likedUsers?.includes(profile._id);
+      // setLiked(hasLiked || false);
     };
     if (id) {
       fetchBlog();
     }
-  }, [blogs, id, likes]);
-// console.log(blog);
+  }, [blogs, id, likes, profile]);
+  // console.log(blog);
 
-  if (!blog) return <div><ViewBlogSkeletonLoader/></div>;
+  if (!blog)
+    return (
+      <div>
+        <ViewBlogSkeletonLoader />
+      </div>
+    );
   // if (!blog) return <div>Blog not found</div>;
 
   //character limit for preview text
@@ -112,11 +127,19 @@ const ViewBlog = () => {
             {!hide ? (
               <div className="flex gap-4">
                 {/* Likes Section */}
-                <button
-                  className="flex text-gray-500 text-xs items-center"
-                  onClick={handleLikes}
-                >
-                  <Heart size={18} /> &nbsp;{localLikes || 0}
+                <button onClick={handleLikes}>
+                  <motion.div
+                    whileTap={{ scale: 1.3 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="flex text-gray-500 text-xs items-center0"
+                  >
+                    <Heart
+                      size={18}
+                      color={liked ? "red" : "gray"}
+                      fill={liked ? "red" : "none"}
+                    />
+                    &nbsp;{localLikes || 0}
+                  </motion.div>
                 </button>
                 <span className="font-light">|</span>
 
@@ -146,12 +169,16 @@ const ViewBlog = () => {
               <span className="font-light">|</span>
               <span>24-07-2024</span>
             </div>
-            {
-              (blog?.createdBy?._id == profile?._id) ?
-            <Link to={`/blog/update/${id}`} className="underline text-blue-500">
-              update
-            </Link> : ''
-            }
+            {blog?.createdBy?._id == profile?._id ? (
+              <Link
+                to={`/blog/update/${id}`}
+                className="underline text-blue-500"
+              >
+                update
+              </Link>
+            ) : (
+              ""
+            )}
           </div>
 
           {/* Divider */}
@@ -173,11 +200,8 @@ const ViewBlog = () => {
               ? blog?.description
               : `${blog?.description.slice(0, previewLimit)}...`} */}
             {isFullDescription
-              ?  blog?.description
-              : `${(blog?.description).slice(
-                  0,
-                  previewLimit
-                )}...`}
+              ? blog?.description
+              : `${(blog?.description).slice(0, previewLimit)}...`}
           </motion.div>
 
           {!hide ? (
@@ -187,7 +211,6 @@ const ViewBlog = () => {
                 <VoiceReader />
               </div>
               <div className="flex justify-end gap-3">
-
                 {/* Export blog */}
                 <ExportToPDF
                   blog={blog}
