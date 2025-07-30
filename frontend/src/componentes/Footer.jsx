@@ -52,7 +52,7 @@ const Footer = () => {
         <CgInfinity className="text-3xl" /> 
         BreezBlogs</Link>
         <div className="hidden md:block text-gray-400 text-sm">
-          <p>&copy; 2024 BreezBlogs PVT. LTD. All rights reserved</p>
+          <p>&copy; 2025 BreezBlogs PVT. LTD. All rights reserved</p>
         </div>
         <div className="flex space-x-6">
           {socialLinks.map((link, idx) => (
