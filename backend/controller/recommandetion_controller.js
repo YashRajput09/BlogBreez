@@ -65,13 +65,14 @@ export const getRelatedBlogs = async (req, res) => {
       // Sort by finalScore (AI + boosts)
       { $sort: { finalScore: -1 } },
       // Take top 5
-      { $limit: 5 },
+      { $limit: 6 },
       // Only send necessary fields
       {
         $project: {
           title: 1,
           category: 1,
           tags: 1,
+          blogImage: 1,
           score: "$finalScore"
         }
       }

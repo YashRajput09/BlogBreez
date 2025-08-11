@@ -15,6 +15,7 @@ import axios from "axios";
 import { IoIosEye } from "react-icons/io";
 import ExportToPDF from "../componentes/Interactions/ExportToPDF.jsx";
 import ViewBlogSkeletonLoader from "../loaders/SkeletonLoader.jsx";
+import RecommendedBlogs from "../componentes/Recommendation/RecommendedBlogs.jsx";
 
 const ViewBlog = () => {
   const { id } = useParams();
@@ -259,6 +260,7 @@ const ViewBlog = () => {
             </motion.div>
           </div>
         </motion.div>
+        <RecommendedBlogs/>
       </div>
     </div>
   );
