@@ -1,75 +1,155 @@
 import blogModel from "../models/blog_model.js";
-import userModel from "../models/user_model.js";
+import { generateEmbedding } from "../services/embeddingService.js";
 
-export const recommendedBlogs = async (req, res) => {
-    const { userId } = req.params;
-
-    try {
-        // const user = await userModel.findById(userId).populate("readBlogs");
-        const user = await userModel.findById(userId).populate({
-          path: "readBlogs",
-          select: "category tags"
-      });
-      
-
-        if (!user || user.readBlogs.length === 0) {
-            const trendingBlogs = await blogModel.find().sort({ views: -1 }).limit(5);
-            return res.status(200).json({ message: "Showing trending blogs", blogs: trendingBlogs });
-        }
-
-        // Extract categories & tags from read blogs
-        const readCategories = user.readBlogs.flatMap((blog) => blog.category);
-        const readTags = user.readBlogs.flatMap((blog) => blog.tags);
-        const readBlogIds = user.readBlogs.map((blog) => blog._id.toString()); // Get already read blog IDs
-
-        // Find relevant blogs
-        const recommendedBlogs = await blogModel.aggregate([
-            {
-                $match: {
-                    _id: { $nin: readBlogIds }, // Exclude already read blogs
-                    $or: [
-                      { category: { $in: Array.isArray(readCategories) ? readCategories : [readCategories] } },
-                      { tags: { $in: Array.isArray(readTags) ? readTags : [readTags] } }                      
-                    ],
-                },
-            },
-            {
-                $addFields: {
-                    matchScore: {
-                        $add: [
-                            { $size: { $setIntersection: ["$category", readCategories] } },
-                            { $size: { $setIntersection: ["$tags", readTags] } }
-                        ]
-                    }
-                }
-            },
-            { $sort: { matchScore: -1, views: -1 } }, // Sort by relevance & views
-            { $limit: 5 }
-        ]);
-
-        res.status(200).json({ blogs: recommendedBlogs });
-
-    } catch (error) {
-        res.status(500).json({ message: "Error fetching recommendations", error });
+export const getRelatedBlogs = async (req, res) => {
+  try {
+    const currentBlog = await blogModel.findById(req.params.id).lean();
+    if (!currentBlog) {
+      return res.status(404).json({ error: "Blog not found" });
     }
+
+    // Create embedding vector from title + content
+    const queryVector = await generateEmbedding(
+      `${currentBlog.title} ${currentBlog.content || ""}`
+    );
+
+    // Run vector search
+    const related = await blogModel.aggregate([
+      {
+        $vectorSearch: {
+          index: "vector_index", // MongoDB Atlas Search index name
+          path: "embedding",
+          queryVector,
+          numCandidates: 50, // how many to consider before filtering
+          limit: 20 // bring more so we can boost before final limit
+        }
+      },
+      // Flatten nested tags so matching works
+      {
+        $addFields: {
+          flatTags: {
+            $reduce: {
+              input: "$tags",
+              initialValue: [],
+              in: { $concatArrays: ["$$value", "$$this"] }
+            }
+          }
+        }
+      },
+      // Add a custom score = AI score + boosts for category/tags match
+      {
+        $addFields: {
+          finalScore: {
+            $add: [
+              { $meta: "vectorSearchScore" },
+              {
+                $cond: [
+                  { $in: [currentBlog.category[0], "$category"] },
+                  0.15, // boost for category match
+                  0
+                ]
+              },
+              {
+                $cond: [
+                  { $gt: [{ $size: { $setIntersection: ["$flatTags", currentBlog.tags.flat()] } }, 0] },
+                  0.1, // boost if at least one tag matches
+                  0
+                ]
+              }
+            ]
+          }
+        }
+      },
+      // Remove the blog itself
+      { $match: { _id: { $ne: currentBlog._id } } },
+      // Sort by finalScore (AI + boosts)
+      { $sort: { finalScore: -1 } },
+      // Take top 5
+      { $limit: 5 },
+      // Only send necessary fields
+      {
+        $project: {
+          title: 1,
+          category: 1,
+          tags: 1,
+          score: "$finalScore"
+        }
+      }
+    ]);
+
+    res.json(related);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Something went wrong" });
+  }
 };
 
 
-export const trackView = async(req, res) => {
-    const {userId, blogId} = req.body;
-    if (!userId || !blogId) {
-        return res.status(400).json({ message: "User ID and Blog ID required" });
-      }
-      try {
-        // Update Blog View Count
-        await blogModel.findByIdAndUpdate(blogId, { $inc: { views: 1 } });
-    
-        // Store blog in user’s read history
-        await userModel.findByIdAndUpdate(userId, { $addToSet: { readBlogs: blogId } });
-    
-        res.status(200).json({ message: "View tracked successfully" });
-      } catch (error) {
-        res.status(500).json({ message: "Error tracking view", error });
-      }
-}  
+
+// import Blog from "../models/blog_model.js";
+// import { generateEmbedding } from "../services/embeddingService.js";
+
+// export const getRelatedBlogs = async (req, res) => {
+//   try {
+//     const currentBlog = await Blog.findById(req.params.id).lean();
+//     if (!currentBlog) {
+//       return res.status(404).json({ error: "Blog not found" });
+//     }
+
+//     // Create query vector
+//     const queryVector = await generateEmbedding(
+//       `${currentBlog.title} ${currentBlog.content || ""}`
+//     );
+
+//     const titleKeywords = currentBlog.title.split(/\s+/).filter(Boolean);
+
+//     const related = await Blog.aggregate([
+//       {
+//         $vectorSearch: {
+//           index: "vector_index",
+//           path: "embedding",
+//           queryVector,
+//           numCandidates: 50,
+//           limit: 50
+//         }
+//       },
+//       // Flatten nested tags so $in works
+//       {
+//         $addFields: {
+//           flatTags: {
+//             $reduce: {
+//               input: "$tags",
+//               initialValue: [],
+//               in: { $concatArrays: ["$$value", "$$this"] }
+//             }
+//           }
+//         }
+//       },
+//       {
+//         $match: {
+//           _id: { $ne: currentBlog._id },
+//           $or: [
+//             { title: { $regex: titleKeywords.join("|"), $options: "i" } },
+//             { flatTags: { $in: currentBlog.tags.flat() } },
+//             { category: { $in: currentBlog.category } }
+//           ]
+//         }
+//       },
+//       { $limit: 5 },
+//       {
+//         $project: {
+//           title: 1,
+//           category: 1,
+//           tags: 1,
+//           score: { $meta: "vectorSearchScore" }
+//         }
+//       }
+//     ]);
+
+//     res.json(related);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "Something went wrong" });
+//   }
+// };
 

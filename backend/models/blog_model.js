@@ -69,7 +69,11 @@ const blogSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     }],// Track users who viewed the blog   
-})
+     embedding: {
+        type: [Number], // OpenAI embedding vector
+        default: []
+    },
+});
 
 const Blog = mongoose.model("Blog", blogSchema);
 export default Blog;
