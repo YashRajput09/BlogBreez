@@ -3,6 +3,7 @@ import blogModel from "../models/blog_model.js";
 import activityModel from "../models/activity_model.js";
 import mongoose from "mongoose";
 import {generateSearchQuery} from "../utils/search.js";
+import { generateEmbedding } from "../services/embeddingService.js";
 
 // search blogs
 export const searchBlogs = async(req, res) =>{
@@ -81,6 +82,9 @@ export const createBlog = async (req, res) => {
     if (!cloudinaryResponse || cloudinaryResponse.error) {
       // console.log(cloudinaryResponse.error);
     }
+       // Generate embedding from title + description
+      const embeddingText = `${title}\n\n${description}`;
+    const embedding = await generateEmbedding(embeddingText);
 
     // 7. Prepare blog data
     const blogData = {
@@ -91,6 +95,7 @@ export const createBlog = async (req, res) => {
       adminName,
       adminImage,
       createdBy,
+      embedding,
       blogImage: {
         url: cloudinaryResponse.url,
         public_id: cloudinaryResponse.public_id,
@@ -185,7 +190,7 @@ export const getMyBlogs = async (req, res) => {
   res.status(200).json(blogs);
 };
 
-//update Blog
+// ********* update Blog *********
 export const updateBlog = async (req, res) => {
   const { id } = req.params;
   try {
@@ -239,8 +244,15 @@ export const updateBlog = async (req, res) => {
       } catch (error) {
         return res.status(400).json({ message: "Invalid tags format" });
       }}
-  // console.log(updatedData);
   
+        //  Generate embedding from updated title + description
+    if (updatedData.title || updatedData.description) {
+      const title = updatedData.title || existingBlog.title;
+      const description = updatedData.description || existingBlog.description;
+      const embeddingText = `${title}\n\n${description}`;
+      updatedData.embedding = await generateEmbedding(embeddingText);
+    }
+
   const updatedBlog = await blogModel.findByIdAndUpdate(
     id,
     { $set: updatedData}, // $set is used to update only the fields provided in the request
@@ -254,7 +266,7 @@ export const updateBlog = async (req, res) => {
 }
 }
 
-// blog Like feature
+// ********* blog Like feature *********
 export const blogLikes = async(req, res) =>{
  try {
    const blog = await blogModel.findById(req.params.id);
@@ -266,7 +278,7 @@ export const blogLikes = async(req, res) =>{
  }
 };
 
-//  blog likedBy feature
+// ********* blog likedBy feature **********
 export const blogLikedBy = async(req, res) =>{
   const userId  = req.body.userId; // Ensure this is sent from the frontend
   const {blogId} = req.params.id;
