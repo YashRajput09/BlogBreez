@@ -20,7 +20,6 @@ let embedder;
 // Load model once at startup
 (async () => {
   embedder = await pipeline("feature-extraction", "Xenova/all-MiniLM-L6-v2");
-  console.log("✅ Local embedding model loaded");
 })();
 
 export async function generateEmbedding(text) {
