@@ -259,8 +259,8 @@ const ViewBlog = () => {
               </button>
             </motion.div>
           </div>
-        </motion.div>
         <RecommendedBlogs/>
+        </motion.div>
       </div>
     </div>
   );
