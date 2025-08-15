@@ -102,7 +102,6 @@ export const getRecentActivities = async (req, res) => {
       .limit(10)
       .populate("contentId")
       .exec();
-    console.log(activities);
     res.status(200).json({ success: true, activities });
   } catch (error) {
     console.error(error);

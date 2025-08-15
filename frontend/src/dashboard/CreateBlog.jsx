@@ -76,13 +76,14 @@ const CreateBlog = () => {
       formData.append("description", description);
       tags.forEach((tag) => formData.append("tags", tag));
       formData.append("blogImage", blogImage);
+      console.log("blogImage", blogImage);
 
       await axios.post(
         `${import.meta.env.VITE_APP_BACKEND_URL}/blog/create`,
         formData,
         {
           withCredentials: true,
-          headers: { "Content-Type": "multipart/form-data" },
+          // headers: { "Content-Type": "multipart/form-data" },
         }
       );
 
@@ -96,7 +97,7 @@ const CreateBlog = () => {
       setMetadataGenerated(false);
     } catch (error) {
       console.error(error);
-      toast.error("Failed to create blog");
+      toast.error(error?.response?.data?.message || "Failed to create blog");
     }
     setLoading(false);
   };
@@ -226,7 +227,7 @@ const CreateBlog = () => {
                 <span className="text-lg transition-transform group-hover:rotate-12">
                   ✨
                 </span>
-                {autoMetaLoading ? "Analyzing image..." : "Generate Metadata"}
+                {autoMetaLoading ? "Analyzing image..." : "Generate Metadata with AI"}
               </button>
             )}
           </div>

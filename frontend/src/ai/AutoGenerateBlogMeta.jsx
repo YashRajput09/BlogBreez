@@ -14,7 +14,7 @@ export default function AutoGenerateBlogMeta() {
     setAutoMetaLoading(true);
     try {
       const formData = new FormData();
-      formData.append("image", imageFile);
+      formData.append("blogImage", imageFile);
 
       const { data } = await axios.post(
         `${import.meta.env.VITE_APP_BACKEND_URL}/api/auto-meta`,

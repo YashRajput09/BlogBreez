@@ -81,8 +81,8 @@ dbConnection();
 
 // ROUTES
 app.use("/user", fileUploadMiddleware, userRoute);
-app.use("/user/dashboard", dashboardRoute)
-app.use("/blog", blogRoute);
+app.use("/user/dashboard",fileUploadMiddleware, dashboardRoute)
+app.use("/blog", fileUploadMiddleware, blogRoute);
 app.use("/blog/recommanded", fileUploadMiddleware, recommadedRoute);
-app.use("/api/auto-meta", upload.single("image"), autoMetaRoutes)
+app.use("/api/auto-meta", upload.single("blogImage"), autoMetaRoutes)
 
