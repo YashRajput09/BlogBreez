@@ -4,12 +4,14 @@ import express from 'express';
 import session from 'express-session'
 import mongoose from 'mongoose';
 import fileUpload from 'express-fileupload';
+import multer from 'multer';
 import userRoute from './routes/user_route.js'
 import blogRoute from './routes/blog_route.js'
 import cookieParser from 'cookie-parser';
 import cors from "cors";
 import dashboardRoute from './routes/dashboard_route.js'
 import recommadedRoute from './routes/recommendation_route.js';
+import autoMetaRoutes from './routes/autoMeta_routes.js'
 const app = express();
 
 // define session options
@@ -49,10 +51,16 @@ app.use(cors({
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
 }));
-app.use(fileUpload({
-    useTempFiles: true,
-    tempFileDir: '/tmp/'
-}));
+
+// Express-fileupload middleware for normal uploads
+const fileUploadMiddleware = fileUpload({
+  useTempFiles: true,
+  tempFileDir: '/tmp/'
+});
+
+// MULTER (Only for Gemini image-processing routes)
+const storage = multer.memoryStorage();
+export const upload = multer({ storage }); // export for use in routes
 
 //MONGODB CONNECTION
 const port = process.env.PORT;
@@ -72,8 +80,9 @@ async function dbConnection() {
 dbConnection();
 
 // ROUTES
-app.use("/user", userRoute);
+app.use("/user", fileUploadMiddleware, userRoute);
 app.use("/user/dashboard", dashboardRoute)
 app.use("/blog", blogRoute);
-app.use("/blog/recommanded", recommadedRoute);
+app.use("/blog/recommanded", fileUploadMiddleware, recommadedRoute);
+app.use("/api/auto-meta", upload.single("image"), autoMetaRoutes)
 
