@@ -16,6 +16,7 @@ import { IoIosEye } from "react-icons/io";
 import ExportToPDF from "../componentes/Interactions/ExportToPDF.jsx";
 import ViewBlogSkeletonLoader from "../loaders/SkeletonLoader.jsx";
 import RecommendedBlogs from "../componentes/Recommendation/RecommendedBlogs.jsx";
+import QAAssistant from "../ai/QAAssistant.jsx"
 
 const ViewBlog = () => {
   const { id } = useParams();
@@ -94,6 +95,7 @@ const ViewBlog = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 via-blue-50 to-gray-100 p-2 md:p-5  flex justify-center items-center ">
+      <div className="absolute bottom-1 right-10"><QAAssistant blogId={id}/></div>
       <div id="pdf-content" className="group">
         <motion.div
           className="w-full max-w-3xl p-6 bg-white shadow-lg rounded-lg"
