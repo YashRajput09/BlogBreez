@@ -12,6 +12,7 @@ import cors from "cors";
 import dashboardRoute from './routes/dashboard_route.js'
 import recommadedRoute from './routes/recommendation_route.js';
 import autoMetaRoutes from './routes/autoMeta_routes.js'
+import qaAssistantRoute from './routes/assistant_route.js';
 const app = express();
 
 // define session options
@@ -84,5 +85,6 @@ app.use("/user", fileUploadMiddleware, userRoute);
 app.use("/user/dashboard",fileUploadMiddleware, dashboardRoute)
 app.use("/blog", fileUploadMiddleware, blogRoute);
 app.use("/blog/recommanded", fileUploadMiddleware, recommadedRoute);
-app.use("/api/auto-meta", upload.single("blogImage"), autoMetaRoutes)
+app.use("/blog/assistant", qaAssistantRoute);
+app.use("/api/auto-meta", upload.single("blogImage"), autoMetaRoutes);
 
