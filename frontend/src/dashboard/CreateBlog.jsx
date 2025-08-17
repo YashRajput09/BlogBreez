@@ -222,7 +222,7 @@ const CreateBlog = () => {
                 type="button"
                 onClick={handleGenerateMeta}
                 disabled={autoMetaLoading}
-                className="group inline-flex items-center justify-center gap-2 bg-purple-600 text-white px-5 py-2 rounded-md shadow transition-all hover:bg-purple-700 focus:ring-2 focus:ring-purple-300"
+                className="group inline-flex items-center justify-center gap-2 bg-purple-600 text-white px-3 py-1 rounded-md shadow transition-all hover:bg-purple-700 focus:ring-2 focus:ring-purple-300"
               >
                 <span className="text-lg transition-transform group-hover:rotate-12">
                   ✨
