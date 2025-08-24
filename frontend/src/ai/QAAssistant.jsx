@@ -8,6 +8,7 @@ const QAAssistant = ({ blogId }) => {
   const [input, setInput] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(true); // tooltip state
   const chatEndRef = useRef(null);
 
   // Auto-scroll when messages or loader changes
@@ -43,13 +44,23 @@ const QAAssistant = ({ blogId }) => {
 
   return (
     <>
-      {/* Floating Logo */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 bg-blue-600 p-3 z-10 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
-      >
-        <MessageCircle size={28} className="text-white" />
-      </button>
+      {/* Floating Logo with Tooltip */}
+      <div className="fixed bottom-6 right-6 z-10 flex flex-col items-end">
+        {showTooltip && (
+          <div className="mb-2 bg-blue-500 text-white text-xs px-3 py-1 rounded-lg shadow-md whitespace-nowrap animate-bounce">
+            AI Blog Assistant ✨
+          </div>
+        )}
+        <button
+          onClick={() => {
+            setIsOpen(!isOpen);
+            setShowTooltip(false); // hide tooltip once clicked
+          }}
+          className="bg-blue-600 p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
+        >
+          <MessageCircle size={28} className="text-white" />
+        </button>
+      </div>
 
       {/* Chat Window with Animation */}
       <AnimatePresence>
